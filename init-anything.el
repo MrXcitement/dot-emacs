@@ -41,7 +41,6 @@
 	      anything-c-source-info-pages
 	      anything-c-source-man-pages
 	      anything-c-source-file-cache
-	      anything-c-source-recentf
 	      anything-c-source-emacs-commands))
   (global-set-key (kbd "M-X") 'anything))
 
