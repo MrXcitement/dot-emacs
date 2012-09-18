@@ -56,6 +56,10 @@
 (require 'cl nil t)
 
 ;;;
+;; Initialize the environment (PATH and exec-path)
+(require 'init-env nil t)
+
+;;;
 ;; EmacsWiki auto-install utilities
 ;; Required by: zoom-frm
 ;; http://www.emacswiki.org/emacs/AutoInstall
