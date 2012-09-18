@@ -1,0 +1,5 @@
+alias ffow find-file-other-window $1
+alias ffof find-file-other-frame $1
+alias ff find-file $1
+alias ll ls -l
+alias lla ls -la

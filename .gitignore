@@ -1,0 +1,20 @@
+# Directories to ignore
+auto-install.d/
+auto-save-list/
+elpa/
+site-lisp/
+semanticdb/
+server/
+tutorial/
+url/
+
+# Files to ignore
+tramp
+*~
+.DS_Store
+.org-id-locations
+ac-comphist.dat
+anything-c-adaptive-history
+ede-projects.el
+
+
