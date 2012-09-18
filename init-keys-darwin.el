@@ -1,11 +1,14 @@
-;;;
-;; Set general purpose key mappings and system specific mappings
-;; This file is NOT part of GNU Emacs
+;;; 
+;; init-keys-darwin.el
+;; Darwin (MacOS) specific key mappings
+;; This file is NOT a part of GNU Emacs
 
 ;; Mike Barker <mike@thebarkers.com>
-;; June 24, 2012
+;; September 18, 2012
 
-;; Copyright (c) 2012 Mike Barker
+;;; License
+
+;; Copyright (c) 2012 Mike Barker 
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a
 ;; copy of this software and associated documentation files (the "Software"),
@@ -25,33 +28,13 @@
 ;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;; DEALINGS IN THE SOFTWARE.
 
-;; 2012.09.15 - Added MIT License from the OSI (http://opensource.org/licenses/MIT)
+;;; Change log:
+;; 2012.09.18
+;; * First release.
 
-(message "Loading init-keys.el...")
+(message "Loading init-keys-darwin.el...")
 
-;; Show recent files buffer
-(global-set-key (kbd "C-x M-f") 'recentf-open-files)
+(global-set-key [kp-delete] 'delete-char) ; Make fn-del delete forward
 
-;; Compilation output, next/previous error. (Alt-Page Up/Alt-Page Down)
-(global-set-key (kbd "<M-prior>") 'previous-error)
-(global-set-key (kbd "<M-next>")  'next-error)
-
-;; Determine the system we are on
-(cond
- ;; Darwin (Mac OS X) custimzations
- ((string-equal "darwin" system-type)
-  (require 'init-keys-darwin nil t)	; soft require darwin key mappings
-  )
-
- ;; Gnu/linux customizations
- ((string-equal "gnu/linux" system-type)
-  (require 'init-keys-linux nil t)	; soft requir linux key mappings
-  )
-
- ;; Windows customizations
- ((string-equal "windows-nt" system-type )
-  (require 'init-keys-windows nil t)	; soft require windows key mappings
-  )
-)
-
-(provide 'init-keys)
+(provide 'init-keys-darwin)
+;;; init-keys-darwin.el ends here
