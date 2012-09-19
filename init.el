@@ -29,15 +29,26 @@
 ;; - Added MIT License from the OSI (http://opensource.org/licenses/MIT)
 
 ;; 2012.09.16
-;; - Implement el-get to replace auto-install and package.el
+;; * Implement el-get to replace auto-install and package.el
 
-;; Add personal .emacs.d and site-lisp dir to START of load-path
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
-;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/themes"))
+;; 2012.09.19
+;; * Removed el-get and not using at this time.
+;;   el-get is not multi platform friendly, it uses symlinks to packages
+;;   and this causes Dropbox does not handle them correctly. Also they will
+;;   not work in Windows.
+;; * init-auto-install handles emacswiki package installs
+;; * init-elpa handles installing pakages using package.el
 
 ;; Save the current time for testing how long the init.el fie took to load
 (defvar *emacs-load-start* (current-time))
+
+;;;
+;; Load the cl package
+(require 'cl nil t)
+
+;; Add personal directories to the START of load-path
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/themes"))
 
 ;; If not loading in aquamacs...
 (when (not (featurep 'aquamacs))
@@ -47,16 +58,7 @@
 )
 
 ;;;
-;; if the user name is not set, set the user full name
-(if (= (length user-full-name) 0)
-    (setq user-full-name "Mike Barker"))
-
-;;;
-;; Load the cl package
-(require 'cl nil t)
-
-;;;
-;; Initialize the environment (PATH and exec-path)
+;; Initialize the environment
 (require 'init-env nil t)
 
 ;;;
@@ -66,9 +68,9 @@
 (require 'init-auto-install nil t)
 
 ;;;
-;; Emacs 24 and ELPA package management system
-;; http://tromey.com/elpa/
-(require 'init-elpa nil t)
+;; Emacs 24 package management system
+;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages
+(require 'init-package nil t)
 
 ;;; 
 ;; Misc personalization

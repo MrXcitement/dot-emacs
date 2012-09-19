@@ -38,23 +38,30 @@
 ;;; Change log:
 ;; 2012.09.18
 ;; * First release.
+;; 2012.09.19
+;; * Setting user-full-name and user-mail-address
+
+;;;
+;; if the user name is not set, set the user full name
+(if (= (length user-full-name) 0)
+    (setq user-full-name "Mike Barker"))
+
+;;;
+;; if the email is not set, set it
+(if (= (length user-mail-address) 0)
+    (setq user-mail-address "mike@thebarkers.com"))
 
 ;; Determine the system we are on
 (cond
  ;; Darwin (Mac OS X) custimzations
  ((string-equal "darwin" system-type)
-  (require 'init-env-darwin nil t)
-  )
-
+  (require 'init-env-darwin nil t))
  ;; Gnu/linux customizations
  ((string-equal "gnu/linux" system-type)
-  (require 'init-env-linux nil t)
-  )
-
+  (require 'init-env-linux nil t))
  ;; Windows customizations
  ((string-equal "windows-nt" system-type )
-  (require 'init-env-windows nil t)
-  )
+  (require 'init-env-windows nil t))
 )
 
 (provide 'init-env)
