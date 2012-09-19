@@ -1,5 +1,8 @@
 ;;;
-;; Initialize the ELPA package manager system
+;; init-package.el
+;; Initialize the package manager system
+;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html
+
 ;; This file is NOT part of GNU Emacs
 
 ;; Mike Barker <mike@thebarkers.com>
@@ -25,18 +28,12 @@
 ;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;; DEALINGS IN THE SOFTWARE.
 
-;; 2012.09.15 - Added MIT License from the OSI (http://opensource.org/licenses/MIT)
+;; 2012.09.15 
+;; * Added MIT License from the OSI (http://opensource.org/licenses/MIT)
 
-(message "Loading init-elpa.el...")
+(message "Loading init-package.el...")
 
-;;;
-;; TODO: Handle emacs 23.x versions...
-;; (when
-;;     (load
-;;      (expand-file-name "~/.emacs.d/elpa/package.el"))
-;; )
-
-;; Initialize the ELPA package manager system
+;; Initialize the package manager system
 (package-initialize)
 
 ;; Add third party package archives
@@ -45,4 +42,35 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("SC"   . "http://joseito.republika.pl/sunrise-commander/"))
 
-(provide 'init-elpa)
+;; A list of packages to install
+(defvar init-package-packages '(anything 
+				anything-config 
+				anything-match-plugin 
+				auto-complete 
+				buffer-move
+				color-theme-sanityinc-tomorrow 
+				ecb
+				groovy-mode
+				highlight-80+
+				inkpot-theme
+				ipython
+				multi-term
+				ntcmd
+				popup
+				pymacs
+				redo+
+				yasnippet)
+  "A list of packages to ensure are installed.")
+
+;; Function to install default packages
+(defun init-package-install ()
+  "Install a default set of packages."
+  (interactive)
+  (message "Installing default packages...")
+  (package-refresh-contents)
+  (dolist (package init-package-packages)
+    (when (not (package-installed-p package))
+      (package-install package)))
+  )
+
+(provide 'init-package)
