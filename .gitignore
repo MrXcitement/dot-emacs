@@ -1,5 +1,5 @@
 # Directories to ignore
-auto-install.d/
+auto-install*/
 auto-save-list/
 elpa/
 site-lisp/
@@ -16,5 +16,5 @@ tramp
 ac-comphist.dat
 anything-c-adaptive-history
 ede-projects.el
-
+wget-log
 
