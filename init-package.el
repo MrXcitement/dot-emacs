@@ -49,7 +49,7 @@
 				auto-complete 
 				buffer-move
 				color-theme-sanityinc-tomorrow 
-				ecb
+				ecb-snapshot
 				groovy-mode
 				highlight-80+
 				inkpot-theme
