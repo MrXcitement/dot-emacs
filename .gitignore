@@ -13,8 +13,9 @@ tramp
 *~
 .DS_Store
 .org-id-locations
-ac-comphist.dat
+ac-*dat
 anything-c-adaptive-history
 ede-projects.el
 wget-log
-
+\#*#
+abbrev_defs
