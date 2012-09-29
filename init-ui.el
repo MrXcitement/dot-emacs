@@ -39,6 +39,7 @@
 
 (message "Loading init-ui.el...")
 
+;; Interface settings that affect both cui and gui
 (setq inhibit-splash-screen t)
 (blink-cursor-mode -1)
 (column-number-mode t)
@@ -60,16 +61,17 @@
 
    ;; Darwin (Mac OS X) custimzations
    ((eq system-type 'darwin)
-    (set-face-font 'default "Droid Sans Mono Dotted 14") ; Set default font
+    (require 'init-ui-darwin nil t) 
     )
 
    ;; Gnu/linux customizations
    ((eq system-type 'gnu/linux)
+    (require 'init-ui-linux nil t)
     )
 
    ;; Windows customizations
    ((eq system-type 'windows-nt)
-    (set-face-font 'default "Consolas 12") ; Set default font
+    (require 'init-ui-windows nil t)
     )
 
    ) ; end cond
