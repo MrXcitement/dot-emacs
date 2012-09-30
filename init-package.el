@@ -30,17 +30,16 @@
 
 ;; 2012.09.15 
 ;; * Added MIT License from the OSI (http://opensource.org/licenses/MIT)
-
+;; 2012.09.28
+;; * No longer loading ELPA and SC repositories
 (message "Loading init-package.el...")
 
 ;; Initialize the package manager system
 (package-initialize)
 
 ;; Add third party package archives
-(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("SC"   . "http://joseito.republika.pl/sunrise-commander/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 ;; A list of packages to install
 (defvar init-package-packages '(anything 
