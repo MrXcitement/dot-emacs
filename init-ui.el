@@ -49,7 +49,7 @@
 ;; This is a window sytem (a gui) session
 (when (window-system)
   
-  (load-theme 'tango t) ; Set the default color theme
+  (load-theme 'tango-dark t) ; Set the default color theme
 
   ;;; 
   ;; Use hl-line-mode to highlight the current line.
