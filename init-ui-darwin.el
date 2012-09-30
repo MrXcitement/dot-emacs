@@ -33,7 +33,7 @@
 
 (message "Loading init-ui-darwin.el...")
 
-(set-face-font 'default "Droid Sans Mono Dotted 14") ; Set default font
+(set-face-font 'default "Droid Sans Mono Slashed 14") ; Set default font
 
 (provide 'init-ui-darwin)
 ;;; init-ui-darwin.el ends here
