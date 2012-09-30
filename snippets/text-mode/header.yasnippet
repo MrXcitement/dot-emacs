@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: standard header template
+# key: hhead
+# --\
+${1:Filename}
+${2:Description}
+
+`user-full-name` <`user-mail-address`>
+`(format-time-string "%B %e, %Y")`
+
+Copyright (c) `(format-time-string "%Y")` `user-full-name` 
+
+Change log:
+`(format-time-string "%Y.%m.%d")`
+* First release.
+
+$0
+
