@@ -34,13 +34,15 @@
 ;; 2012.09.17
 ;; * Added new header and license file.
 ;; * Auto complete package now being provided by package.el
+;; 2012.10.01
+;; * No longer need to set the location of the ac-dict folder and the 
+;; ac-comphist.dat file.
 
 (provide 'init-auto-complete)
 ;;; init-auto-complete.el ends here
 
 (when (require 'auto-complete-config)
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-  (setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
   (ac-config-default))
+
 
 (provide 'init-auto-complete)
