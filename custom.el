@@ -18,6 +18,7 @@
  '(ecb-source-file-regexps (quote ((".*" ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|pyc\\)$\\)\\)") ("^\\.\\(emacs\\|gnus\\)$")))))
  '(ecb-source-path (quote (("/" "/") "/Users/mike" ("/Users/mike/Dropbox/Projects/python/minecraft" "minecraft") ("/Users/Shared/Downloads/HF_DP/src/headfirst" "headfirst_java") ("/Users/mike/Dropbox/Projects/python/HFDPPython" "hfdppython") ("/home/Mike/Dropbox/Projects/python/HFDPPython" "HFDPPython"))))
  '(ecb-tree-buffer-style (quote ascii-guides))
+ '(eol-mnemonic-dos "DOS")
  '(eshell-aliases-file "~/.emacs.d/eshell/alias")
  '(global-font-lock-mode t)
  '(gud-gdb-command-name "gdb --annotate=1")
