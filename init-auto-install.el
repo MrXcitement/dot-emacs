@@ -10,7 +10,7 @@
 
 ;; This file is NOT part of GNU Emacs
 
-;; Mike Barker <mike@thebarkers.com
+;; Mike Barker <mike@thebarkers.com>
 ;; June 16th, 2009
 
 ;; Copyright (c) 2012 Mike Barker
@@ -39,6 +39,10 @@
 ;; 2012.09.19
 ;; * Only require the auto-install package if it exists.
 ;; * Add interactive function to install and update the auto-install packages
+
+;; 2012.10.18
+;; * Added visual-basic-mode.el
+;; * Misc fixes
 
 (message "Loading init-auto-install.el...")
 
