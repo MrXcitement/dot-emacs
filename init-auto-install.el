@@ -67,6 +67,7 @@
 				     "misc-fns.el"
 				     "protbuf.el"
 				     "strings.el"
+				     "visual-basic-mode.el"
 				     "zoom-frm.el")
   "A list of default emacswiki packages to install")
 
