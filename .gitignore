@@ -19,3 +19,5 @@ ede-projects.el
 wget-log
 \#*#
 abbrev_defs
+eshell/history
+eshell/lastdir
