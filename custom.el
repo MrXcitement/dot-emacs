@@ -6,6 +6,7 @@
  '(ac-sources (quote (ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
  '(ansi-color-faces-vector [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector (vector "#eaeaea" "#d54e53" "#b9ca4a" "#e7c547" "#7aa6da" "#c397d8" "#70c0b1" "#000000"))
+ '(anything-command-map-prefix-key "C-c a")
  '(auto-mode-case-fold t)
  '(browse-url-browser-function (quote browse-url-default-macosx-browser))
  '(cua-mode t nil (cua-base))

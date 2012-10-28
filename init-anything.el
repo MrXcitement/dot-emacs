@@ -32,6 +32,11 @@
 ;; 2012.09.17
 ;; * First release.
 
+;; 2012.10.27 MRB
+;; * Now setting the anything command map prefix key to <control>c a
+
+(message "Loading init-anything.el...")
+
 (when (require 'anything)
   (require 'anything-config)
   (require 'anything-match-plugin)
@@ -41,8 +46,7 @@
 	      anything-c-source-info-pages
 	      anything-c-source-man-pages
 	      anything-c-source-file-cache
-	      anything-c-source-emacs-commands))
-  (global-set-key (kbd "M-X") 'anything))
+	      anything-c-source-emacs-commands)))
 
 (provide 'init-anything)
 ;;; init-anything.el ends here
