@@ -28,48 +28,63 @@
 ;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;; DEALINGS IN THE SOFTWARE.
 
-;; 2012.09.15 
+;; 2012.09.15
 ;; * Added MIT License from the OSI (http://opensource.org/licenses/MIT)
 ;; 2012.09.28
 ;; * No longer loading ELPA and SC repositories
+;; 2012.10.28 MRB
+;; * Define the third party repositories before adding them to the
+;;   package-archives list.
+;; * Updated the list of third party packages to be installed.
+
 (message "Loading init-package.el...")
 
-;; Initialize the package manager system
-(package-initialize)
+(when (require 'package)
+  ;; define additional third party repositories
+  (defvar marmalade '("http://marmalade-repo.org/packages/"))
+  (defvar melpa '("http://melpa.milkbox.net/packages/"))
 
-;; Add third party package archives
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+  ;; Initialize the package manager system
+  (package-initialize)
 
-;; A list of packages to install
-(defvar init-package-packages '(anything 
-				anything-config 
-				anything-match-plugin 
-				auto-complete 
-				buffer-move
-				color-theme-sanityinc-tomorrow 
-				ecb-snapshot
-				groovy-mode
-				highlight-80+
-				inkpot-theme
-				ipython
-				multi-term
-				ntcmd
-				popup
-				pymacs
-				redo+
-				yasnippet)
-  "A list of packages to ensure are installed.")
+  ;; Add third party package archives
+  (add-to-list 'package-archives marmalade)
+  (add-to-list 'package-archives melpa t)
 
-;; Function to install default packages
-(defun init-package-install ()
-  "Install a default set of packages."
-  (interactive)
-  (message "Installing default packages...")
-  (package-refresh-contents)
-  (dolist (package init-package-packages)
-    (when (not (package-installed-p package))
-      (package-install package)))
-  )
+  ;; A list of packages to install
+  (defvar init-package--packages '(iy-go-to-char
+				   anything
+				   anything-config
+				   anything-match-plugin
+				   auto-complete
+				   buffer-move
+				   color-theme-sanityinc-tomorrow
+				   csharp-mode
+				   ecb
+				   groovy-mode
+				   highlight-80+
+				   inkpot-theme
+				   ipython
+				   js-comint
+				   magit
+				   multi-term
+				   ntcmd
+				   popup
+				   pymacs
+				   redo+
+				   yasnippet)
+    "A list of packages to ensure are installed.")
+
+  ;; Function to install default packages
+  (defun init-package-install ()
+    "Install a default set of packages."
+    (interactive)
+    (message "Installing default packages...")
+    (package-refresh-contents)
+    (dolist (package init-package--packages)
+      (when (not (package-installed-p package))
+	(package-install package)))
+    ) ;; end of defun init-package-install
+  ) ;; end of when require package
 
 (provide 'init-package)
