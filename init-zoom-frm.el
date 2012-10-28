@@ -29,6 +29,8 @@
 ;; 2012.09.15 - Added MIT License from the OSI (http://opensource.org/licenses/MIT)
 ;; 2012.09.16 - Put conditional around require, so that if frame-frm is not installed
 ;;              a message will be printed but not fail.
+;; 2012.10.28 MRB
+;; * Changed check if in window-system to be a little cleaner.
 
 ;; Requires:  
 ;; * zoom-frm.el
@@ -40,7 +42,7 @@
 ;; Install using auto-install
 
 ;; Only load if on a window system
-(if (not(eq window-system nil))
+(when (not (window-system))
     (progn
       (if (require 'zoom-frm nil t)
 	  (progn
