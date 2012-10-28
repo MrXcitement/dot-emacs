@@ -35,8 +35,16 @@
 ;; * No longer need to add to load-path since it is installed
 ;;   via package.el.
 
-(when (require 'yasnippet)
-  (yas-global-mode))
+;; 2012.10.27 MRB
+;; * No longer setting the personal directory, was causing problems!?
+;; * Add message re initializing yasnippet
+
+(message "Loading init-yasnippet.el...")
+
+(when (require 'yasnippet nil t)
+  ;; Develop and keep personal snippets under ~/.emacs.d/mysnippets
+  ;;(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (yas-global-mode t))
 
 (provide 'init-yasnippet)
 ;;; init-yasnippet.el ends here
