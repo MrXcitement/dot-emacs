@@ -128,9 +128,12 @@
 	buffer-move
 	highlight-80+
 	iy-go-to-char
+	;; *** Language Modes ***
 	csharp-mode
 	ntcmd
-;;	visual-basic-mode
+	;; *** Source Code Management **
+	magit
+	;; *** Completion Tools ***
 	auto-complete
 	yasnippet))
 
@@ -150,7 +153,6 @@
 ;; dvc                          ; Distributed version control
 ;; mercurial 	                ; Mercurial VC support
 ;; git                          ; GIT mode
-;; magit
 
 ;; Install any of my packages not allready installed
 (defun my-packages-installed-p ()
