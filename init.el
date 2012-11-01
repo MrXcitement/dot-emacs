@@ -166,48 +166,63 @@
 	unless (package-installed-p p)
 	do (package-install p)))
 
+
 ;; zoom-frm:
 ;; Only define keys when running as a gui
-(when (window-system)
-  (global-set-key (kbd "C->") 'zoom-frm-in)
-  (global-set-key (kbd "C-<") 'zoom-frm-out)
-  (global-set-key (kbd "C-.") 'zoom-frm-unzoom))
+(when (package-installed-p 'zoom-frm)
+  (when (window-system)
+    (global-set-key (kbd "C->") 'zoom-frm-in)
+    (global-set-key (kbd "C-<") 'zoom-frm-out)
+    (global-set-key (kbd "C-.") 'zoom-frm-unzoom)))
 
 ;; redo+:
 ;; If you don't want to redo a previous undo, add
 ;; (setq undo-no-redo t)
-(global-set-key (kbd "C-?") 'redo)   ; [Ctrl+Shift+/]
-(global-set-key (kbd "C-x r") 'redo) ; [Ctrl+x r]
+(when (package-installed-p 'redo+)
+  (global-set-key (kbd "C-?") 'redo+)    ; [Ctrl+Shift+/]
+  (global-set-key (kbd "C-x r") 'redo+)) ; [Ctrl+x r]
 
 ;; buffer-move:
-(global-set-key (kbd "C-c <up>")     'buf-move-up)
-(global-set-key (kbd "C-c <down>")   'buf-move-down)
-(global-set-key (kbd "C-c <left>")   'buf-move-left)
-(global-set-key (kbd "C-c <right>")  'buf-move-right)
+(when (package-installed-p 'buffer-move)
+  (global-set-key (kbd "C-c <up>")     'buf-move-up)
+  (global-set-key (kbd "C-c <down>")   'buf-move-down)
+  (global-set-key (kbd "C-c <left>")   'buf-move-left)
+  (global-set-key (kbd "C-c <right>")  'buf-move-right))
 
 ;; highlight-80+:
-(highlight-80+-mode t)
+(when (package-installed-p 'highlight-80+)
+  (highlight-80+-mode t))
 
 ;; iy-go-to-char:
-(global-set-key (kbd "C-c m") 'iy-go-to-char)
+(when (package-installed-p iy-go-to-char)
+  (global-set-key (kbd "C-c m") 'iy-go-to-char))
 
 ;; csharp-mode:
-(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
-(setq auto-mode-alist
-    (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+(when (package-installed-p csharp-mode)
+  (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+  (setq auto-mode-alist
+	(append '(("\\.cs$" . csharp-mode)) auto-mode-alist)))
 
 ;; ntcmd:
-(autoload 'ntcmd-mode "ntcmd" "Windows batch file mode." t)
-(setq auto-mode-alist
-      (append '(("\\.\\(bat\\|cmd\\)$" .
-		 ntcmd-mode)) auto-mode-alist))
+(when (package-installed-p ntcmd-mode)
+  (autoload 'ntcmd-mode "ntcmd" "Windows batch file mode." t)
+  (setq auto-mode-alist
+	(append '(("\\.\\(bat\\|cmd\\)$" .
+		   ntcmd-mode)) auto-mode-alist)))
+
+;; magit:
+(when (package-installed-p 'magit)
+  ;; configure magit here.
+  )
 
 ;; auto-complete:
-(when (require 'auto-complete-config nil t)
-  (ac-config-default))
+(when (package-installed-p 'auto-complete-mode)
+  (when (require 'auto-complete-config nil t)
+    (ac-config-default)))
 
 ;; yasnippet:
-(yas-global-mode t)
+(when (package-installed-p 'yasnippet)
+  (yas-global-mode t))
 
 ;; ecb:
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/ecb-snap/")
