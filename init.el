@@ -194,7 +194,7 @@
   (highlight-80+-mode t))
 
 ;; iy-go-to-char:
-(when (package-installed-p iy-go-to-char)
+(when (package-installed-p 'iy-go-to-char)
   (global-set-key (kbd "C-c m") 'iy-go-to-char))
 
 ;; csharp-mode:
