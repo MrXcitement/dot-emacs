@@ -102,6 +102,7 @@
   ))
 
 ;;; Initialize Submodules
+
 ;; initialize packages that have been added as a submodule. These packages
 ;; are not currently in any of the package repositories. As soon as they are
 ;; they should be removed from here and added as a package.
@@ -205,6 +206,143 @@
 
 ;; yasnippet:
 (yas-global-mode t)
+
+;; ecb:
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/ecb-snap/")
+;; (setq stack-trace-on-error t)
+;; (require 'ecb)
+
+;; (set-face-foreground (quote ecb-default-highlight-face) "DimGray")
+;; (set-face-background (quote ecb-default-highlight-face) "grey60")
+
+;; evernote-mode:
+;; (when (require 'evernote-mode)
+;;   (setq evernote-username "mrbarker")
+;;   (setq evernote-enml-formatter-command '("w3m" "-dump" "-I" "UTF8" "-O" "UTF8"))
+;;   (global-set-key "\C-ceb" 'evernote-browser)
+;;   (global-set-key "\C-cec" 'evernote-create-note)
+;;   (global-set-key "\C-ceo" 'evernote-open-note)
+;;   (global-set-key "\C-cep" 'evernote-post-region)
+;;   (global-set-key "\C-ces" 'evernote-search-notes)
+;;   (global-set-key "\C-ceS" 'evernote-do-saved-search)
+;;   (global-set-key "\C-cew" 'evernote-write-note))
+
+;; js-comint:
+;; (when (require 'js-comint)
+;;   ;; Load hs-minor-mode to hide/show blocks
+;;   (add-hook 'js-mode-hook
+;; 	    (lambda ()
+;; 	      ;; Scan the file for nested code blocks
+;; 	      (imenu-add-menubar-index)
+;; 	      ;; Activate the folding mode
+;; 	      (hs-minor-mode t)))
+;;   ;; Use node as our repl
+;;   (setq inferior-js-program-command "node")
+;;   (setq inferior-js-mode-hook
+;; 	(lambda ()
+;; 	  ;; We like nice colors
+;; 	  (ansi-color-for-comint-mode-on)
+;; 	  Deal with some prompt nonsense
+;; 	  (add-to-list 'comint-preoutput-filter-functions
+;; 	  	       (lambda (output)
+;; 	  		 (replace-regexp-in-string ".*1G\.\.\..*5G" "..."
+;; 	  					   (replace-regexp-in-string ".*1G.*3G" ">" output)))))))
+
+;; markdown:
+;; (autoload 'markdown-mode "markdown-mode.el"
+;;    "Major mode for editing Markdown files" t)
+;; (setq auto-mode-alist
+;;    (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
+
+;; org-mode:
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/org-6.34c/lisp") t)
+;; (require 'org-install)
+
+;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+;; (define-key global-map "\C-cl" 'org-store-link)
+;; (define-key global-map "\C-ca" 'org-agenda)
+;; (setq org-log-done t)
+
+;; ;; Set to the location of your Org files on your local system
+;; (setq org-directory "~/Dropbox/Personal/Org")
+;; (setq org-default-notes-file (concat org-directory "/notes.org"))
+
+;; ;; Set to the name of the file where new notes will be stored
+;; (setq org-mobile-inbox-for-pull (concat org-directory "/flagged.org"))
+
+;; ;; Set to <your Dropbox root directory>/MobileOrg.
+;; (setq org-mobile-directory "~/Dropbox/MobileOrg")
+
+;; ;; We need to update the checksum file to only transfer updated files.
+;; (add-hook 'org-mobile-post-push-hook
+;;        (lambda () (shell-command "find ~/Dropbox/MobileOrg -name '*.org' -type f -print | sed 's/^\\.\\///' | xargs md5 > ~/Dropbox/MobileOrg/checksums.dat")))
+
+;; ;; Remember mode integration
+;; (org-remember-insinuate)
+;; (define-key global-map "\C-cr" 'org-remember)
+;; (setq org-remember-templates
+;;      '(
+;;       ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" (concat org-directory "/tasks.org") "Tasks")
+;;       ("Note" ?n "\n* %^{topic} %T \n%i%?\n" (concat org-directory "/notes.org"))
+;;       ("Journal" ?j "\n* %U \n%i%?\n" (concat org-directory "/journal.org"))
+;;       ))
+
+;; (setq org-refile-targets (quote (("notes.org" :level . 1)
+;; 				 ("someday.org" :level . 2)
+;; 				 ("tasks.org" :maxlevel . 1)
+;; 				 )))
+
+;; ;; Personal agenda files
+;; ;; ===================================================================
+;; ;; calendar.org       Birthdays, Aniverseries, etc  <-> Google Calendar
+;; ;; journal.org        Daily information             <-> Evernote
+;; ;; notes.org          Random notes                  <-> Evernote
+;; ;; someday.org        Tasks to be done someday      <-> RTM
+;; ;; tasks.org          Projects and tasks            <-> RTM
+;; (setq org-agenda-files (list (concat org-directory "/calendar.org")
+;; 			     (concat org-directory "/journal.org")
+;; 			     (concat org-directory "/notes.org")
+;; 			     (concat org-directory "/someday.org")
+;; 			     (concat org-directory "/tasks.org")
+;; 			     ))
+
+;; org-feed
+;; (setq org-feed-alist
+;;       '(("Remember The Milk"
+;;          "https://www.rememberthemilk.com/atom/mrbarker/"
+;;          "~/Dropbox/Personal/Org/rtm.org" "Remember The Milk Entries"
+;; 	 :parse-feed org-feed-parse-atom-feed
+;; 	 :parse-entry org-feed-parse-rtm-entry
+;; 	 )))
+
+;; (defun org-feed-parse-rtm-entry (entry)
+;;   "Parse the `:item-full-text' as a sexp and create new properties."
+;;   (let ((xml (car (read-from-string (plist-get entry :item-full-text)))))
+;;     ;; Get first <link href='foo'/>.
+;;     (setq entry (plist-put entry :link
+;;                            (xml-get-attribute
+;;                             (car (xml-get-children xml 'link))
+;;                             'href)))
+;;     ;; Add <title/> as :title.
+;;     (setq entry (plist-put entry :title
+;;                            (car (xml-node-children
+;;                                  (car (xml-get-children xml 'title))))))
+;;     (let* ((content (car (xml-get-children xml 'content)))
+;;            (type (xml-get-attribute-or-nil content 'type)))
+;;       (when content
+;;         (cond
+;;          ((string= type "text")
+;;           ;; We like plain text.
+;;           (setq entry (plist-put entry :description (car (xml-node-children content)))))
+;;          ((string= type "html")
+;;           ;; TODO: convert HTML to Org markup.
+;;           (setq entry (plist-put entry :description (car (xml-node-children content)))))
+;;          ((string= type "xhtml")
+;;           ;; TODO: convert XHTML to Org markup.
+;;           (setq entry (plist-put entry :description (prin1-to-string (xml-node-children content)))))
+;;          (t
+;;           (setq entry (plist-put entry :description (format "Unknown '%s' content." type)))))))
+;;     entry))
 
 ;;; Key mappings
 
@@ -317,6 +455,13 @@
       "M-x "
       (all-completions "" obarray 'commandp)))))
 (global-set-key (kbd "M-x") 'ido-execute-command)
+
+
+;;; Cedet mode
+
+;; Turn on EDE (Project handling mode)
+;; (global-ede-mode t)
+;; (semantic-mode t)
 
 ;;; Server mode
 
