@@ -198,13 +198,13 @@
   (global-set-key (kbd "C-c m") 'iy-go-to-char))
 
 ;; csharp-mode:
-(when (package-installed-p csharp-mode)
+(when (package-installed-p 'csharp-mode)
   (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
   (setq auto-mode-alist
 	(append '(("\\.cs$" . csharp-mode)) auto-mode-alist)))
 
 ;; ntcmd:
-(when (package-installed-p ntcmd-mode)
+(when (package-installed-p 'ntcmd-mode)
   (autoload 'ntcmd-mode "ntcmd" "Windows batch file mode." t)
   (setq auto-mode-alist
 	(append '(("\\.\\(bat\\|cmd\\)$" .
