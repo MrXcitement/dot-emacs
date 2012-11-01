@@ -79,7 +79,7 @@
 (cond
  ((string-equal "darwin" system-type)
   ;; configure mac os x configuration
-  (let (mypaths '("/Users/mike/bin"
+  (let ((mypaths '("/Users/mike/bin"
 		  "/Users/Shared/bin"
 		  "/Library/Frameworks/Python.framework/Versions/Current/bin"
 		  "/opt/local/bin"
@@ -87,7 +87,7 @@
 		  "/usr/local/bin"
 		  "/usr/X11/bin"
 		  "/usr/bin"
-		  "/bin"))
+		  "/bin")))
     (setenv "PATH" (mapconcat 'identity mypaths ":"))
     (setq exec-path mypaths))
   )
