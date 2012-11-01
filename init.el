@@ -47,6 +47,7 @@
 ;; * wrap require cl in eval-at-compile.
 ;;   suppress byte compile warnings regarding cl.
 ;;   define init--emacs-root with the emacs config dir.
+;; * handle loading packages from submodules.
 
 ;; Save the current time for testing how long the init.el file took to load
 (defvar *init--load-start* (current-time))
@@ -99,6 +100,18 @@
  ((string-equal "windows-nt" system-type )
   ;; configure windows environment
   ))
+
+;;; Initialize Submodules
+;; initialize packages that have been added as a submodule. These packages
+;; are not currently in any of the package repositories. As soon as they are
+;; they should be removed from here and added as a package.
+
+;; vbnet-mode:
+(add-to-list 'load-path (concat init--emacs-root "/submodules/vbnet-mode"))
+(autoload 'vbnet-mode "vbnet-mode" "Visual Basic mode." t)
+(setq auto-mode-alist
+      (append '(("\\.\\(frm\\|bas\\|cls\\|vb\\|vbs\\)$" .
+		 vbnet-mode)) auto-mode-alist))
 
 ;;; Initialize the package manager and repositories
 (package-initialize)
@@ -185,12 +198,6 @@
 (setq auto-mode-alist
       (append '(("\\.\\(bat\\|cmd\\)$" .
 		 ntcmd-mode)) auto-mode-alist))
-
-;; visual-basic-mode:
-;; (autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
-;; (setq auto-mode-alist
-;;       (append '(("\\.\\(frm\\|bas\\|cls\\|vb\\|vbs\\)$" .
-;; 		 visual-basic-mode)) auto-mode-alist))
 
 ;; auto-complete:
 (when (require 'auto-complete-config nil t)

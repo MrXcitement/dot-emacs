@@ -1,0 +1,3 @@
+[submodule "submodules/vbnet-mode"]
+	path = submodules/vbnet-mode
+	url = https://github.com/MrXcitement/vbnet-mode.git
