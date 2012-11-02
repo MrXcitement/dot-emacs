@@ -216,7 +216,7 @@
   )
 
 ;; auto-complete:
-(when (package-installed-p 'auto-complete-mode)
+(when (package-installed-p 'auto-complete)
   (when (require 'auto-complete-config nil t)
     (ac-config-default)))
 
