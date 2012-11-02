@@ -201,20 +201,17 @@
 
 ;; csharp-mode:
 (when (package-installed-p 'csharp-mode)
-  (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
   (setq auto-mode-alist
 	(append '(("\\.cs$" . csharp-mode)) auto-mode-alist)))
 
 ;; ntcmd:
-(when (package-installed-p 'ntcmd-mode)
-  (autoload 'ntcmd-mode "ntcmd" "Windows batch file mode." t)
+(when (package-installed-p 'ntcmd)
   (setq auto-mode-alist
 	(append '(("\\.\\(bat\\|cmd\\)$" .
 		   ntcmd-mode)) auto-mode-alist)))
 
 ;; markdown:
 (when (package-installed-p 'markdown-mode)
-  (autoload 'markdown-mode "markdown-mode.el" "Markdown major mode." t)
   (setq auto-mode-alist
 	(append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
 		   markdown-mode)) auto-mode-alist)))
