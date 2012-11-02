@@ -131,6 +131,7 @@
 	;; *** Language Modes ***
 	csharp-mode
 	ntcmd
+	markdown-mode
 	;; *** Source Code Management **
 	magit
 	;; *** Completion Tools ***
@@ -179,8 +180,9 @@
 ;; If you don't want to redo a previous undo, add
 ;; (setq undo-no-redo t)
 (when (package-installed-p 'redo+)
-  (global-set-key (kbd "C-?") 'redo+)    ; [Ctrl+Shift+/]
-  (global-set-key (kbd "C-x r") 'redo+)) ; [Ctrl+x r]
+  (require 'redo+ nil t)
+  (global-set-key (kbd "C-?")   'redo)  ; [Ctrl+Shift+/]
+  (global-set-key (kbd "C-x r") 'redo)) ; [Ctrl+x r]
 
 ;; buffer-move:
 (when (package-installed-p 'buffer-move)
@@ -199,16 +201,20 @@
 
 ;; csharp-mode:
 (when (package-installed-p 'csharp-mode)
-  (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
   (setq auto-mode-alist
 	(append '(("\\.cs$" . csharp-mode)) auto-mode-alist)))
 
 ;; ntcmd:
-(when (package-installed-p 'ntcmd-mode)
-  (autoload 'ntcmd-mode "ntcmd" "Windows batch file mode." t)
+(when (package-installed-p 'ntcmd)
   (setq auto-mode-alist
 	(append '(("\\.\\(bat\\|cmd\\)$" .
 		   ntcmd-mode)) auto-mode-alist)))
+
+;; markdown:
+(when (package-installed-p 'markdown-mode)
+  (setq auto-mode-alist
+	(append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
+		   markdown-mode)) auto-mode-alist)))
 
 ;; magit:
 (when (package-installed-p 'magit)
@@ -264,12 +270,6 @@
 ;; 	  	       (lambda (output)
 ;; 	  		 (replace-regexp-in-string ".*1G\.\.\..*5G" "..."
 ;; 	  					   (replace-regexp-in-string ".*1G.*3G" ">" output)))))))
-
-;; markdown:
-;; (autoload 'markdown-mode "markdown-mode.el"
-;;    "Major mode for editing Markdown files" t)
-;; (setq auto-mode-alist
-;;    (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 
 ;; org-mode:
 ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/org-6.34c/lisp") t)
