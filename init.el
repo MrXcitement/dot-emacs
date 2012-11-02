@@ -217,7 +217,7 @@
   (autoload 'markdown-mode "markdown-mode.el" "Markdown major mode." t)
   (setq auto-mode-alist
 	(append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
-		   markdown-mode) auto-mode-alist))))
+		   markdown-mode)) auto-mode-alist)))
 
 ;; magit:
 (when (package-installed-p 'magit)
