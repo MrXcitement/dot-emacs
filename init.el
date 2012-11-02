@@ -179,8 +179,9 @@
 ;; If you don't want to redo a previous undo, add
 ;; (setq undo-no-redo t)
 (when (package-installed-p 'redo+)
-  (global-set-key (kbd "C-?") 'redo+)    ; [Ctrl+Shift+/]
-  (global-set-key (kbd "C-x r") 'redo+)) ; [Ctrl+x r]
+  (require 'redo+ nil t)
+  (global-set-key (kbd "C-?")   'redo)  ; [Ctrl+Shift+/]
+  (global-set-key (kbd "C-x r") 'redo)) ; [Ctrl+x r]
 
 ;; buffer-move:
 (when (package-installed-p 'buffer-move)
