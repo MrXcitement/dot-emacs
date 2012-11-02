@@ -131,6 +131,7 @@
 	;; *** Language Modes ***
 	csharp-mode
 	ntcmd
+	markdown-mode
 	;; *** Source Code Management **
 	magit
 	;; *** Completion Tools ***
@@ -211,6 +212,13 @@
 	(append '(("\\.\\(bat\\|cmd\\)$" .
 		   ntcmd-mode)) auto-mode-alist)))
 
+;; markdown:
+(when (package-installed-p 'markdown-mode)
+  (autoload 'markdown-mode "markdown-mode.el" "Markdown major mode." t)
+  (setq auto-mode-alist
+	(append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
+		   markdown-mode) auto-mode-alist))))
+
 ;; magit:
 (when (package-installed-p 'magit)
   ;; configure magit here.
@@ -265,12 +273,6 @@
 ;; 	  	       (lambda (output)
 ;; 	  		 (replace-regexp-in-string ".*1G\.\.\..*5G" "..."
 ;; 	  					   (replace-regexp-in-string ".*1G.*3G" ">" output)))))))
-
-;; markdown:
-;; (autoload 'markdown-mode "markdown-mode.el"
-;;    "Major mode for editing Markdown files" t)
-;; (setq auto-mode-alist
-;;    (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 
 ;; org-mode:
 ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/org-6.34c/lisp") t)
