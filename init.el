@@ -136,7 +136,8 @@
 	magit
 	;; *** Completion Tools ***
 	auto-complete
-	yasnippet))
+	yasnippet
+	helm))
 
 ;; evernote-mode                ; ** BROKEN ** evernote client
 ;; w3m 		                ; ** used by evernote mode ** w3m browser
@@ -229,6 +230,12 @@
 ;; yasnippet:
 (when (package-installed-p 'yasnippet)
   (yas-global-mode t))
+
+
+;; helm:
+(when (package-installed-p 'helm)
+  (global-set-key (kbd "C-c h")   'helm-mini)
+  (helm-mode 1))
 
 ;; ecb:
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/ecb-snap/")
@@ -460,18 +467,18 @@
       `(("\\`/?\\([^/]*/\\)*\\([^/]*\\)\\'" ,user-temporary-file-directory t)))
 
 ;;; Interactively do things
-(ido-mode t)
-(setq ido-enable-flex-matching t) ; enable fuzzy matching
+;; (ido-mode t)
+;; (setq ido-enable-flex-matching t) ; enable fuzzy matching
 
-;; Set M-x to use ido mode
-(defun ido-execute-command ()
-   (interactive)
-   (call-interactively
-    (intern
-     (ido-completing-read
-      "M-x "
-      (all-completions "" obarray 'commandp)))))
-(global-set-key (kbd "M-x") 'ido-execute-command)
+;; ;; Set M-x to use ido mode
+;; (defun ido-execute-command ()
+;;    (interactive)
+;;    (call-interactively
+;;     (intern
+;;      (ido-completing-read
+;;       "M-x "
+;;       (all-completions "" obarray 'commandp)))))
+;; (global-set-key (kbd "M-x") 'ido-execute-command)
 
 
 ;;; Cedet mode
