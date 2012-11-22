@@ -30,23 +30,36 @@
 (global-set-key (kbd "C-+") 'toggle-hiding)
 (global-set-key (kbd "C-=") 'toggle-selective-display)
 
-;;; nxml-mode config
+;;; nxml-mode config to hide/show blocks
 (add-to-list 'hs-special-modes-alist
-        '(nxml-mode
-          "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
-          ""
-          "<!--" ;; won't work on its own; uses syntax table
-          (lambda (arg) (my-nxml-forward-element))
-          nil))
+	     '(nxml-mode
+	       "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
+	       ""
+	       "<!--"                        ;; won't work on its own; uses syntax table
+	       my-nxml-forward-sexp-func
+	       nil                           ;; my-nxml-hs-adjust-beg-func
+	       ))
+
+;;; html-mode config to hide/show blocks
+(add-to-list 'hs-special-modes-alist
+	     '(html-mode
+	       "<!--\\|<[^/>]>\\|<[^/][^>]*"
+	       "</\\|-->"
+	       "<!--"
+	       sgml-skip-tag-forward
+	       nil))
+
+(defun my-nxml-forward-sexp-func (pos)
+  (my-nxml-forward-element))
 
 (defun my-nxml-forward-element ()
   (let ((nxml-sexp-element-flag)
-	(outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b"))
+  	(outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b"))
     (setq nxml-sexp-element-flag (not (looking-at "<!--")))
     (unless (looking-at outline-regexp)
       (condition-case nil
-	  (nxml-forward-balanced-item 1)
-	(error nil)))))
+  	  (nxml-forward-balanced-item 1)
+  	(error nil)))))
 
 
 ;;; hook into the following major modes
@@ -57,5 +70,6 @@
 (add-hook 'perl-mode-hook       'hs-minor-mode)
 (add-hook 'sh-mode-hook         'hs-minor-mode)
 (add-hook 'nxml-mode-hook       'hs-minor-mode)
+(add-hook 'html-mode-hook       'hs-minor-mode)
 
 (provide 'init-hideshow)
