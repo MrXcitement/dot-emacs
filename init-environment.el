@@ -9,6 +9,9 @@
 ;; 2012.11.18
 ;; * First release.
 
+;; 2012.11.24 MRB
+;; * No longer set whitespace here, should be set per mode.
+
 ;; if the user name is not set, set it
 (when (eq user-full-name "")
     (setq user-full-name "Mike Barker"))
@@ -18,8 +21,8 @@
     (setq user-mail-address "mike@thebarkers.com"))
 
 ;;; Whitespace configuration
-(setq-default show-trailing-whitespace t)
-(setq indicate-empty-lines t)
+;; (setq-default show-trailing-whitespace t)
+;; (setq indicate-empty-lines t)
 ;; Remove trailing whitespace when saving
 ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
