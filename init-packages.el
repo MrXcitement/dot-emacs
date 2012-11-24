@@ -37,7 +37,8 @@
 	;; ** Completion Modes **
 	auto-complete
 	yasnippet
-	helm))
+	helm
+	helm-themes))
 
 ;;; Modes that have been used in the past, but are not loaded now
 ;; evernote-mode                ; ** BROKEN ** evernote client
