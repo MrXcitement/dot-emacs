@@ -9,6 +9,13 @@
 ;; 2012.11.18
 ;; * First release.
 
+;; 2012.11.24
+;; * Modularize the installation and initialization of packages.
+;;   Instead of having a list of packages to be installed and then
+;;   each package being initialized. I have seperated the installation
+;;   to be done in the same block with the initialization code.
+
+
 ;;; Initialize the Package Manager
 ;; I try to use the package manager and third party repositories for
 ;; most of the additional packages that I use in my initialization.
@@ -18,27 +25,6 @@
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives 
 	     '("melpa" . "http://melpa.milkbox.net/packages/"))
-
-;; a default set of external packages
-(setq my-packages 
-      '(
-	;; ** Miscellaneous Modes **
-	frame-fns frame-cmds zoom-frm
-	redo+
-	buffer-move
-	highlight-80+
-	iy-go-to-char
-	;; ** Language Modes **
-	csharp-mode
-	ntcmd
-	markdown-mode
-	;; ** Source Code Management Modes **
-	magit
-	;; ** Completion Modes **
-	auto-complete
-	yasnippet
-	helm
-	helm-themes))
 
 ;;; Modes that have been used in the past, but are not loaded now
 ;; evernote-mode                ; ** BROKEN ** evernote client
@@ -58,15 +44,16 @@
 ;; mercurial 	                ; Mercurial VC support
 ;; git                          ; GIT mode
 
-;; Install any of my packages not allready installed
-(defun my-packages-installed-p ()
-  (every 'package-installed-p my-packages))
+;; Refresh the package database
+(message "%s" "Refreshing the package database")
+(package-refresh-contents)
+(message "%s" "...done.")
 
-(unless (my-packages-installed-p)
-  (message "%s" "Refreshing the package database")
-  (package-refresh-contents)
-  (message "%s" "...done.")
-  (loop for p in my-packages
+;; Install a list of packages.
+;; Only install a package that is not allready installed
+(defun my-packages-install (my-package-list)
+  (message "Installing packages: %s" my-package-list)
+  (loop for p in my-package-list
 	unless (package-installed-p p)
 	do (package-install p)))
 
@@ -74,6 +61,7 @@
 
 ;; zoom-frm:
 ;; Only define keys when running as a gui
+(my-packages-install '(frame-fns frame-cmds zoom-frm))
 (when (package-installed-p 'zoom-frm)
   (when (window-system)
     (global-set-key (kbd "C->") 'zoom-frm-in)
@@ -83,12 +71,14 @@
 ;; redo+:
 ;; If you don't want to redo a previous undo, add
 ;; (setq undo-no-redo t)
+(my-packages-install '(redo+))
 (when (package-installed-p 'redo+)
   (require 'redo+ nil t)
   (global-set-key (kbd "C-?")   'redo)  ; [Ctrl+Shift+/]
   (global-set-key (kbd "C-x r") 'redo)) ; [Ctrl+x r]
 
 ;; buffer-move:
+(my-packages-install '(buffer-move))
 (when (package-installed-p 'buffer-move)
   (global-set-key (kbd "C-c <up>")     'buf-move-up)
   (global-set-key (kbd "C-c <down>")   'buf-move-down)
@@ -96,46 +86,67 @@
   (global-set-key (kbd "C-c <right>")  'buf-move-right))
 
 ;; highlight-80+:
+(my-packages-install '(highlight-80+))
 (when (package-installed-p 'highlight-80+)
   (highlight-80+-mode t))
 
 ;; iy-go-to-char:
+;; Provide the ability to go to a character.
+(my-packages-install '(iy-go-to-char))
 (when (package-installed-p 'iy-go-to-char)
   (global-set-key (kbd "C-c m") 'iy-go-to-char))
 
 ;; csharp-mode:
+(my-packages-install '(csharp-mode))
 (when (package-installed-p 'csharp-mode)
   (setq auto-mode-alist
 	(append '(("\\.cs$" . csharp-mode)) auto-mode-alist)))
 
 ;; ntcmd:
+(my-packages-install '(ntcmd))
 (when (package-installed-p 'ntcmd)
   (setq auto-mode-alist
 	(append '(("\\.\\(bat\\|cmd\\)$" .
 		   ntcmd-mode)) auto-mode-alist)))
 
 ;; markdown:
+(my-packages-install '(markdown-mode))
 (when (package-installed-p 'markdown-mode)
   (setq auto-mode-alist
 	(append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
 		   markdown-mode)) auto-mode-alist)))
 
+;; powershell:
+(my-packages-install '(powershell-mode powershell))
+(when (package-installed-p 'powershell-mode)
+  (require 'powershell-mode nil t)
+  (setq auto-mode-alist
+	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
+(when (and (package-installed-p 'powershell)
+	   (string-equal "windows-nt" system-type))
+  (require 'powershell nil t))
+
 ;; magit:
+;; Git mode
+(my-packages-install '(magit))
 (when (package-installed-p 'magit)
   ;; configure magit here.
   )
 
 ;; auto-complete:
+(my-packages-install '(auto-complete))
 (when (package-installed-p 'auto-complete)
   (when (require 'auto-complete-config nil t)
     (ac-config-default)))
 
 ;; yasnippet:
+(my-packages-install '(yasnippet))
 (when (package-installed-p 'yasnippet)
   (yas-global-mode t))
 
 
 ;; helm:
+(my-packages-install '(helm helm-themes))
 (when (package-installed-p 'helm)
   (global-set-key (kbd "C-c h")   'helm-mini)
   (helm-mode 1))
