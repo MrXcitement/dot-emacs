@@ -142,6 +142,11 @@
 ;; yasnippet:
 (my-packages-install '(yasnippet))
 (when (package-installed-p 'yasnippet)
+  ;; Makefiles will now include text-mode snippets
+  (add-hook 'makefile-mode-hook
+	    (lambda()
+	      (make-local-variable 'yas-extra-modes)
+	      (setq yas-extra-modes 'text-mode)))
   (yas-global-mode t))
 
 
