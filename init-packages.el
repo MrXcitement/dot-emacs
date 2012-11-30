@@ -45,9 +45,9 @@
 ;; git                          ; GIT mode
 
 ;; Refresh the package database
-(message "%s" "Refreshing the package database")
-(package-refresh-contents)
-(message "%s" "...done.")
+;; (message "%s" "Refreshing the package database")
+;; (package-refresh-contents)
+;; (message "%s" "...done.")
 
 ;; Install a list of packages.
 ;; Only install a package that is not allready installed
