@@ -3,7 +3,7 @@
 ;; Mike Barker <mike@thebarkers.com>
 ;; November 18, 2012
 
-;; Copyright (c) 2012 Mike Barker 
+;; Copyright (c) 2012 Mike Barker
 
 ;; Change log:
 ;; 2012.11.18
@@ -19,47 +19,58 @@
 ;; * Remove redo+, version 1.15 is currently broken.
 ;; * Add undo-tree, this allows you to *see* how emacs native
 ;;   undo/redo system works.
+;; * Added my-package-refresh-contents defun that will refresh the
+;;   package database only if the passed in package name is not in
+;;   it allready.
+
+;;; Modes that have been used in the past, but are not loaded now
+;; evernote-mode                ; ** BROKEN ** evernote client
+;; w3m				; ** used by evernote mode ** w3m browser
+;; org-mode			; org-mode customization
+;; haskell			; Haskel mode
+;; lolcode                      ; LOLCode, program like a cat
+;; python-mode			; Python mode
+;; python                       ; Python tools
+;; pymacs                       ; Python emacs bridge
+;; ipython                      ; Interactive python mode
+;; ruby				; Edit ruby files
+;; jscomint                     ; Run javascript files
+;; mode-compile			; Smart compile configuration
+;; ecb				; Emacs Code Browser setup
+;; dvc                          ; Distributed version control
+;; mercurial			; Mercurial VC support
+;; git                          ; GIT mode
 
 ;;; Initialize the Package Manager
 ;; I try to use the package manager and third party repositories for
 ;; most of the additional packages that I use in my initialization.
 
 (package-initialize)
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
 	     '("melpa" . "http://melpa.milkbox.net/packages/"))
 
-;;; Modes that have been used in the past, but are not loaded now
-;; evernote-mode                ; ** BROKEN ** evernote client
-;; w3m 		                ; ** used by evernote mode ** w3m browser
-;; org-mode    	                ; org-mode customization
-;; haskell           	        ; Haskel mode
-;; lolcode                      ; LOLCode, program like a cat
-;; python-mode 	                ; Python mode
-;; python                       ; Python tools
-;; pymacs                       ; Python emacs bridge
-;; ipython                      ; Interactive python mode
-;; ruby	                        ; Edit ruby files
-;; jscomint                     ; Run javascript files
-;; mode-compile 	        ; Smart compile configuration
-;; ecb 		                ; Emacs Code Browser setup
-;; dvc                          ; Distributed version control
-;; mercurial 	                ; Mercurial VC support
-;; git                          ; GIT mode
+;;; helper functions
 
-;; Refresh the package database
-;; (message "%s" "Refreshing the package database")
-;; (package-refresh-contents)
-;; (message "%s" "...done.")
+;; Refresh the package database, but only if the package name is not found.
+(defun my-package-refresh-contents (name)
+  (let ((pkg-desc (assq name package-archive-contents)))
+    (unless pkg-desc
+      (message "Refreshing the package database")
+      (package-refresh-contents))))
 
 ;; Install a list of packages.
 ;; Only install a package that is not allready installed
 (defun my-packages-install (my-package-list)
   (message "Installing packages: %s" my-package-list)
   (loop for p in my-package-list
+	;; Skip if allready installed
 	unless (package-installed-p p)
-	do (package-install p)))
+	;; Install the package
+	do
+	(my-package-refresh-contents p)
+	(package-install p)))
 
 ;;; Configure packages/modes
 
@@ -191,22 +202,22 @@
 ;; (when (require 'js-comint)
 ;;   ;; Load hs-minor-mode to hide/show blocks
 ;;   (add-hook 'js-mode-hook
-;; 	    (lambda ()
-;; 	      ;; Scan the file for nested code blocks
-;; 	      (imenu-add-menubar-index)
-;; 	      ;; Activate the folding mode
-;; 	      (hs-minor-mode t)))
+;;	    (lambda ()
+;;	      ;; Scan the file for nested code blocks
+;;	      (imenu-add-menubar-index)
+;;	      ;; Activate the folding mode
+;;	      (hs-minor-mode t)))
 ;;   ;; Use node as our repl
 ;;   (setq inferior-js-program-command "node")
 ;;   (setq inferior-js-mode-hook
-;; 	(lambda ()
-;; 	  ;; We like nice colors
-;; 	  (ansi-color-for-comint-mode-on)
-;; 	  Deal with some prompt nonsense
-;; 	  (add-to-list 'comint-preoutput-filter-functions
-;; 	  	       (lambda (output)
-;; 	  		 (replace-regexp-in-string ".*1G\.\.\..*5G" "..."
-;; 	  					   (replace-regexp-in-string ".*1G.*3G" ">" output)))))))
+;;	(lambda ()
+;;	  ;; We like nice colors
+;;	  (ansi-color-for-comint-mode-on)
+;;	  Deal with some prompt nonsense
+;;	  (add-to-list 'comint-preoutput-filter-functions
+;;		       (lambda (output)
+;;			 (replace-regexp-in-string ".*1G\.\.\..*5G" "..."
+;;						   (replace-regexp-in-string ".*1G.*3G" ">" output)))))))
 
 ;; org-mode:
 ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/org-6.34c/lisp") t)
@@ -242,9 +253,9 @@
 ;;       ))
 
 ;; (setq org-refile-targets (quote (("notes.org" :level . 1)
-;; 				 ("someday.org" :level . 2)
-;; 				 ("tasks.org" :maxlevel . 1)
-;; 				 )))
+;;				 ("someday.org" :level . 2)
+;;				 ("tasks.org" :maxlevel . 1)
+;;				 )))
 
 ;; ;; Personal agenda files
 ;; ;; ===================================================================
@@ -254,20 +265,20 @@
 ;; ;; someday.org        Tasks to be done someday      <-> RTM
 ;; ;; tasks.org          Projects and tasks            <-> RTM
 ;; (setq org-agenda-files (list (concat org-directory "/calendar.org")
-;; 			     (concat org-directory "/journal.org")
-;; 			     (concat org-directory "/notes.org")
-;; 			     (concat org-directory "/someday.org")
-;; 			     (concat org-directory "/tasks.org")
-;; 			     ))
+;;			     (concat org-directory "/journal.org")
+;;			     (concat org-directory "/notes.org")
+;;			     (concat org-directory "/someday.org")
+;;			     (concat org-directory "/tasks.org")
+;;			     ))
 
 ;; org-feed
 ;; (setq org-feed-alist
 ;;       '(("Remember The Milk"
 ;;          "https://www.rememberthemilk.com/atom/mrbarker/"
 ;;          "~/Dropbox/Personal/Org/rtm.org" "Remember The Milk Entries"
-;; 	 :parse-feed org-feed-parse-atom-feed
-;; 	 :parse-entry org-feed-parse-rtm-entry
-;; 	 )))
+;;	 :parse-feed org-feed-parse-atom-feed
+;;	 :parse-entry org-feed-parse-rtm-entry
+;;	 )))
 
 ;; (defun org-feed-parse-rtm-entry (entry)
 ;;   "Parse the `:item-full-text' as a sexp and create new properties."
@@ -297,4 +308,3 @@
 ;;          (t
 ;;           (setq entry (plist-put entry :description (format "Unknown '%s' content." type)))))))
 ;;     entry))
-
