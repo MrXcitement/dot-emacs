@@ -69,13 +69,15 @@
     (global-set-key (kbd "C-.") 'zoom-frm-unzoom)))
 
 ;; redo+:
+;; 2012.12.19 MRB -- Version 1.15 is currently broken, loading fixed
+;;   version in init-submodules
 ;; If you don't want to redo a previous undo, add
 ;; (setq undo-no-redo t)
-(my-packages-install '(redo+))
-(when (package-installed-p 'redo+)
-  (require 'redo+ nil t)
-  (global-set-key (kbd "C-?")   'redo)  ; [Ctrl+Shift+/]
-  (global-set-key (kbd "C-x r") 'redo)) ; [Ctrl+x r]
+;; (my-packages-install '(redo+))
+;; (when (package-installed-p 'redo+)
+;;   (require 'redo+ nil t)
+;;   (global-set-key (kbd "C-?")   'redo)  ; [Ctrl+Shift+/]
+;;   (global-set-key (kbd "C-x r") 'redo)) ; [Ctrl+x r]
 
 ;; buffer-move:
 (my-packages-install '(buffer-move))
