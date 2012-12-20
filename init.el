@@ -58,12 +58,13 @@
 ;;   to be hidden and shown.
 ;; * Added rules to allow hs-minor-mode handle nxml files
 
-;; Save the current time for testing how long the init.el file took to load
-(defvar *init--load-start* (current-time))
+;; 2012.12.19 MRB
+;; * No longer track the load time for init.el.
+;;   If you are intersted in the init time, M-x emacs-init-time.
 
 ;;;
 ;; Load the cl package and disable byte compile warnings
-(eval-when-compile (require 'cl nil t))
+(eval-when-compile (require 'cl nil t))	
 (setq byte-compile-warnings '(cl-functions))
 
 ;;; Initialize the environment
@@ -113,11 +114,6 @@
 
 ;;; Initialize the server
 (require 'init-server nil t)
-
-;;; How long did it take to initialize emacs.
-(message "Emacs initialization (init.el) loaded in %ds"
-	 (destructuring-bind (hi lo ms) (current-time)
-	   (- (+ hi lo) (+ (first *init--load-start*) (second *init--load-start*)))))
 
 (provide 'init)
 ;;; init.el ends here
