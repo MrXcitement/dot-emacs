@@ -97,6 +97,16 @@
 ;;(require 'init-ido nil t)
 ;;(require 'init-cedet nil t)
 
+;;; Hook the dired mode
+(add-hook 'dired-mode-hook
+	  (lambda()
+	    (hl-line-mode 1)))
+
+;;; Hook the package menu mode
+(add-hook 'package-menu-mode-hook
+	  (lambda()
+	    (hl-line-mode 1)))
+
 ;;; Intialize buffers to protect and where to put autosave and backup files.
 (require 'init-protbufs nil t)
 (require 'init-save-backup nil t)
