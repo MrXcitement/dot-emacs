@@ -156,6 +156,12 @@
   (global-set-key (kbd "C-c h")   'helm-mini)
   (helm-mode 1))
 
+;; php+-mode:
+(my-packages-install '(php+-mode))
+(when (package-installed-p 'php+-mode)
+  (require 'php+-mode)
+  (php+-mode-setup))
+
 
 (provide 'init-packages)
 
