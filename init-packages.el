@@ -15,6 +15,10 @@
 ;;   each package being initialized. I have seperated the installation
 ;;   to be done in the same block with the initialization code.
 
+;; 2012.12.20 MRB
+;; * Remove redo+, version 1.15 is currently broken.
+;; * Add undo-tree, this allows you to *see* how emacs native
+;;   undo/redo system works.
 
 ;;; Initialize the Package Manager
 ;; I try to use the package manager and third party repositories for
@@ -68,17 +72,6 @@
     (global-set-key (kbd "C-<") 'zoom-frm-out)
     (global-set-key (kbd "C-.") 'zoom-frm-unzoom)))
 
-;; redo+:
-;; 2012.12.19 MRB -- Version 1.15 is currently broken, loading fixed
-;;   version in init-submodules
-;; If you don't want to redo a previous undo, add
-;; (setq undo-no-redo t)
-;; (my-packages-install '(redo+))
-;; (when (package-installed-p 'redo+)
-;;   (require 'redo+ nil t)
-;;   (global-set-key (kbd "C-?")   'redo)  ; [Ctrl+Shift+/]
-;;   (global-set-key (kbd "C-x r") 'redo)) ; [Ctrl+x r]
-
 ;; buffer-move:
 (my-packages-install '(buffer-move))
 (when (package-installed-p 'buffer-move)
@@ -97,6 +90,12 @@
 (my-packages-install '(iy-go-to-char))
 (when (package-installed-p 'iy-go-to-char)
   (global-set-key (kbd "C-c m") 'iy-go-to-char))
+
+;; undo-tree:
+(my-packages-install '(undo-tree))
+(when (package-installed-p 'undo-tree)
+  ;;(require 'undo-tree nil t)
+  (global-undo-tree-mode))
 
 ;; csharp-mode:
 (my-packages-install '(csharp-mode))
