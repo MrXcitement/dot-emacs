@@ -103,11 +103,6 @@
 	  (lambda()
 	    (hl-line-mode 1)))
 
-;;; Hook the package menu mode
-(add-hook 'package-menu-mode-hook
-	  (lambda()
-	    (hl-line-mode 1)))
-
 ;;; Spelling configuration
 (setq ispell-program-name "hunspell")
 
