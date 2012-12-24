@@ -41,16 +41,6 @@
 ;; mercurial			; Mercurial VC support
 ;; git                          ; GIT mode
 
-;;; Initialize the Package Manager
-;; I try to use the package manager and third party repositories for
-;; most of the additional packages that I use in my initialization.
-
-(package-initialize)
-(add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/"))
-
 ;;; helper functions
 
 ;; Refresh the package database, but only if the package name is not found.
@@ -71,6 +61,21 @@
 	do
 	(my-package-refresh-contents p)
 	(package-install p)))
+
+;;; Initialize the Package Manager
+;; I try to use the package manager and third party repositories for
+;; most of the additional packages that I use in my initialization.
+
+(package-initialize)
+(add-to-list 'package-archives
+	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+
+;;; Hook the package menu mode
+(add-hook 'package-menu-mode-hook
+	  (lambda()
+	    (hl-line-mode 1)))
 
 ;;; Configure packages/modes
 
