@@ -108,6 +108,10 @@
 	  (lambda()
 	    (hl-line-mode 1)))
 
+;;; Spelling configuration
+(setq ispell-program-name "hunspell")
+
+
 ;;; Intialize buffers to protect and where to put autosave and backup files.
 (require 'init-protbufs nil t)
 (require 'init-save-backup nil t)
