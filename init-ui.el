@@ -9,6 +9,12 @@
 ;; 2012.11.18
 ;; * First release.
 
+;;; Whitespace configuration
+;; (setq-default show-trailing-whitespace t)
+;; (setq indicate-empty-lines t)
+;; Remove trailing whitespace when saving
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;;; User interface settings 
 (setq inhibit-splash-screen t)
 (blink-cursor-mode -1)
