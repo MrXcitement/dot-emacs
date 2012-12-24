@@ -133,22 +133,22 @@
 	(append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
 		   markdown-mode)) auto-mode-alist)))
 
-;; powershell:
-(my-packages-install '(powershell-mode powershell))
+;; powershell-mode: allow you to edit powershell files.
+(my-packages-install '(powershell-mode))
 (when (package-installed-p 'powershell-mode)
   (require 'powershell-mode nil t)
   (setq auto-mode-alist
 	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
+
+;; powershell: allow a inferior powershell shell
+(my-packages-install '(powershell))
 (when (and (package-installed-p 'powershell)
 	   (string-equal "windows-nt" system-type))
   (require 'powershell nil t))
 
-;; magit:
-;; Git mode
+;; magit: Git mode
 (my-packages-install '(magit))
-(when (package-installed-p 'magit)
-  ;; configure magit here.
-  )
+(eval-after-load 'magit '(require 'init-magit))
 
 ;; auto-complete:
 (my-packages-install '(auto-complete))
