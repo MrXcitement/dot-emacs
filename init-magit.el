@@ -48,6 +48,6 @@
 
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 
-(provide 'init-magit.el)
+(provide 'init-magit)
 
 
