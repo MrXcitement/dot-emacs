@@ -62,6 +62,10 @@
 ;; * No longer track the load time for init.el.
 ;;   If you are intersted in the init time, M-x emacs-init-time.
 
+;; 2013.01.08 MRB
+;; * Set windmove-default-keybindings so that super-arrow key will move to
+;;   window.
+
 ;;;
 ;; Load the cl package and disable byte compile warnings
 (eval-when-compile (require 'cl nil t))	
@@ -91,6 +95,8 @@
 
 ;;; Initialize the user interface
 (require 'init-ui nil t)
+;; turn on move to window support (<super-{up,down,left,right}>)
+(windmove-default-keybindings 'super)
 
 ;;; Initialize internal major and minor modes
 (require 'init-eshell nil t)
