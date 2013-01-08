@@ -23,6 +23,9 @@
 ;;   package database only if the passed in package name is not in
 ;;   it allready.
 
+;; 2013.01.08 MRB
+;; * Changed keybinding for buffer move to <C-c> <s-{up,down,left,right}>
+
 ;;; Modes that have been used in the past, but are not loaded now
 ;; evernote-mode                ; ** BROKEN ** evernote client
 ;; w3m				; ** used by evernote mode ** w3m browser
@@ -91,10 +94,10 @@
 ;; buffer-move:
 (my-packages-install '(buffer-move))
 (when (package-installed-p 'buffer-move)
-  (global-set-key (kbd "C-c <up>")     'buf-move-up)
-  (global-set-key (kbd "C-c <down>")   'buf-move-down)
-  (global-set-key (kbd "C-c <left>")   'buf-move-left)
-  (global-set-key (kbd "C-c <right>")  'buf-move-right))
+  (global-set-key (kbd "C-c <s-up>")     'buf-move-up)
+  (global-set-key (kbd "C-c <s-down>")   'buf-move-down)
+  (global-set-key (kbd "C-c <s-left>")   'buf-move-left)
+  (global-set-key (kbd "C-c <s-right>")  'buf-move-right))
 
 ;; highlight-80+:
 (my-packages-install '(highlight-80+))
