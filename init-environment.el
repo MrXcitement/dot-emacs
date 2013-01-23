@@ -12,6 +12,9 @@
 ;; 2012.11.24 MRB
 ;; * No longer set whitespace here, should be set per mode.
 
+;; 2013.01.09 MRB
+;; * Removed path to macports bin (/opt/local/bin)
+
 ;; System specific environement settings
 (cond
  ((string-equal "darwin" system-type)
@@ -19,7 +22,6 @@
   (let ((mypaths '("/Users/mike/bin"
 		   "/Users/Shared/bin"
 		   "/Library/Frameworks/Python.framework/Versions/Current/bin"
-		   "/opt/local/bin"
 		   "/usr/local/git/bin"
 		   "/usr/local/bin"
 		   "/usr/X11/bin"
