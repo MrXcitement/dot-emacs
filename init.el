@@ -66,6 +66,10 @@
 ;; * Set windmove-default-keybindings so that super-arrow key will move to
 ;;   window.
 
+;; 2013.01.23 MRB
+;; * Removed enable cua-mode in customize.el
+;;   now just set: (cua-selection-mode 1)
+
 ;;;
 ;; Load the cl package and disable byte compile warnings
 (eval-when-compile (require 'cl nil t))	
@@ -103,8 +107,9 @@
 (require 'init-hideshow nil t)
 ;;(require 'init-ido nil t)
 ;;(require 'init-cedet nil t)
+(cua-selection-mode 1)			; allow cua rectangle selection
 
-;;; Hook the dired mode
+;;; Hook major and minor modes
 (add-hook 'dired-mode-hook
 	  (lambda()
 	    (hl-line-mode 1)))
