@@ -26,6 +26,10 @@
 ;; 2013.01.08 MRB
 ;; * Changed keybinding for buffer move to <C-c> <s-{up,down,left,right}>
 
+;; 2013-03-17 MRB
+;; * Added git-gutter mode.
+;;   https://github.com/syohex/emacs-git-gutter
+
 ;;; Modes that have been used in the past, but are not loaded now
 ;; evernote-mode                ; ** BROKEN ** evernote client
 ;; w3m				; ** used by evernote mode ** w3m browser
@@ -182,6 +186,15 @@
   (require 'php+-mode)
   (php+-mode-setup))
 
+;; git-gutter:
+(my-packages-install '(git-gutter))
+(when (package-installed-p 'git-gutter)
+  (global-git-gutter-mode t)
+  (global-set-key (kbd "C-c C-g") 'git-gutter:toggle)
+  (global-set-key (kbd "C-c g =") 'git-gutter:popup-hunk)
+  (global-set-key (kbd "C-c g p") 'git-gutter:previous-hunk)
+  (global-set-key (kbd "C-c g n") 'git-gutter:next-hunk)
+  (global-set-key (kbd "C-c g r") 'git-gutter:revert-hunk))
 
 (provide 'init-packages)
 
