@@ -115,7 +115,8 @@
 ;; Provide the ability to go to a character.
 (my-packages-install '(iy-go-to-char))
 (when (package-installed-p 'iy-go-to-char)
-  (global-set-key (kbd "C-c m") 'iy-go-to-char))
+  (global-set-key (kbd "C-c m") 'iy-go-to-char)
+  (global-set-key (kbd "C-c M") 'iy-go-to-char-backward))
 
 ;; undo-tree:
 (my-packages-install '(undo-tree))
