@@ -86,14 +86,17 @@
 
 ;;; Configure packages/modes
 
+;; 2013-04-01 MRB
+;; emacs has font scalling built in at least since v23 so we do not need to 
+;; load the frame-* and zoom-* packages to zoom the text.
 ;; zoom-frm:
 ;; Only define keys when running as a gui
-(my-packages-install '(frame-fns frame-cmds zoom-frm))
-(when (package-installed-p 'zoom-frm)
-  (when (window-system)
-    (global-set-key (kbd "C->") 'zoom-frm-in)
-    (global-set-key (kbd "C-<") 'zoom-frm-out)
-    (global-set-key (kbd "C-.") 'zoom-frm-unzoom)))
+;; (my-packages-install '(frame-fns frame-cmds zoom-frm))
+;; (when (package-installed-p 'zoom-frm)
+;;   (when (window-system)
+;;     (global-set-key (kbd "C->") 'zoom-frm-in)
+;;     (global-set-key (kbd "C-<") 'zoom-frm-out)
+;;     (global-set-key (kbd "C-.") 'zoom-frm-unzoom)))
 
 ;; buffer-move:
 (my-packages-install '(buffer-move))
