@@ -91,7 +91,7 @@
 (require 'init-environment nil t)
 
 ;;; Initialize 3rd party packages
-(require 'init-submodules nil t)
+;;(require 'init-submodules nil t)
 (require 'init-packages nil t)
 
 ;;; Initialize keyboard
