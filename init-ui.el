@@ -30,6 +30,9 @@
    ((eq system-type 'darwin)
     ;; Darwin (Mac OS X) gui custimzation
     (set-face-font 'default "Droid Sans Mono Slashed 14")
+    (global-set-key (kbd "s-=") 'text-scale-increase)
+    (global-set-key (kbd "s--") 'text-scale-decrease)
+    (global-set-key (kbd "s-0") (lambda () (interactive) (text-scale-set 0)))
     )
    ((eq system-type 'gnu/linux)
     ;; Linux gui customization)
