@@ -91,6 +91,7 @@
 (require 'init-environment nil t)
 
 ;;; Initialize 3rd party packages
+(require 'init-site-lisp nil t)
 ;;(require 'init-submodules nil t)
 (require 'init-packages nil t)
 
@@ -105,7 +106,8 @@
 ;;; Initialize internal major and minor modes
 (require 'init-eshell nil t)
 (require 'init-hideshow nil t)
-;;(require 'init-ido nil t)
+(when (< emacs-major-version 24)
+  (require 'init-ido nil t))	       ; use ido on emacs less than 24
 ;;(require 'init-cedet nil t)
 (cua-selection-mode 1)			; allow cua rectangle selection
 
@@ -119,7 +121,7 @@
 
 
 ;;; Intialize buffers to protect and where to put autosave and backup files.
-(require 'init-protbufs nil t)
+;;(require 'init-protbufs nil t)
 (require 'init-save-backup nil t)
 
 ;;; Initialize the server

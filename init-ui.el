@@ -24,23 +24,26 @@
 
 ;;; Window (gui) ui settings
 (when (window-system)
-  (load-theme 'tango t) ; Set the default color theme
+  (cond
+   ((= emacs-major-version 24)
+    (load-theme 'tango t)))
+
   ;; System specific ui settings
   (cond
+   ;; Darwin (Mac OS X) gui custimzation
    ((eq system-type 'darwin)
-    ;; Darwin (Mac OS X) gui custimzation
     (set-face-font 'default "Droid Sans Mono Slashed 14")
     (global-set-key (kbd "s-=") 'text-scale-increase)
     (global-set-key (kbd "s--") 'text-scale-decrease)
-    (global-set-key (kbd "s-0") (lambda () (interactive) (text-scale-set 0)))
-    )
+    (global-set-key (kbd "s-0") (lambda () (interactive) (text-scale-set 0))))
+
+   ;; Linux gui customization
    ((eq system-type 'gnu/linux)
-    ;; Linux gui customization)
-    )
+    (set-face-font 'default "Monospace 11"))
+
+   ;; Windows customizations
    ((eq system-type 'windows-nt)
-    ;; Windows customizations
-    (set-face-font 'default "Lucida Console 10")
-    )))
+    (set-face-font 'default "Lucida Console 10"))))
 
 ;;; Terminal ui settings
 (unless (window-system)
