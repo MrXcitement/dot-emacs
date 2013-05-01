@@ -65,20 +65,23 @@
 	(my-package-refresh-contents p)
 	(package-install p)))
 
+;;; Initialize the emacs package manager
+(defun my-packages-initialize-emacs ()
+  (message "Initializing emacs package manager...")
+  (package-initialize)
+  (add-to-list 'package-archives
+	       '("marmalade" . "http://marmalade-repo.org/packages/"))
+  (add-to-list 'package-archives
+	       '("melpa" . "http://melpa.milkbox.net/packages/"))
+  ;; Hook the package menu mode
+  (add-hook 'package-menu-mode-hook
+	    (lambda()
+	      (hl-line-mode 1))))
+
 ;;; Initialize the Package Manager
 ;; I try to use the package manager and third party repositories for
 ;; most of the additional packages that I use in my initialization.
-
-(package-initialize)
-(add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/"))
-
-;;; Hook the package menu mode
-(add-hook 'package-menu-mode-hook
-	  (lambda()
-	    (hl-line-mode 1)))
+(my-packages-initialize-emacs)
 
 ;;; Configure packages/modes
 
@@ -171,10 +174,11 @@
 
 
 ;; helm:
-(my-packages-install '(helm helm-themes))
-(when (package-installed-p 'helm)
-  (global-set-key (kbd "C-c h")   'helm-mini)
-  (helm-mode 1))
+(when (>= emacs-major-version 24)
+  (my-packages-install '(helm helm-themes))
+  (when (package-installed-p 'helm)
+    (global-set-key (kbd "C-c h")   'helm-mini)
+    (helm-mode 1)))
 
 ;; php+-mode:
 (my-packages-install '(php+-mode))
