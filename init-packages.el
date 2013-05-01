@@ -26,6 +26,10 @@
 ;; 2013.01.08 MRB
 ;; * Changed keybinding for buffer move to <C-c> <s-{up,down,left,right}>
 
+;; 2013-03-17 MRB
+;; * Added git-gutter mode.
+;;   https://github.com/syohex/emacs-git-gutter
+
 ;;; Modes that have been used in the past, but are not loaded now
 ;; evernote-mode                ; ** BROKEN ** evernote client
 ;; w3m				; ** used by evernote mode ** w3m browser
@@ -85,14 +89,17 @@
 
 ;;; Configure packages/modes
 
+;; 2013-04-01 MRB
+;; emacs has font scalling built in at least since v23 so we do not need to 
+;; load the frame-* and zoom-* packages to zoom the text.
 ;; zoom-frm:
 ;; Only define keys when running as a gui
-(my-packages-install '(frame-fns frame-cmds zoom-frm))
-(when (package-installed-p 'zoom-frm)
-  (when (window-system)
-    (global-set-key (kbd "C->") 'zoom-frm-in)
-    (global-set-key (kbd "C-<") 'zoom-frm-out)
-    (global-set-key (kbd "C-.") 'zoom-frm-unzoom)))
+;; (my-packages-install '(frame-fns frame-cmds zoom-frm))
+;; (when (package-installed-p 'zoom-frm)
+;;   (when (window-system)
+;;     (global-set-key (kbd "C->") 'zoom-frm-in)
+;;     (global-set-key (kbd "C-<") 'zoom-frm-out)
+;;     (global-set-key (kbd "C-.") 'zoom-frm-unzoom)))
 
 ;; buffer-move:
 (my-packages-install '(buffer-move))
@@ -111,7 +118,8 @@
 ;; Provide the ability to go to a character.
 (my-packages-install '(iy-go-to-char))
 (when (package-installed-p 'iy-go-to-char)
-  (global-set-key (kbd "C-c m") 'iy-go-to-char))
+  (global-set-key (kbd "C-c m") 'iy-go-to-char)
+  (global-set-key (kbd "C-c M") 'iy-go-to-char-backward))
 
 ;; undo-tree:
 (my-packages-install '(undo-tree))
@@ -186,6 +194,15 @@
   (require 'php+-mode)
   (php+-mode-setup))
 
+;; git-gutter:
+(my-packages-install '(git-gutter))
+(when (package-installed-p 'git-gutter)
+  (global-git-gutter-mode t)
+  (global-set-key (kbd "C-c C-g") 'git-gutter:toggle)
+  (global-set-key (kbd "C-c g =") 'git-gutter:popup-hunk)
+  (global-set-key (kbd "C-c g p") 'git-gutter:previous-hunk)
+  (global-set-key (kbd "C-c g n") 'git-gutter:next-hunk)
+  (global-set-key (kbd "C-c g r") 'git-gutter:revert-hunk))
 
 (provide 'init-packages)
 

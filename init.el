@@ -92,7 +92,7 @@
 
 ;;; Initialize 3rd party packages
 (require 'init-site-lisp nil t)
-(require 'init-submodules nil t)
+;;(require 'init-submodules nil t)
 (require 'init-packages nil t)
 
 ;;; Initialize keyboard
