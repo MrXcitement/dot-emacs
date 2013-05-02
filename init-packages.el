@@ -57,30 +57,29 @@
       (message "Refreshing the package database")
       (package-refresh-contents))))
 
-;; Install a list of packages.
+;; Install a single package.
 ;; Only install a package that is not allready installed
+(defun my-package-install (my-package)
+  (unless (package-installed-p my-package)
+    (message "Installing package: %s" my-package)
+    (my-package-refresh-contents my-package)
+    (package-install my-package)))
+
+;; Install a list of packages.
 (defun my-packages-install (my-package-list)
-  (message "Installing packages: %s" my-package-list)
   (loop for p in my-package-list
-	;; Skip if allready installed
-	unless (package-installed-p p)
-	;; Install the package
-	do
-	(my-package-refresh-contents p)
-	(package-install p)))
+	(my-package-install p)))
 
 ;;; Initialize the emacs package manager
 (defun my-packages-initialize-emacs ()
   (message "Initializing emacs package manager...")
   (package-initialize)
-  (add-to-list 'package-archives
-	       '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives
-	       '("melpa" . "http://melpa.milkbox.net/packages/"))
+  (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+			   ("marmalade" . "http://marmalade-repo.org/packages/")
+			   ("melpa" . "http://melpa.milkbox.net/packages/")))
   ;; Hook the package menu mode
   (add-hook 'package-menu-mode-hook
-	    (lambda()
-	      (hl-line-mode 1))))
+	    (lambda() (hl-line-mode 1))))
 
 ;;; Initialize the Package Manager
 ;; I try to use the package manager and third party repositories for
@@ -89,89 +88,90 @@
 
 ;;; Configure packages/modes
 
-;; 2013-04-01 MRB
-;; emacs has font scalling built in at least since v23 so we do not need to 
-;; load the frame-* and zoom-* packages to zoom the text.
-;; zoom-frm:
-;; Only define keys when running as a gui
-;; (my-packages-install '(frame-fns frame-cmds zoom-frm))
-;; (when (package-installed-p 'zoom-frm)
-;;   (when (window-system)
-;;     (global-set-key (kbd "C->") 'zoom-frm-in)
-;;     (global-set-key (kbd "C-<") 'zoom-frm-out)
-;;     (global-set-key (kbd "C-.") 'zoom-frm-unzoom)))
-
 ;; buffer-move:
-(my-packages-install '(buffer-move))
+(my-package-install 'buffer-move)
 (when (package-installed-p 'buffer-move)
-  (global-set-key (kbd "C-c <s-up>")     'buf-move-up)
-  (global-set-key (kbd "C-c <s-down>")   'buf-move-down)
-  (global-set-key (kbd "C-c <s-left>")   'buf-move-left)
-  (global-set-key (kbd "C-c <s-right>")  'buf-move-right))
+  (global-set-key (kbd "C-c <up>") 
+		  (lambda () (interactive) 
+		    (call-interactively 'buf-move-up)))
+  (global-set-key (kbd "C-c <down>")
+		  (lambda () (interactive) 
+		    (call-interactively 'buf-move-down)))
+  (global-set-key (kbd "C-c <left>") 
+		  (lambda () (interactive) 
+		    (call-interactively 'buf-move-left)))
+  (global-set-key (kbd "C-c <right>")  
+		  (lambda () 
+		    (interactive) (call-interactively 'buf-move-right))))
 
 ;; highlight-80+:
-(my-packages-install '(highlight-80+))
+(my-package-install 'highlight-80+)
 (when (package-installed-p 'highlight-80+)
-  (highlight-80+-mode t))
+  (highlight-80+-mode))
 
 ;; iy-go-to-char:
 ;; Provide the ability to go to a character.
-(my-packages-install '(iy-go-to-char))
+(my-package-install 'iy-go-to-char)
 (when (package-installed-p 'iy-go-to-char)
-  (global-set-key (kbd "C-c m") 'iy-go-to-char)
-  (global-set-key (kbd "C-c M") 'iy-go-to-char-backward))
+  (global-set-key (kbd "C-c m") 
+		  (lambda () 
+		    (interactive) (call-interactively 'iy-go-to-char)))
+  (global-set-key (kbd "C-c M")
+		  (lambda () (interactive) 
+		    (call-interactively 'iy-go-to-char-backward))))
 
 ;; undo-tree:
-(my-packages-install '(undo-tree))
+(my-package-install 'undo-tree)
 (when (package-installed-p 'undo-tree)
   ;;(require 'undo-tree nil t)
   (global-undo-tree-mode))
 
 ;; csharp-mode:
-(my-packages-install '(csharp-mode))
+(my-package-install 'csharp-mode)
 (when (package-installed-p 'csharp-mode)
   (setq auto-mode-alist
 	(append '(("\\.cs$" . csharp-mode)) auto-mode-alist)))
 
 ;; ntcmd:
-(my-packages-install '(ntcmd))
+(my-package-install 'ntcmd)
 (when (package-installed-p 'ntcmd)
   (setq auto-mode-alist
-	(append '(("\\.\\(bat\\|cmd\\)$" .
-		   ntcmd-mode)) auto-mode-alist)))
+	(append '(("\\.\\(bat\\|cmd\\)$" . ntcmd-mode)) auto-mode-alist)))
 
 ;; markdown:
-(my-packages-install '(markdown-mode))
+(my-package-install 'markdown-mode)
 (when (package-installed-p 'markdown-mode)
   (setq auto-mode-alist
-	(append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
-		   markdown-mode)) auto-mode-alist)))
+	(append '(("\\.\\(markdown\\|md\\|mdw\\|mdt\\)$" . markdown-mode)) auto-mode-alist)))
 
 ;; powershell-mode: allow you to edit powershell files.
-(my-packages-install '(powershell-mode))
+(my-package-install 'powershell-mode)
 (when (package-installed-p 'powershell-mode)
-  (require 'powershell-mode nil t)
+;;  (require 'powershell-mode nil t)
   (setq auto-mode-alist
 	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
 
 ;; powershell: allow a inferior powershell shell
-(my-packages-install '(powershell))
-(when (and (package-installed-p 'powershell)
-	   (string-equal "windows-nt" system-type))
-  (require 'powershell nil t))
+(when (string-equal "windows-nt" system-type)
+  (my-package-install 'powershell)
+  (when (package-installed-p 'powershell)
+    (eval-after-load "powershell"
+      (require 'powershell nil t))))
 
 ;; magit: Git mode
-(my-packages-install '(magit))
-(eval-after-load 'magit '(require 'init-magit))
+(my-package-install 'magit)
+(eval-after-load "magit"
+  '(progn
+     (require 'init-magit nil t)))
 
 ;; auto-complete:
-(my-packages-install '(auto-complete))
+(my-package-install 'auto-complete)
 (when (package-installed-p 'auto-complete)
-  (when (require 'auto-complete-config nil t)
-    (ac-config-default)))
+  (require 'auto-complete-config nil t)
+  (ac-config-default))
 
 ;; yasnippet:
-(my-packages-install '(yasnippet))
+(my-package-install 'yasnippet)
 (when (package-installed-p 'yasnippet)
   ;; Makefiles will now include text-mode snippets
   (add-hook 'makefile-mode-hook
@@ -179,7 +179,6 @@
 	      (make-local-variable 'yas-extra-modes)
 	      (setq yas-extra-modes 'text-mode)))
   (yas-global-mode t))
-
 
 ;; helm:
 (when (>= emacs-major-version 24)
@@ -189,13 +188,15 @@
     (helm-mode 1)))
 
 ;; php+-mode:
-(my-packages-install '(php+-mode))
+(my-package-install 'php+-mode)
 (when (package-installed-p 'php+-mode)
-  (require 'php+-mode)
-  (php+-mode-setup))
+  (eval-after-load "php+-mode"
+    '(progn
+       (require 'php+-mode)
+       (php+-mode-setup))))
 
 ;; git-gutter:
-(my-packages-install '(git-gutter))
+(my-package-install 'git-gutter)
 (when (package-installed-p 'git-gutter)
   (global-git-gutter-mode t)
   (global-set-key (kbd "C-c C-g") 'git-gutter:toggle)
