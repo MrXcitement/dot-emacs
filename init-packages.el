@@ -67,7 +67,7 @@
 
 ;; Install a list of packages.
 (defun my-packages-install (my-package-list)
-  (loop for p in my-package-list
+  (loop for p in my-package-list do 
 	(my-package-install p)))
 
 ;;; Initialize the emacs package manager
