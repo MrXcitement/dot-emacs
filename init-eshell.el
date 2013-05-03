@@ -10,25 +10,63 @@
 ;; * First release.
 
 ;;; Eshell initialization
-(defmacro with-face (str &rest properties)
-  `(propertize ,str 'face (list ,@properties)))
 
-;; Put a new line after the path and before the prompt
-(setq eshell-prompt-function
-      (lambda nil
-	(concat
-	 (with-face (user-login-name) :foreground "blue")
-	 (with-face "@" :foreground "blue")
-	 (with-face (system-name) :foreground "blue")
-	 " "
-	 (with-face (eshell/pwd) :foreground "green")
-	 "\n"
-	 (if (= (user-uid) 0) "# " "$ "))))
 
 ;; Needed for the above colors to have an effect
 (setq eshell-highlight-prompt nil)
 
 ;; Needed to tweek for completion to work
 (setq eshell-prompt-regexp "^[^#$\n]*[#$] ")
+
+;; History settings
+(setq eshell-history-size 1024)
+(load "em-hist") ;; So the history vars are defined
+(if (boundp 'eshell-save-history-on-exit)
+    (setq eshell-save-history-on-exit t))
+(if (boundp 'ehsell-ask-to-save-history)
+    (setq eshell-ask-to-save-history 'always))
+
+(defmacro with-face (str &rest properties)
+  `(propertize ,str 'face (list ,@properties)))
+
+(defun pwd-repl-home (pwd)
+  "Returns a path with the home directory replaced with a tilde"
+  (interactive)
+  (let* ((home (expand-file-name (getenv "HOME")))
+	 (home-len (length home)))
+    (if (and (>= (length pwd) home-len)
+	     (equal home (substring pwd 0 home-len)))
+	(concat "~" (substring pwd home-len)) pwd)))
+
+
+(defun curr-dir-git-branch-string (pwd)
+  "Returns current git branch as a string, or the empty string if
+PWD is not in a git repo (or the git command is not found)."
+  (interactive)
+  (if (and (eshell-search-path "git")
+	     (locate-dominating-file pwd ".git"))
+      (progn
+	(let ((git-output (shell-command-to-string 
+			   (concat "cd " pwd " && git branch | grep '\\*' | sed -e 's/^\\* //'"))))
+	  (concat "("
+		  (if (> (length git-output) 0)
+		      (substring git-output 0 -1)
+		    "(no branch)")
+		  ")")))
+    (concat "")))
+
+;; Put a new line after the path and before the prompt
+(setq eshell-prompt-function
+      (lambda nil
+	(concat
+	 (with-face (user-login-name) :foreground "yellow")
+	 (with-face "@" :foreground "yellow")
+	 (with-face (system-name) :foreground "yellow")
+	 " "
+	 (with-face (pwd-repl-home(eshell/pwd)) :foreground "purple")
+	 " "
+	 (with-face (curr-dir-git-branch-string(eshell/pwd)) :foreground "green")
+	 "\n"
+	 (if (= (user-uid) 0) "# " "$ "))))
 
 (provide 'init-eshell)
