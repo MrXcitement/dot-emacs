@@ -59,11 +59,15 @@
 
 ;; Install a single package.
 ;; Only install a package that is not allready installed
+;; 2013-05-02 MRB - Ignore errors when installing packages.
+;; This allows a system that does not have access to the various package archives to
+;; continue to work and not stop the initialization of emacs.
 (defun my-package-install (my-package)
   (unless (package-installed-p my-package)
     (message "Installing package: %s" my-package)
-    (my-package-refresh-contents my-package)
-    (package-install my-package)))
+    (ignore-errors
+      (my-package-refresh-contents my-package)
+      (package-install my-package))))
 
 ;; Install a list of packages.
 (defun my-packages-install (my-package-list)
