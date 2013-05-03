@@ -35,7 +35,7 @@
   "Return whether or not the library 'name' can be loaded from a
 source file under ~/.emacs.d/site-lisp/name/"
   (let ((f (locate-library (symbol-name name))))
-    (and f (string-prefix-p (file-name-as-directory (site-lisp-dir-for name))))))
+    (and f (string-prefix-p (file-name-as-directory (site-lisp-dir-for name)) f))))
 
 (defun site-lisp-ensure-lib-from-url (name url)
   (unless (site-lisp-library-loadable-p name)
@@ -52,7 +52,7 @@ source file under ~/.emacs.d/site-lisp/name/"
 ;; "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el"
 (defun site-lisp-ensure-libs ()
   (unless (> emacs-major-version 23)
-    (site-lisp-ensure-lib-from-url 'package "http://bit.ly/pkg-el23")
+    (site-lisp-ensure-lib-from-url 'package "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el")
     (require 'package)))
 
 (site-lisp-ensure-libs)
