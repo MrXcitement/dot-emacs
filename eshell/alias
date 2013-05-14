@@ -1,6 +1,7 @@
-alias gitnp git --no-pager $*
-alias lla ls -la
-alias ll ls -l
-alias ff find-file $1
-alias ffof find-file-other-frame $1
+alias clear recenter 0
+alias ll ls -ll $*
+alias la ls -la $*
+alias git git --no-pager $*
 alias ffow find-file-other-window $1
+alias ffof find-file-other-frame $1
+alias ff find-file $1

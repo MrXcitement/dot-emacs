@@ -59,11 +59,11 @@ PWD is not in a git repo (or the git command is not found)."
 (setq eshell-prompt-function
       (lambda nil
 	(concat
-	 (with-face (user-login-name) :foreground "yellow")
-	 (with-face "@" :foreground "yellow")
-	 (with-face (system-name) :foreground "yellow")
-	 " "
-	 (with-face (pwd-repl-home(eshell/pwd)) :foreground "purple")
+	 (with-face (user-login-name) :foreground "cyan")
+	 (with-face "@" :foreground "cyan")
+	 (with-face (system-name) :foreground "cyan")
+	 (with-face ": " :foreground "cyan")
+	 (with-face (pwd-repl-home(eshell/pwd)) :foreground "magenta")
 	 " "
 	 (with-face (curr-dir-git-branch-string(eshell/pwd)) :foreground "green")
 	 "\n"
