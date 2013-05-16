@@ -151,7 +151,7 @@
 ;; powershell-mode: allow you to edit powershell files.
 (my-package-install 'powershell-mode)
 (when (package-installed-p 'powershell-mode)
-;;  (require 'powershell-mode nil t)
+  (require 'powershell-mode nil t)
   (setq auto-mode-alist
 	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
 
@@ -159,8 +159,7 @@
 (when (string-equal "windows-nt" system-type)
   (my-package-install 'powershell)
   (when (package-installed-p 'powershell)
-    (eval-after-load "powershell"
-      (require 'powershell nil t))))
+    (require 'powershell nil t)))
 
 ;; magit: Git mode
 (my-package-install 'magit)
