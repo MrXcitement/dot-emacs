@@ -19,14 +19,17 @@
 (cond
  ((string-equal "darwin" system-type)
   ;; configure mac os x configuration
-  (let ((mypaths '("/Users/mike/bin"
+  (let ((mypaths '("~/bin"
 		   "/Users/Shared/bin"
 		   "/Library/Frameworks/Python.framework/Versions/Current/bin"
 		   "/usr/local/git/bin"
 		   "/usr/local/bin"
+		   "/usr/local/sbin"
 		   "/usr/X11/bin"
 		   "/usr/bin"
-		   "/bin")))
+		   "/usr/sbin"
+		   "/bin"
+		   "/sbin")))
     (setenv "PATH" (mapconcat 'identity mypaths ":"))
     (setq exec-path mypaths))
   )
