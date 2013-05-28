@@ -70,6 +70,9 @@
 ;; * Removed enable cua-mode in customize.el
 ;;   now just set: (cua-selection-mode 1)
 
+;; 2013-05-28 MRB
+;; * Added whitespace configuration from init-ui.el file.
+
 ;;;
 ;; Load the cl package and disable byte compile warnings
 (eval-when-compile (require 'cl nil t))	
@@ -119,6 +122,11 @@
 ;;; Spelling configuration
 (setq ispell-program-name "hunspell")
 
+;;; Whitespace configuration
+;; (setq-default show-trailing-whitespace t)
+;; (setq indicate-empty-lines t)
+;; Remove trailing whitespace when saving
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;; Intialize buffers to protect and where to put autosave and backup files.
 ;;(require 'init-protbufs nil t)
