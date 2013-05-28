@@ -30,25 +30,10 @@
 ;; * Added git-gutter mode.
 ;;   https://github.com/syohex/emacs-git-gutter
 
-;;; Modes that have been used in the past, but are not loaded now
-;; evernote-mode                ; ** BROKEN ** evernote client
-;; w3m				; ** used by evernote mode ** w3m browser
-;; org-mode			; org-mode customization
-;; haskell			; Haskel mode
-;; lolcode                      ; LOLCode, program like a cat
-;; python-mode			; Python mode
-;; python                       ; Python tools
-;; pymacs                       ; Python emacs bridge
-;; ipython                      ; Interactive python mode
-;; ruby				; Edit ruby files
-;; jscomint                     ; Run javascript files
-;; mode-compile			; Smart compile configuration
-;; ecb				; Emacs Code Browser setup
-;; dvc                          ; Distributed version control
-;; mercurial			; Mercurial VC support
-;; git                          ; GIT mode
+;; 2013-05-28 MRB
+;; * Edited comments
 
-;;; helper functions
+;;; Helper functions: my-package(s)-*
 
 ;; Refresh the package database, but only if the package name is not found.
 (defun my-package-refresh-contents (name)
@@ -90,9 +75,9 @@
 ;; most of the additional packages that I use in my initialization.
 (my-packages-initialize-emacs)
 
-;;; Configure packages/modes
+;;; Install and configure packages/modes
 
-;; buffer-move:
+;;; buffer-move:
 (my-package-install 'buffer-move)
 (when (package-installed-p 'buffer-move)
   (global-set-key (kbd "C-c <up>") 
@@ -108,13 +93,13 @@
 		  (lambda () 
 		    (interactive) (call-interactively 'buf-move-right))))
 
-;; highlight-80+:
+;;; highlight-80+:
 (my-package-install 'highlight-80+)
 (when (package-installed-p 'highlight-80+)
   (highlight-80+-mode))
 
-;; iy-go-to-char:
-;; Provide the ability to go to a character.
+;;; iy-go-to-char:
+;; provide the ability to quicly go/jump to a character.
 (my-package-install 'iy-go-to-char)
 (when (package-installed-p 'iy-go-to-char)
   (global-set-key (kbd "C-c m") 
@@ -124,73 +109,79 @@
 		  (lambda () (interactive) 
 		    (call-interactively 'iy-go-to-char-backward))))
 
-;; undo-tree:
+;;; undo-tree:
 (my-package-install 'undo-tree)
 (when (package-installed-p 'undo-tree)
-  ;;(require 'undo-tree nil t)
   (global-undo-tree-mode))
 
-;; csharp-mode:
+;;; csharp-mode:
 (my-package-install 'csharp-mode)
 (when (package-installed-p 'csharp-mode)
   (setq auto-mode-alist
 	(append '(("\\.cs$" . csharp-mode)) auto-mode-alist)))
 
-;; ntcmd:
+;;; ntcmd:
 (my-package-install 'ntcmd)
 (when (package-installed-p 'ntcmd)
   (setq auto-mode-alist
 	(append '(("\\.\\(bat\\|cmd\\)$" . ntcmd-mode)) auto-mode-alist)))
 
-;; markdown:
+;;; markdown:
 (my-package-install 'markdown-mode)
 (when (package-installed-p 'markdown-mode)
   (setq auto-mode-alist
 	(append '(("\\.\\(markdown\\|md\\|mdw\\|mdt\\)$" . markdown-mode)) auto-mode-alist)))
 
-;; powershell-mode: allow you to edit powershell files.
+;;; powershell-mode:
+;; allow you to edit powershell files.
 (my-package-install 'powershell-mode)
 (when (package-installed-p 'powershell-mode)
   (require 'powershell-mode nil t)
   (setq auto-mode-alist
 	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
 
-;; powershell: allow a inferior powershell shell
+;;; powershell: 
+;; allow a inferior powershell shell, but only if on windows.
 (when (string-equal "windows-nt" system-type)
   (my-package-install 'powershell)
   (when (package-installed-p 'powershell)
     (require 'powershell nil t)))
 
-;; magit: Git mode
+;;; magit: 
+;; Git mode
 (my-package-install 'magit)
 (eval-after-load "magit"
   '(progn
      (require 'init-magit nil t)))
 
-;; auto-complete:
+;;; auto-complete:
+;; provide auto complete suggestions
 (my-package-install 'auto-complete)
 (when (package-installed-p 'auto-complete)
   (require 'auto-complete-config nil t)
   (ac-config-default))
 
-;; yasnippet:
+;;; yasnippet:
+;; snippet template engine
 (my-package-install 'yasnippet)
 (when (package-installed-p 'yasnippet)
-  ;; Makefiles will now include text-mode snippets
+  ;; Hook modes here to allow them to have a specific set of snippets available
+  ;; makefiles will now include text-mode snippets
   (add-hook 'makefile-mode-hook
 	    (lambda()
 	      (make-local-variable 'yas-extra-modes)
 	      (setq yas-extra-modes 'text-mode)))
   (yas-global-mode t))
 
-;; helm:
+;;; helm:
+;; quicksilver/spotlight for emacs, only works in emacs >= ver 24
 (when (>= emacs-major-version 24)
   (my-packages-install '(helm helm-themes))
   (when (package-installed-p 'helm)
     (global-set-key (kbd "C-c h")   'helm-mini)
     (helm-mode 1)))
 
-;; php+-mode:
+;;; php+-mode:
 (my-package-install 'php+-mode)
 (when (package-installed-p 'php+-mode)
   (eval-after-load "php+-mode"
@@ -198,7 +189,8 @@
        (require 'php+-mode)
        (php+-mode-setup))))
 
-;; git-gutter:
+;;; git-gutter:
+;; show git status in the gutter of the file
 (my-package-install 'git-gutter)
 (when (package-installed-p 'git-gutter)
   (global-git-gutter-mode t)
@@ -209,6 +201,24 @@
   (global-set-key (kbd "C-c g r") 'git-gutter:revert-hunk))
 
 (provide 'init-packages)
+
+;;; Modes that have been used in the past, but are not loaded now
+;; evernote-mode                ; ** BROKEN ** evernote client
+;; w3m				; ** used by evernote mode ** w3m browser
+;; org-mode			; org-mode customization
+;; haskell			; Haskel mode
+;; lolcode                      ; LOLCode, program like a cat
+;; python-mode			; Python mode
+;; python                       ; Python tools
+;; pymacs                       ; Python emacs bridge
+;; ipython                      ; Interactive python mode
+;; ruby				; Edit ruby files
+;; jscomint                     ; Run javascript files
+;; mode-compile			; Smart compile configuration
+;; ecb				; Emacs Code Browser setup
+;; dvc                          ; Distributed version control
+;; mercurial			; Mercurial VC support
+;; git                          ; GIT mode
 
 ;;; Packages that are not loaded
 ;; ecb:
