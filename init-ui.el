@@ -9,11 +9,9 @@
 ;; 2012.11.18
 ;; * First release.
 
-;;; Whitespace configuration
-;; (setq-default show-trailing-whitespace t)
-;; (setq indicate-empty-lines t)
-;; Remove trailing whitespace when saving
-;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; 2013-05-28 MRB
+;; * No longer loading a theme
+;; * Removed whitespace configuration
 
 ;;; User interface settings 
 (setq inhibit-splash-screen t)
@@ -24,9 +22,6 @@
 
 ;;; Window (gui) ui settings
 (when (window-system)
-  (cond
-   ((= emacs-major-version 24)
-    (load-theme 'tango t)))
 
   ;; System specific ui settings
   (cond
