@@ -1,0 +1,7 @@
+# contributor: Mike Barker <mike@thebarkers.com>
+# name: <html lang="en-US">...</html>
+# key: html
+# --
+<html lang="en-US">
+  $0
+</html>

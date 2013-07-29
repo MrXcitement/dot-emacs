@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# contributor: Mike Barker <mike@thebarkers.com>
+# name: button
+# --
+<button id="${1:id}" type="${2:type}" onclick="${3:onclick()}">$0</button>

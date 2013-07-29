@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# contributor: Mike Barker <mike@thebarkers.com>
+# name: label
+# --
+<label>$0</label>

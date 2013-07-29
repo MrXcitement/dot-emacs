@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Mike Barker <mike@thebarkers.com>
+# name: <meta charset="UTF-8">
+# key: meta
+# --
+<meta charset="UTF-8">
