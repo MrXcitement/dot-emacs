@@ -21,7 +21,7 @@
   ;; configure mac os x configuration
   (let ((mypaths '("~/bin"
 		   "/Users/Shared/bin"
-		   "/Library/Frameworks/Python.framework/Versions/Current/bin"
+		   "/usr/local/share/python"
 		   "/usr/local/git/bin"
 		   "/usr/local/bin"
 		   "/usr/local/sbin"
