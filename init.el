@@ -109,8 +109,11 @@
 ;;; Initialize internal major and minor modes
 (require 'init-eshell nil t)
 (require 'init-hideshow nil t)
-(when (< emacs-major-version 24)
-  (require 'init-ido nil t))	       ; use ido on emacs less than 24
+(when (require 'init-ido nil t)
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (ido-mode 1))
+  
 ;;(require 'init-cedet nil t)
 (cua-selection-mode 1)			; allow cua rectangle selection
 
