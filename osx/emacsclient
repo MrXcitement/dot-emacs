@@ -1,2 +1,2 @@
 #!/bin/sh
-/Users/Shared/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c "$@"
+/Users/Shared/Applications/Emacs.app/Contents/MacOS/bin/emacsclient "$@"
