@@ -1,4 +1,4 @@
-;;; init.el --- My emacs initialization file
+;;; init.el --- My Emacs initialization file
 
 ;; This file is NOT part of GNU Emacs
 
@@ -73,70 +73,64 @@
 ;; 2013-05-28 MRB
 ;; * Added whitespace configuration from init-ui.el file.
 
+;; 2013-08-23 MRB
+;; * Misc re-factoring var names, etc.
+ 
 ;;;
 ;; Load the cl package and disable byte compile warnings
 (eval-when-compile (require 'cl nil t))	
 (setq byte-compile-warnings '(cl-functions))
 
 ;;; Initialize the environment
-(defvar init--emacs-root (expand-file-name "~/.emacs.d"))
+(defvar init-emacs-root (expand-file-name "~/.emacs.d"))
 
 ;; Add personal directories to the START of load-path
-(add-to-list 'load-path init--emacs-root)
+(add-to-list 'load-path init-emacs-root)
 
 ;; Aquamacs has it's own custom.el and some of the default settings in
 ;; custom.el will cause aquamacs to have problems.
 (unless (featurep 'aquamacs)
   ;; Configure and load custom-file used for customize settings.
-  (setq custom-file (concat init--emacs-root "/custom.el"))
+  (setq custom-file (concat init-emacs-root "/custom.el"))
   (load custom-file 'noerror))
 
 (require 'init-environment nil t)
-
-;;; Initialize 3rd party packages
-(require 'init-site-lisp nil t)
-;;(require 'init-submodules nil t)
-(require 'init-packages nil t)
 
 ;;; Initialize keyboard
 (require 'init-keymaps nil t)
 
 ;;; Initialize the user interface
 (require 'init-ui nil t)
-;; turn on move to window support (<super-{up,down,left,right}>)
-(windmove-default-keybindings 'super)
 
 ;;; Initialize internal major and minor modes
 (require 'init-eshell nil t)
 (require 'init-hideshow nil t)
-(when (require 'init-ido nil t)
-  (setq ido-enable-flex-matching t)
-  (setq ido-everywhere t)
-  (ido-mode 1))
-  
+(require 'init-ido nil t)
 ;;(require 'init-cedet nil t)
-(cua-selection-mode 1)			; allow cua rectangle selection
 
-;;; Hook major and minor modes
-(add-hook 'dired-mode-hook
-	  (lambda()
-	    (hl-line-mode 1)))
+;;; Initialize the spelling sub-system.
+(require 'init-spelling nil t)
 
-;;; Spelling configuration
-(setq ispell-program-name "hunspell")
-
-;;; Whitespace configuration
-;; (setq-default show-trailing-whitespace t)
-;; (setq indicate-empty-lines t)
-;; Remove trailing whitespace when saving
-;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;;; Intialize buffers to protect and where to put autosave and backup files.
+;;; Initialize buffers to protect and where to put auto-save and backup files.
 ;;(require 'init-protbufs nil t)
 (require 'init-save-backup nil t)
 
 ;;; Initialize the server
 (require 'init-server nil t)
+
+;;; Hook major and minor modes
+
+;; Remove trailing whitespace when saving
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Highlight the current line when in dired mode.
+(add-hook 'dired-mode-hook
+	  (lambda()
+	    (hl-line-mode 1)))
+
+;;; Initialize 3rd party packages
+(require 'init-site-lisp nil t)
+(require 'init-packages nil t)
 
 (provide 'init)
 ;;; init.el ends here

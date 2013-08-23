@@ -9,19 +9,14 @@
 ;; 2012.11.18
 ;; * First release.
 
-;;; Interactively do things
-(ido-mode t)
-(setq ido-enable-flex-matching t) ; enable fuzzy matching
+;; 2013-08-23 MRB
+;; * No longer use custom ido-execute-command to use ido matching with
+;;   M-x. Now using the package Smex to provide this capability.
 
-;; Set M-x to use ido mode
-(defun ido-execute-command ()
-   (interactive)
-   (call-interactively
-    (intern
-     (ido-completing-read
-      "M-x "
-      (all-completions "" obarray 'commandp)))))
-(global-set-key (kbd "M-x") 'ido-execute-command)
+;;; Interactively do things
+(setq ido-enable-flex-matching t) ; enable fuzzy matching
+(setq ido-everywhere t)
+(ido-mode 1)
 
 (provide 'init-ido)
 

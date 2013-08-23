@@ -13,12 +13,28 @@
 ;; * No longer loading a theme
 ;; * Removed whitespace configuration
 
+;; 2013-08-23 MRB
+;; * Set the 'move to window' support to use the meta key
+;; * Set cua selection rectangle mode -- C-Return to enable/cancel
+
 ;;; User interface settings 
 (setq inhibit-splash-screen t)
 (blink-cursor-mode -1)
 (column-number-mode t)
 (show-paren-mode t)
 (tool-bar-mode -1)
+
+;; turn on move to window support (<meta-{up,down,left,right}>)
+(windmove-default-keybindings 'meta)
+
+;; Configure cua mode to allow selection of text only.
+;; This allows the C-x,c,v keys to retain their original funcitonality
+;; but allow cua rectangle selection.
+(cua-selection-mode 1)			
+
+;;; White-space configuration
+(setq-default show-trailing-whitespace t)
+(setq indicate-empty-lines t)
 
 ;;; Window (gui) ui settings
 (when (window-system)
