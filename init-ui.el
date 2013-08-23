@@ -3,7 +3,7 @@
 ;; Mike Barker <mike@thebarkers.com>
 ;; November 18, 2012
 
-;; Copyright (c) 2012 Mike Barker 
+;; Copyright (c) 2012 Mike Barker
 
 ;; Change log:
 ;; 2012.11.18
@@ -17,20 +17,23 @@
 ;; * Set the 'move to window' support to use the meta key
 ;; * Set cua selection rectangle mode -- C-Return to enable/cancel
 
-;;; User interface settings 
+;;; User interface settings
 (setq inhibit-splash-screen t)
 (blink-cursor-mode -1)
 (column-number-mode t)
 (show-paren-mode t)
 (tool-bar-mode -1)
 
-;; turn on move to window support (<meta-{up,down,left,right}>)
-(windmove-default-keybindings 'meta)
+;; turn on move to window support (<C-c-{up,down,left,right}>)
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
 
 ;; Configure cua mode to allow selection of text only.
 ;; This allows the C-x,c,v keys to retain their original funcitonality
 ;; but allow cua rectangle selection.
-(cua-selection-mode 1)			
+(cua-selection-mode 1)
 
 ;;; White-space configuration
 (setq-default show-trailing-whitespace t)
