@@ -48,8 +48,8 @@
       (message "Refreshing the package database")
       (package-refresh-contents))))
 
-;; Install a single package. 
-;; Only install a package that is not allready installed 
+;; Install a single package.
+;; Only install a package that is not allready installed
 ;; 2013-05-02 MRB - Ignore errors when installing packages. This
 ;; allows a system that does not have access to the various package
 ;; archives to continue to work and not stop the initialization of
@@ -63,7 +63,7 @@
 
 ;; Install a list of packages.
 (defun my-packages-install (my-package-list)
-  (loop for p in my-package-list do 
+  (loop for p in my-package-list do
 	(my-package-install p)))
 
 ;;; Initialize the emacs package manager
@@ -129,7 +129,7 @@
   (global-set-key (kbd "C-c m") 'iy-go-to-char)
   (global-set-key (kbd "C-c M") 'iy-go-to-char-backward))
 
-;;; magit: 
+;;; magit:
 ;; Git helper mode
 (my-packages-install '(magit))
 (eval-after-load 'magit '(require 'init-magit))
@@ -154,21 +154,25 @@
   (php+-mode-setup))
 
 ;;; powershell-mode:
+;; ** WARNING **
+;; this package in melpa is out of date, the latest is on emacswiki,
+;; moved to init-site-lisp.el
+;; ** WARNING **
 ;; allow you to edit powershell files.
-(my-package-install 'powershell-mode)
-(when (package-installed-p 'powershell-mode)
-  (require 'powershell-mode nil t)
-  (setq auto-mode-alist
-	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
+;; (my-package-install 'powershell-mode)
+;; (when (package-installed-p 'powershell-mode)
+;;   (require 'powershell-mode nil t)
+;;   (setq auto-mode-alist
+;; 	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
 
-;;; powershell: 
+;;; powershell:
 ;; allow an inferior powershell shell
 (my-packages-install '(powershell))
 (when (and (package-installed-p 'powershell)
 	   (string-equal "windows-nt" system-type))
   (require 'powershell nil t))
 
-;;; semx: 
+;;; semx:
 ;; Smex is a M-x enhancement that uses IDO.
 (my-packages-install '(smex))
 (when (package-installed-p 'smex)

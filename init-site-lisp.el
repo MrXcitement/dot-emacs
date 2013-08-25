@@ -3,7 +3,7 @@
 ;; Mike Barker <mike@thebarkers.com>
 ;; March 2nd, 2013
 
-;; Copyright (c) 2012 Mike Barker 
+;; Copyright (c) 2012 Mike Barker
 
 ;; Change log:
 ;; 2013.03.02
@@ -49,12 +49,28 @@ source file under ~/.emacs.d/site-lisp/name/"
 	(shell-command (format "svn co %s %s" url dir) "*site-lisp-svn*"))
       (add-to-list 'load-path dir))))
 
-;; "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el"
-(defun site-lisp-ensure-libs ()
-  (unless (> emacs-major-version 23)
-    (site-lisp-ensure-lib-from-url 'package "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el")
-    (require 'package)))
+;;; ensure that third party packages are downloaded and then loaded from the site-lisp subdirectory.
 
-(site-lisp-ensure-libs)
+;; package.el
+;; http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el
+;; allow emacs v23 to use the v24 package system.
+(unless (> emacs-major-version 23)
+  (site-lisp-ensure-lib-from-url 'package "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el")
+  (require 'package))
+
+;; powershell-mode.el
+;; http://www.emacswiki.org/emacs/download/PowerShell-Mode.el
+;; currently 8/2013 the version of this file on melpa is out of date.
+(site-lisp-ensure-lib-from-url 'powershell-mode "http://www.emacswiki.org/emacs/download/PowerShell-Mode.el")
+(autoload 'powershell-mode "powershell-mode" "Powershell mode." t)
+(setq auto-mode-alist (append '(("\\.ps1$" .
+				 powershell-mode)) auto-mode-alist))
+
+;; visual-basic-mode.el
+;; http://www.emacswiki.org/emacs/download/visual-basic-mode.el
+(site-lisp-ensure-lib-from-url 'visual-basic-mode "http://www.emacswiki.org/emacs/download/visual-basic-mode.el")
+(autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
+(setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\|vb\\)$" .
+				 visual-basic-mode)) auto-mode-alist))
 
 (provide 'init-site-lisp)
