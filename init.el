@@ -75,25 +75,34 @@
 
 ;; 2013-08-23 MRB
 ;; * Misc re-factoring var names, etc.
- 
+
+;; 2013-09-25 MRB
+;; * Turn on recent file mode (recentf-mode t)
+;; * Clean up some of the comments.
+
 ;;;
 ;; Load the cl package and disable byte compile warnings
-(eval-when-compile (require 'cl nil t))	
+(eval-when-compile (require 'cl nil t))
 (setq byte-compile-warnings '(cl-functions))
 
-;;; Initialize the environment
+;; Where is the emacs initialization directory
 (defvar init-emacs-root (expand-file-name "~/.emacs.d"))
 
 ;; Add personal directories to the START of load-path
 (add-to-list 'load-path init-emacs-root)
 
 ;; Aquamacs has it's own custom.el and some of the default settings in
-;; custom.el will cause aquamacs to have problems.
+;; custom.el will cause aquamacs to have problems. Also if Aquamacs puts
+;; it's customize settings in the same file, Emacs may have problems
+;; when it loads.
+
+;; Unless the current emacs is aquamaces,
+;; configure and load custom-file used for customize settings.
 (unless (featurep 'aquamacs)
-  ;; Configure and load custom-file used for customize settings.
   (setq custom-file (concat init-emacs-root "/custom.el"))
   (load custom-file 'noerror))
 
+;;; Initiaze the system/os environement variables
 (require 'init-environment nil t)
 
 ;;; Initialize keyboard
@@ -107,6 +116,7 @@
 (require 'init-hideshow nil t)
 (require 'init-ido nil t)
 ;;(require 'init-cedet nil t)
+(recentf-mode t) ;; Turn on recent file mode
 
 ;;; Initialize the spelling sub-system.
 (require 'init-spelling nil t)
