@@ -35,7 +35,7 @@
  '(paren-sexp-mode t)
  '(python-python-command "python")
  '(python-remove-cwd-from-path nil)
- '(safe-local-variable-values (quote ((require-final-newline . t))))
+ '(safe-local-variable-values (quote ((c-default-style . "bsd") (require-final-newline . t))))
  '(scroll-bar-mode (quote right))
  '(sentence-end-double-space nil)
  '(tool-bar-mode nil)
