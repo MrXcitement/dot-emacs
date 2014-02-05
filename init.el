@@ -142,5 +142,17 @@
 (require 'init-site-lisp nil t)
 (require 'init-packages nil t)
 
+;;; Operating Specific Initialization
+(cond
+ ;; Darwin (Mac OS X) gui custimzation
+ ((eq system-type 'darwin)
+  (setq dired-use-ls-dired nil)
+  )
+ ;; Linux gui customization
+ ((eq system-type 'gnu/linux)
+  )
+ ;; Windows customizations
+ ((eq system-type 'windows-nt)))
+
 (provide 'init)
 ;;; init.el ends here
