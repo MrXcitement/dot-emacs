@@ -9,6 +9,9 @@
 ;; 2013.09.25
 ;; * First release.
 
+;; 2014.02.11
+;; * Now set the current directory to the users home directory at startup
+
 ;; Needed for hunspell to work properly
 (setenv "DICTIONARY" "en_US")
 
@@ -25,5 +28,8 @@
 		 "/sbin")))
   (setenv "PATH" (mapconcat 'identity mypaths ":"))
   (setq exec-path mypaths))
+
+;; Force the current directory to be the users home dir
+(setq default-directory "~/")
 
 (provide 'init-environment-darwin)
