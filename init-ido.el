@@ -1,9 +1,9 @@
-;; init-ido.el -- Initialize the Interactively DO mode 
+;; init-ido.el -- Initialize the Interactively DO mode
 
 ;; Mike Barker <mike@thebarkers.com>
 ;; November 18, 2012
 
-;; Copyright (c) 2012 Mike Barker 
+;; Copyright (c) 2012 Mike Barker
 
 ;; Change log:
 ;; 2012.11.18
@@ -19,5 +19,3 @@
 (ido-mode 1)
 
 (provide 'init-ido)
-
-
