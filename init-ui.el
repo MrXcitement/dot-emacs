@@ -17,6 +17,9 @@
 ;; * Set the 'move to window' support to use the meta key
 ;; * Set cua selection rectangle mode -- C-Return to enable/cancel
 
+;; 2014-02-11 MRB
+;; * Clean up the whitespace settings.
+
 ;;; User interface settings
 (setq inhibit-splash-screen t)
 (blink-cursor-mode -1)
@@ -35,9 +38,13 @@
 ;; but allow cua rectangle selection.
 (cua-selection-mode 1)
 
-;;; White-space configuration
-(setq-default show-trailing-whitespace t)
-(setq indicate-empty-lines t)
+;;; Whitespace configuration
+(setq whitespace-line-column 80
+      whitespace-style '(face spaces tabs newline space-mark tab-mark
+			      newline-mark trailing lines-tail))
+
+;; activate minor whitespace mode when in python mode
+(add-hook 'python-mode-hook 'whitespace-mode)
 
 ;;; Window (gui) ui settings
 (when (window-system)
