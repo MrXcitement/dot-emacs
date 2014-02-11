@@ -38,166 +38,182 @@
 ;; * remove helm, since it does not support emacs 23 and replace with
 ;;   smex an ido interface to M-x.
 
+;; 2014-02-11 MRB
+;; * removed marmalade repository -- not currently using any packages from there.
+;; * overhauled the way packages are installed and configured.
+;; * packages are added to an install list and each package in this list is
+;;   installed at the end of this script.
+;; * packages have an after-init hook created that will init them when the
+;;   init.el has completed.
 
 ;;; Helper functions: my-package(s)-*
 
-;; Refresh the package database, but only if the package name is not found.
-(defun my-package-refresh-contents (name)
-  (let ((pkg-desc (assq name package-archive-contents)))
+;;; Refresh the package database, but only if the package name is not found.
+(defun init-packages--package-refresh-contents (package)
+  "Refresh the package database if the package name is not found."
+  (let ((pkg-desc (assq package package-archive-contents)))
     (unless pkg-desc
       (message "Refreshing the package database")
       (package-refresh-contents))))
 
-;; Install a single package.
-;; Only install a package that is not allready installed
-;; 2013-05-02 MRB - Ignore errors when installing packages. This
-;; allows a system that does not have access to the various package
-;; archives to continue to work and not stop the initialization of
-;; emacs.
-(defun my-package-install (my-package)
-  (unless (package-installed-p my-package)
-    (message "Installing package: %s" my-package)
+;;; Install a single package.
+;;; Only install a package that is not allready installed
+;;; 2013-05-02 MRB - Ignore errors when installing packages. This
+;;; allows a system that does not have access to the various package
+;;; archives to continue to work and not stop the initialization of
+;;; emacs.
+(defun init-packages--package-install (package)
+  "Install a single package."
+  (unless (package-installed-p package)
+    (message "Installing package: %s" package)
     (ignore-errors
-      (my-package-refresh-contents my-package)
-      (package-install my-package))))
+      (init-packages--package-refresh-contents package)
+      (package-install package))))
 
-;; Install a list of packages.
-(defun my-packages-install (my-package-list)
-  (loop for p in my-package-list do
-	(my-package-install p)))
-
-;;; Initialize the emacs package manager
-(defun my-packages-initialize-emacs ()
-  (message "Initializing emacs package manager...")
-  (package-initialize)
-  (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			   ("marmalade" . "http://marmalade-repo.org/packages/")
-			   ("melpa" . "http://melpa.milkbox.net/packages/")))
-  ;; Hook the package menu mode
-  (add-hook 'package-menu-mode-hook
-	    (lambda() (hl-line-mode 1))))
+;;; Install a list of packages.
+(defun init-packages--packages-install (package-list)
+  "Install a list of packages."
+  (loop for p in package-list do
+	(init-packages--package-install p)))
 
 ;;; Initialize the Package Manager
-;; I try to use the package manager and third party repositories for
-;; most of the additional packages that I use in my initialization.
-(my-packages-initialize-emacs)
+(message "init-package -- Initializing emacs package manager...")
 
-
+;;;
 ;;; Install and configure packages
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+;;; 			 ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+;;; Hook the package menu mode
+(add-hook 'package-menu-mode-hook
+	  (lambda() (hl-line-mode 1)))
+
+;;; Add packages to be installed to this list.
+(setq init-packages--packages '())
 
 ;;; auto-complete:
-(my-packages-install '(popup auto-complete))
-(when (package-installed-p 'auto-complete)
-  (when (require 'auto-complete-config nil t)
-    (ac-config-default)))
-
+(add-to-list 'init-packages--packages 'popup)
+(add-to-list 'init-packages--packages 'auto-complete)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (when (require 'auto-complete-config nil t)
+	      (ac-config-default))))
 
 ;;; buffer-move:
-(my-packages-install '(buffer-move))
-(when (package-installed-p 'buffer-move)
-  (global-set-key (kbd "C-c <S-up>")     'buf-move-up)
-  (global-set-key (kbd "C-c <S-down>")   'buf-move-down)
-  (global-set-key (kbd "C-c <S-left>")   'buf-move-left)
-  (global-set-key (kbd "C-c <S-right>")  'buf-move-right))
+(add-to-list 'init-packages--packages 'buffer-move)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (global-set-key (kbd "C-c <S-up>")     'buf-move-up)
+	    (global-set-key (kbd "C-c <S-down>")   'buf-move-down)
+	    (global-set-key (kbd "C-c <S-left>")   'buf-move-left)
+	    (global-set-key (kbd "C-c <S-right>")  'buf-move-right)))
 
 ;;; csharp-mode:
-(my-packages-install '(csharp-mode))
-(when (package-installed-p 'csharp-mode)
-  (setq auto-mode-alist
-	(append '(("\\.cs$" . csharp-mode)) auto-mode-alist)))
+(add-to-list 'init-packages--packages 'csharp-mode)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (setq auto-mode-alist
+		  (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))))
 
 ;;; git-gutter:
-;; show git status in the gutter of the file
-(my-package-install 'git-gutter)
-(when (package-installed-p 'git-gutter)
-  (global-git-gutter-mode t)
-  (global-set-key (kbd "C-c C-g") 'git-gutter:toggle)
-  (global-set-key (kbd "C-c g =") 'git-gutter:popup-hunk)
-  (global-set-key (kbd "C-c g p") 'git-gutter:previous-hunk)
-  (global-set-key (kbd "C-c g n") 'git-gutter:next-hunk)
-  (global-set-key (kbd "C-c g r") 'git-gutter:revert-hunk))
-
-;;; highlight-80+:
-(my-packages-install '(highlight-80+))
-(when (package-installed-p 'highlight-80+)
-  (highlight-80+-mode))
+;;; show git status in the gutter of the file
+(add-to-list 'init-packages--packages 'git-gutter)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (global-git-gutter-mode t)
+	    (global-set-key (kbd "C-c C-g") 'git-gutter:toggle)
+	    (global-set-key (kbd "C-c g =") 'git-gutter:popup-hunk)
+	    (global-set-key (kbd "C-c g p") 'git-gutter:previous-hunk)
+	    (global-set-key (kbd "C-c g n") 'git-gutter:next-hunk)
+	    (global-set-key (kbd "C-c g r") 'git-gutter:revert-hunk)))
 
 ;;; iy-go-to-char:
-;; provide the ability to quicly go/jump to a character.
-(my-package-install 'iy-go-to-char)
-(when (package-installed-p 'iy-go-to-char)
-  (global-set-key (kbd "C-c m") 'iy-go-to-char)
-  (global-set-key (kbd "C-c M") 'iy-go-to-char-backward))
+;;; provide the ability to quicly go/jump to a character.
+(add-to-list 'init-packages--packages 'iy-go-to-char)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (global-set-key (kbd "C-c m") 'iy-go-to-char)
+	    (global-set-key (kbd "C-c M") 'iy-go-to-char-backward)))
 
 ;;; magit:
-;; Git helper mode
-(my-packages-install '(magit))
-(eval-after-load 'magit '(require 'init-magit))
+;;; Git helper mode
+(add-to-list 'init-packages--packages 'magit)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (require 'init-magit nil t)))
 
 ;;; markdown:
-(my-packages-install '(markdown-mode))
-(when (package-installed-p 'markdown-mode)
-  (setq auto-mode-alist
-	(append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
-		   markdown-mode)) auto-mode-alist)))
+(add-to-list 'init-packages--packages 'markdown-mode)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (setq auto-mode-alist
+		  (append '(("\\.\\(text\\|markdown\\|md\\|mdw\\|mdt\\)$" .
+			     markdown-mode)) auto-mode-alist))))
 
 ;;; ntcmd:
-(my-package-install 'ntcmd)
-(when (package-installed-p 'ntcmd)
-  (setq auto-mode-alist
-	(append '(("\\.\\(bat\\|cmd\\)$" . ntcmd-mode)) auto-mode-alist)))
-
-;;; php+-mode:
-(my-packages-install '(php+-mode))
-(when (package-installed-p 'php+-mode)
-  (require 'php+-mode)
-  (php+-mode-setup))
+(add-to-list 'init-packages--packages 'ntcmd)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (setq auto-mode-alist
+		  (append '(("\\.\\(bat\\|cmd\\)$" .
+			     ntcmd-mode)) auto-mode-alist))))
 
 ;;; powershell-mode:
-;; ** WARNING **
-;; this package in melpa is out of date, the latest is on emacswiki,
-;; moved to init-site-lisp.el
-;; ** WARNING **
-;; allow you to edit powershell files.
-;; (my-package-install 'powershell-mode)
-;; (when (package-installed-p 'powershell-mode)
-;;   (require 'powershell-mode nil t)
-;;   (setq auto-mode-alist
-;; 	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
+;;; ** WARNING **
+;;; this package in melpa is out of date, the latest is on emacswiki,
+;;; moved to init-site-lisp.el
+;;; ** WARNING **
+;;; allow you to edit powershell files.
+;;; (my-package-install 'powershell-mode)
+;;; (when (package-installed-p 'powershell-mode)
+;;;   (require 'powershell-mode nil t)
+;;;   (setq auto-mode-alist
+;;; 	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
 
 ;;; powershell:
-;; allow an inferior powershell shell
-(my-packages-install '(powershell))
-(when (and (package-installed-p 'powershell)
-	   (string-equal "windows-nt" system-type))
-  (require 'powershell nil t))
+;;; on ms windows, allow an inferior powershell shell
+(when (string-equal "windows-nt" system-type)
+  (add-to-list 'init-packages--packages 'powershell)
+  (add-hook 'after-init-hook
+	    (lambda ()
+	      (require 'powershell nil t))))
 
 ;;; semx:
-;; Smex is a M-x enhancement that uses IDO.
-(my-packages-install '(smex))
-(when (package-installed-p 'smex)
-  (smex-initialize)
-  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-  (global-set-key (kbd "M-x") 'smex)
-  ;;(global-set-key (kbd "M-x") 'smex-major-mode-commands)
-  )
+;;; Smex is a M-x enhancement that uses IDO.
+(add-to-list 'init-packages--packages 'smex)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (smex-initialize)
+	    (global-set-key (kbd "M-x") 'smex)
+	    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+	    (global-set-key (kbd "C-c M-x") 'execute-extended-command)))
 
 ;;; undo-tree:
-(my-packages-install '(undo-tree))
-(when (package-installed-p 'undo-tree)
-  ;;(require 'undo-tree nil t)
-  (global-undo-tree-mode))
+;;; Show the undu history as a tree that can be navigated with the arrow keys
+(add-to-list 'init-packages--packages 'undo-tree)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (global-undo-tree-mode)))
 
 ;;; yasnippet:
-;; snippet template engine
-(my-package-install 'yasnippet)
-(when (package-installed-p 'yasnippet)
-  ;; Hook modes here to allow them to have a specific set of snippets available
-  ;; makefiles will now include text-mode snippets
-  (add-hook 'makefile-mode-hook
-	    (lambda()
-	      (make-local-variable 'yas-extra-modes)
-	      (setq yas-extra-modes 'text-mode)))
-  (yas-global-mode t))
+;;; snippet template engine
+(add-to-list 'init-packages--packages 'yasnippet)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (yas-global-mode t)
+	    ;; Hook modes here to allow them to have a specific set of snippets available
+	    ;; makefiles will now include text-mode snippets
+	    (add-hook 'makefile-mode-hook
+		      (lambda()
+			(make-local-variable 'yas-extra-modes)
+			(setq yas-extra-modes 'text-mode)))
+	    ))
+
+;;; Initialize the package manager and installed packages.
+(package-initialize)
+
+;;; Install any missing packages
+(init-packages--packages-install init-packages--packages)
 
 (provide 'init-packages)
