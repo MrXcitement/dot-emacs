@@ -89,7 +89,7 @@
 (defvar init-emacs-root (expand-file-name "~/.emacs.d"))
 
 ;; Add personal directories to the START of load-path
-(add-to-list 'load-path init-emacs-root)
+(add-to-list 'load-path (concat init-emacs-root "/lisp"))
 
 ;; Aquamacs has it's own custom.el and some of the default settings in
 ;; custom.el will cause aquamacs to have problems. Also if Aquamacs puts
