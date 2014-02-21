@@ -21,3 +21,5 @@ wget-log
 abbrev_defs
 eshell/history
 eshell/lastdir
+/ido.last
+/recentf
