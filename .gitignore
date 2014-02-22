@@ -19,7 +19,7 @@ ede-projects.el
 wget-log
 \#*#
 abbrev_defs
-eshell/history
-eshell/lastdir
-/ido.last
-/recentf
+emacs.d/eshell/history
+emacs.d/eshell/lastdir
+emacs.d/ido.last
+emacs.d/recentf
