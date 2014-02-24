@@ -1,11 +1,17 @@
-emacsrc
-=======
+My Emacs Configuration
+======================
 
-###My emacs configuration
-
-This is my constantly evolving Emacs configuration for Emacs 24 and greater.
+This is my constantly evolving Emacs configuration.
 
 To install the configuration on your system, clone this repository and then link the configuration direcotory (emacs.d) into your home directory. Detailed directions are listed below for Unix and Windows systems.
+
+Requirements:
+=============
+
+Emacs 24 or greater.
+
+Installation:
+=============
 
 For unix based OS: (Linux/Mac OS X/etc.)
 
