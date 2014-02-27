@@ -14,14 +14,21 @@
 ;; * Rename and cleanup of function names.
 ;; * Added code to ensure existing directories in the site-lisp directory are added to the
 ;;   load path so that we do not continue to download if the elisp is allready downloaded.
+;; 2014-02-26 MRB
+;; * BugFix: unable to download packages if the site-lisp directory
+;;   did not exist. Cleanup the utility functions so that the path is
+;;   only expanded when getting the user-emacs-directory.
 
 ;;; utility functions used to download elisp files.
 
+(defun init:site-lisp-dir ()
+  (expand-file-name "site-lisp" user-emacs-directory))
+
 (defun init:site-lisp-dir-for (name)
-  (expand-file-name (format "site-lisp/%s" name) user-emacs-directory))
+  (format "%s/%s" (init:site-lisp-dir) name))
 
 (defun init:site-lisp-library-el-path (name)
-  (expand-file-name (format "%s.el" name) (init:site-lisp-dir-for name)))
+  (format "%s/%s.el" (init:site-lisp-dir-for name) name))
 
 (defun init:site-lisp-download-module (name url)
   (let ((dir (init:site-lisp-dir-for name)))
@@ -44,7 +51,7 @@ source file under ~/.emacs.d/site-lisp/name/"
   (unless (init:site-lisp-library-loadable-p name)
     (byte-compile-file (init:site-lisp-download-module name url))))
 
-(defun init:site-lisp-add-subdirs-to-load-path (parent-dir)
+(defun init:add-subdirs-to-load-path (parent-dir)
   "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
   (let* ((default-directory parent-dir))
     (progn
@@ -55,13 +62,16 @@ source file under ~/.emacs.d/site-lisp/name/"
                    collecting (expand-file-name dir))
              load-path)))))
 
-;;; ensure that we have included any existing site-lisp directories in
-;;; the load-path so that we only download if we need to.
-(init:site-lisp-add-subdirs-to-load-path
- (expand-file-name "site-lisp/" user-emacs-directory))
-
 ;;; ensure that third party packages are downloaded and then loaded
 ;;; from the site-lisp subdirectory.
+(message "initialize the site-lisp packages directory...")
+
+;;; Make sure the site-lisp directory exists
+(unless (file-directory-p (init:site-lisp-dir))
+  (make-directory (init:site-lisp-dir)))
+
+;;; Add any pre-existing packages to the load path
+(init:add-subdirs-to-load-path (init:site-lisp-dir))
 
 ;; package.el
 ;; http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el
