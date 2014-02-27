@@ -1,4 +1,4 @@
-;; init-environment.el -- Initialize the environment
+;; init-environment.el -- Initialize the system environment
 
 ;; Mike Barker <mike@thebarkers.com>
 ;; November 18, 2012
@@ -18,6 +18,11 @@
 ;; 2013-09-25
 ;; System specific environement settings moved to init-environment-<system>
 ;; where <system> is: darwin, gnu-linux, windows-nt
+
+;; 2014-02-27 MRB
+;; * Added initialization message.
+
+(message "init-environment -- Initializing the system environment...")
 
 (cond
  ((string-equal "darwin" system-type)

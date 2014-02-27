@@ -80,79 +80,71 @@
 ;; * Turn on recent file mode (recentf-mode t)
 ;; * Clean up some of the comments.
 
+;; 2014-02-27 MRB
+;; * Moved in line code into separate packages in the lisp dir.
+;;   Created init-os and init-hooks modules to handle setting os
+;;   specific settings and create global hooks.
+;; * Removed hard coding the users emacs directory, now using
+;;   user-emacs-directory variable.
+;; * Error if Emacs earlier than version 24
+;; * Major cleanup of code.
+
 ;;;
 ;; Load the cl package and disable byte compile warnings
 (eval-when-compile (require 'cl nil t))
 (setq byte-compile-warnings '(cl-functions))
 
-;; Where is the emacs initialization directory
-(defvar init-emacs-root (expand-file-name "~/.emacs.d"))
-
-;; Add personal directories to the START of load-path
-(add-to-list 'load-path (concat init-emacs-root "/lisp"))
+;;; Emacs 24 or greater only
+(let ((minver 24))
+  (unless (>= emacs-major-version minver)
+    (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
 
 ;; Aquamacs has it's own custom.el and some of the default settings in
-;; custom.el will cause aquamacs to have problems. Also if Aquamacs puts
-;; it's customize settings in the same file, Emacs may have problems
-;; when it loads.
+;; custom.el will cause aquamacs to have problems. Also if Aquamacs
+;; puts it's customize settings in the same file, Emacs may have
+;; problems when it loads.
 
 ;; Unless the current emacs is aquamaces,
-;; configure and load custom-file used for customize settings.
 (unless (featurep 'aquamacs)
-  (setq custom-file (concat init-emacs-root "/custom.el"))
+  ;; configure and load custom-file used for customize settings.
+  (setq custom-file
+	(expand-file-name
+	 (concat user-emacs-directory "/custom.el")))
   (load custom-file 'noerror))
 
-;;; Initiaze the system/os environement variables
-(require 'init-environment nil t)
+;;; Initialize various aspects of emacs.
+;;; These scripts are located in the lisp subdirectory.
+(add-to-list 'load-path
+	     (expand-file-name (concat user-emacs-directory "/lisp")))
 
-;;; Initialize keyboard
-(require 'init-keymaps nil t)
-
-;;; Initialize the user interface
-(require 'init-ui nil t)
-
-;;; Initialize internal major and minor modes
+;;; Configure internal major modes
 (require 'init-eshell nil t)
 (require 'init-hideshow nil t)
 (require 'init-ido nil t)
-;;(require 'init-cedet nil t)
-(recentf-mode t) ;; Turn on recent file mode
-
-;;; Initialize the spelling sub-system.
 (require 'init-spelling nil t)
-
-;;; Initialize buffers to protect and where to put auto-save and backup files.
-;;(require 'init-protbufs nil t)
 (require 'init-save-backup nil t)
 
-;;; Initialize the server
+;;; Configure the system state
+(require 'init-environment nil t)
+(require 'init-os nil t)
+(require 'init-ui nil t)
+
+;;; Configure global settings
+(require 'init-hooks nil t)
+(require 'init-keymaps nil t)
 (require 'init-server nil t)
 
-;;; Hook major and minor modes
-
-;; Remove trailing whitespace when saving
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Highlight the current line when in dired mode.
-(add-hook 'dired-mode-hook
-	  (lambda()
-	    (hl-line-mode 1)))
-
-;;; Initialize 3rd party packages
+;;; Load and configure third party packages
 (require 'init-site-lisp nil t)
 (require 'init-packages nil t)
 
-;;; Operating Specific Initialization
-(cond
- ;; Darwin (Mac OS X) gui custimzation
- ((eq system-type 'darwin)
-  (setq dired-use-ls-dired nil)
-  )
- ;; Linux gui customization
- ((eq system-type 'gnu/linux)
-  )
- ;; Windows customizations
- ((eq system-type 'windows-nt)))
+;;; Load time
+(add-hook 'after-init-hook
+          (lambda ()
+            (message "init completed in %.2fms"
+                     (* 1000.0
+			(float-time
+			 (time-subtract after-init-time before-init-time))))))
 
 (provide 'init)
 ;;; init.el ends here

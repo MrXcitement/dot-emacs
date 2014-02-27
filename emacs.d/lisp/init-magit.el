@@ -3,7 +3,7 @@
 ;; Mike Barker <mike@thebarkers.com>
 ;; December 23, 2012
 
-;; Copyright (c) 2012 Mike Barker 
+;; Copyright (c) 2012 Mike Barker
 
 ;;; MIT License
 
@@ -35,6 +35,8 @@
 ;; * Whitespace in diffs by Magnar Sveen
 ;;   http://whattheemacsd.com/setup-magit.el-02.html
 
+(message "Initialize magit mode (init-magit)...")
+
 (when (require 'magit nil t)
 
   ;;; show full screen magit-status
@@ -42,6 +44,7 @@
     (window-configuration-to-register :magit-fullscreen)
     ad-do-it
     (delete-other-windows))
+
   ;;; restore windows when quit magit-status
   (defun magit-quit-session ()
     "Restore the previous window configuration and kills the magit buffer"
@@ -70,5 +73,3 @@
   (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
 
 (provide 'init-magit)
-
-

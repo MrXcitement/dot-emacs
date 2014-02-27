@@ -46,10 +46,14 @@
 ;; * packages have an after-init hook created that will init them when the
 ;;   init.el has completed.
 
-;;; Helper functions: my-package(s)-*
+;; 2014-02-27 MRB
+;; * Added elpy mode
+;; * Some code/comment reformatting
+
+;;; Helper functions: init:package(s)-*
 
 ;;; Refresh the package database, but only if the package name is not found.
-(defun init-packages--package-refresh-contents (package)
+(defun init:package-refresh-contents (package)
   "Refresh the package database if the package name is not found."
   (let ((pkg-desc (assq package package-archive-contents)))
     (unless pkg-desc
@@ -62,46 +66,46 @@
 ;;; allows a system that does not have access to the various package
 ;;; archives to continue to work and not stop the initialization of
 ;;; emacs.
-(defun init-packages--package-install (package)
+(defun init:package-install (package)
   "Install a single package."
   (unless (package-installed-p package)
     (message "Installing package: %s" package)
     (ignore-errors
-      (init-packages--package-refresh-contents package)
+      (init:package-refresh-contents package)
       (package-install package))))
 
 ;;; Install a list of packages.
-(defun init-packages--packages-install (package-list)
+(defun init:packages-install (package-list)
   "Install a list of packages."
   (loop for p in package-list do
-	(init-packages--package-install p)))
+	(init:package-install p)))
 
 ;;; Initialize the Package Manager
-(message "init-package -- Initializing emacs package manager...")
+(message "init-packages -- Initializing emacs package manager...")
 
-;;;
-;;; Install and configure packages
+;;; Initialize the package-archives to be used.
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-;;; 			 ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-;;; Hook the package menu mode
+;;; Higlight the selected package
 (add-hook 'package-menu-mode-hook
 	  (lambda() (hl-line-mode 1)))
 
-;;; Add packages to be installed to this list.
-(setq init-packages--packages '())
+;;; Add packages to be installed to this empty list.
+(setq init:my-packages '())
 
 ;;; auto-complete:
-(add-to-list 'init-packages--packages 'popup)
-(add-to-list 'init-packages--packages 'auto-complete)
+(add-to-list 'init:my-packages 'popup)
+(add-to-list 'init:my-packages 'auto-complete)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (when (require 'auto-complete-config nil t)
-	      (ac-config-default))))
+	      (ac-config-default)
+	      (ac-flyspell-workaround))))
 
 ;;; buffer-move:
-(add-to-list 'init-packages--packages 'buffer-move)
+(add-to-list 'init:my-packages 'buffer-move)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (global-set-key (kbd "C-c <S-up>")     'buf-move-up)
@@ -110,7 +114,7 @@
 	    (global-set-key (kbd "C-c <S-right>")  'buf-move-right)))
 
 ;;; csharp-mode:
-(add-to-list 'init-packages--packages 'csharp-mode)
+(add-to-list 'init:my-packages 'csharp-mode)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (setq auto-mode-alist
@@ -118,7 +122,7 @@
 
 ;;; git-gutter:
 ;;; show git status in the gutter of the file
-(add-to-list 'init-packages--packages 'git-gutter)
+(add-to-list 'init:my-packages 'git-gutter)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (global-git-gutter-mode t)
@@ -130,7 +134,7 @@
 
 ;;; iy-go-to-char:
 ;;; provide the ability to quicly go/jump to a character.
-(add-to-list 'init-packages--packages 'iy-go-to-char)
+(add-to-list 'init:my-packages 'iy-go-to-char)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (global-set-key (kbd "C-c m") 'iy-go-to-char)
@@ -138,13 +142,13 @@
 
 ;;; magit:
 ;;; Git helper mode
-(add-to-list 'init-packages--packages 'magit)
+(add-to-list 'init:my-packages 'magit)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (require 'init-magit nil t)))
 
 ;;; markdown:
-(add-to-list 'init-packages--packages 'markdown-mode)
+(add-to-list 'init:my-packages 'markdown-mode)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (setq auto-mode-alist
@@ -152,36 +156,30 @@
 			     markdown-mode)) auto-mode-alist))))
 
 ;;; ntcmd:
-(add-to-list 'init-packages--packages 'ntcmd)
+(add-to-list 'init:my-packages 'ntcmd)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (setq auto-mode-alist
 		  (append '(("\\.\\(bat\\|cmd\\)$" .
 			     ntcmd-mode)) auto-mode-alist))))
 
-;;; powershell-mode:
 ;;; ** WARNING **
+;;; powershell-mode:
 ;;; this package in melpa is out of date, the latest is on emacswiki,
 ;;; moved to init-site-lisp.el
 ;;; ** WARNING **
-;;; allow you to edit powershell files.
-;;; (my-package-install 'powershell-mode)
-;;; (when (package-installed-p 'powershell-mode)
-;;;   (require 'powershell-mode nil t)
-;;;   (setq auto-mode-alist
-;;; 	(append '(("\\.ps1$" . powershell-mode)) auto-mode-alist)))
 
 ;;; powershell:
 ;;; on ms windows, allow an inferior powershell shell
 (when (string-equal "windows-nt" system-type)
-  (add-to-list 'init-packages--packages 'powershell)
+  (add-to-list 'init:my-packages 'powershell)
   (add-hook 'after-init-hook
 	    (lambda ()
 	      (require 'powershell nil t))))
 
 ;;; semx:
 ;;; Smex is a M-x enhancement that uses IDO.
-(add-to-list 'init-packages--packages 'smex)
+(add-to-list 'init:my-packages 'smex)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (smex-initialize)
@@ -191,18 +189,18 @@
 
 ;;; undo-tree:
 ;;; Show the undu history as a tree that can be navigated with the arrow keys
-(add-to-list 'init-packages--packages 'undo-tree)
+(add-to-list 'init:my-packages 'undo-tree)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (global-undo-tree-mode)))
 
 ;;; yasnippet:
 ;;; snippet template engine
-(add-to-list 'init-packages--packages 'yasnippet)
+(add-to-list 'init:my-packages 'yasnippet)
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (yas-global-mode t)
-	    ;; Hook modes here to allow them to have a specific set of snippets available
+ ;;; Hook modes here to allow them to have a specific set of snippets available
 	    ;; makefiles will now include text-mode snippets
 	    (add-hook 'makefile-mode-hook
 		      (lambda()
@@ -210,10 +208,18 @@
 			(setq yas-extra-modes 'text-mode)))
 	    ))
 
+;;; elpy:
+;;; Emacs Python Development Environment
+(add-to-list 'init:my-packages 'elpy)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (elpy-enable)
+	    (elpy-clean-modeline)))
+
 ;;; Initialize the package manager and installed packages.
 (package-initialize)
 
 ;;; Install any missing packages
-(init-packages--packages-install init-packages--packages)
+(init:packages-install init:my-packages)
 
 (provide 'init-packages)

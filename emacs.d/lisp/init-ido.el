@@ -13,7 +13,12 @@
 ;; * No longer use custom ido-execute-command to use ido matching with
 ;;   M-x. Now using the package Smex to provide this capability.
 
+;; 2014-02-27 MRB
+;; * Added initialization message
+
 ;;; Interactively do things
+(message "init-ido -- Initializing the ido mode...")
+
 (setq ido-enable-flex-matching t) ; enable fuzzy matching
 (setq ido-everywhere t)
 (ido-mode 1)

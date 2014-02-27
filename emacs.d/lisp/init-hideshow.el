@@ -3,13 +3,19 @@
 ;; Mike Barker <mike@thebarkers.com>
 ;; November 19, 2012
 
-;; Copyright (c) 2012 Mike Barker 
+;; Copyright (c) 2012 Mike Barker
 
 ;; Change log:
 ;; 2012.11.19
 ;; * First release.
 
-;;; setup selective display for hidding
+;; 2014-02-27 MRB
+;; * Added initialization message
+;; * Some reformatting of the code.
+
+;;; setup selective display for hiding
+(message "init-hideshow -- Initialize the hideshow minor mode...")
+
 (defun toggle-selective-display (column)
       (interactive "P")
       (set-selective-display
@@ -30,6 +36,19 @@
 (global-set-key (kbd "C-+") 'toggle-hiding)
 (global-set-key (kbd "C-=") 'toggle-selective-display)
 
+;;; handle hidding html and nxml documents
+(defun my-nxml-forward-sexp-func (pos)
+  (my-nxml-forward-element))
+
+(defun my-nxml-forward-element ()
+  (let ((nxml-sexp-element-flag)
+  	(outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b"))
+    (setq nxml-sexp-element-flag (not (looking-at "<!--")))
+    (unless (looking-at outline-regexp)
+      (condition-case nil
+  	  (nxml-forward-balanced-item 1)
+  	(error nil)))))
+
 ;;; nxml-mode config to hide/show blocks
 (add-to-list 'hs-special-modes-alist
 	     '(nxml-mode
@@ -48,19 +67,6 @@
 	       "<!--"
 	       sgml-skip-tag-forward
 	       nil))
-
-(defun my-nxml-forward-sexp-func (pos)
-  (my-nxml-forward-element))
-
-(defun my-nxml-forward-element ()
-  (let ((nxml-sexp-element-flag)
-  	(outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b"))
-    (setq nxml-sexp-element-flag (not (looking-at "<!--")))
-    (unless (looking-at outline-regexp)
-      (condition-case nil
-  	  (nxml-forward-balanced-item 1)
-  	(error nil)))))
-
 
 ;;; hook into the following major modes
 (add-hook 'c-mode-common-hook   'hs-minor-mode)

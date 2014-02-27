@@ -3,13 +3,17 @@
 ;; Mike Barker <mike@thebarkers.com>
 ;; November 18, 2012
 
-;; Copyright (c) 2012 Mike Barker 
+;; Copyright (c) 2012 Mike Barker
 
 ;; Change log:
 ;; 2012.11.18
 ;; * First release.
 
+;; 2014-02-27 MRB
+;; * Added initialization message
+
 ;;; Key mappings
+(message "init-keymaps -- Initialize custom keymaps...")
 
 ;; Compilation output, next/previous error. (Alt-Page Up/Alt-Page Down)
 (global-set-key (kbd "<M-prior>") 'previous-error)

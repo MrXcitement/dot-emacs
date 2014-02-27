@@ -12,6 +12,11 @@
 ;; 2014.02.11
 ;; * Now set the current directory to the users home directory at startup
 
+;; 2014-02-27 MRB
+;; * Added initialization message
+
+(message "Initializing the darwin environment (init-environment-darwin)...")
+
 ;; Needed for hunspell to work properly
 (setenv "DICTIONARY" "en_US")
 

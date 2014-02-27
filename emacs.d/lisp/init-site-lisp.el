@@ -8,19 +8,25 @@
 ;; Change log:
 ;; 2013.03.02
 ;; * First release.
+
 ;; 2013.05.01
 ;; * This code was lifted from Steve Purcell's init-site-lisp at https://github.com/purcell/emacs.d
+
 ;; 2014.21.02
 ;; * Rename and cleanup of function names.
 ;; * Added code to ensure existing directories in the site-lisp directory are added to the
 ;;   load path so that we do not continue to download if the elisp is allready downloaded.
+
 ;; 2014-02-26 MRB
 ;; * BugFix: unable to download packages if the site-lisp directory
-;;   did not exist. Cleanup the utility functions so that the path is
-;;   only expanded when getting the user-emacs-directory.
+;;   did not exist.
+;; * Cleanup the utility functions so that the path is only expanded
+;;   when getting the user-emacs-directory.
+
+;; 2014-02-27 MRB
+;; * Some code/comments reformatting
 
 ;;; utility functions used to download elisp files.
-
 (defun init:site-lisp-dir ()
   (expand-file-name "site-lisp" user-emacs-directory))
 
@@ -64,7 +70,7 @@ source file under ~/.emacs.d/site-lisp/name/"
 
 ;;; ensure that third party packages are downloaded and then loaded
 ;;; from the site-lisp subdirectory.
-(message "initialize the site-lisp packages directory...")
+(message "init-site-lisp -- Initialize the site-lisp packages directory...")
 
 ;;; Make sure the site-lisp directory exists
 (unless (file-directory-p (init:site-lisp-dir))

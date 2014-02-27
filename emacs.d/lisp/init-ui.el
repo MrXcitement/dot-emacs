@@ -20,7 +20,14 @@
 ;; 2014-02-11 MRB
 ;; * Clean up the whitespace settings.
 
+;; 2014-02-27 MRB
+;; * Added initialization message
+;; * Minor code/comment reformatting
+
 ;;; User interface settings
+
+(message "init-ui -- Initialize the user interface...")
+
 (setq inhibit-splash-screen t)
 (blink-cursor-mode -1)
 (column-number-mode t)
@@ -51,14 +58,15 @@
 
   ;; System specific ui settings
   (cond
-   ;; Darwin (Mac OS X) gui custimzation
+
+   ;; Darwin (Mac OS X) customization
    ((eq system-type 'darwin)
     (set-face-font 'default "Droid Sans Mono Slashed 14")
     (global-set-key (kbd "s-=") 'text-scale-increase)
     (global-set-key (kbd "s--") 'text-scale-decrease)
     (global-set-key (kbd "s-0") (lambda () (interactive) (text-scale-set 0))))
 
-   ;; Linux gui customization
+   ;; Linux customization
    ((eq system-type 'gnu/linux)
     (set-face-font 'default "Monospace 11"))
 
