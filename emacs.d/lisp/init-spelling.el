@@ -12,10 +12,13 @@
 ;; 2014-02-27 MRB
 ;; * Added initialize message
 ;; * Hook python mode to use flyspell programming mode
+;; * Now set the ispell-local-dictionary-alist to fix hunspell not
+;;   working on windows.
 
 (message "init-spelling -- Initialize the spelling mode...")
 
 (setq ispell-program-name "hunspell")
+(setq ispell-local-dictionary-alist (quote ((nil "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "en_US") nil utf-8))))
 
 ;; Turn flyspell programming mode on
 (add-hook 'emacs-lisp-mode-hook
