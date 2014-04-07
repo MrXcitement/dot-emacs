@@ -96,11 +96,10 @@
 (setq init:my-packages '())
 
 ;;; auto-complete:
-(add-to-list 'init:my-packages 'popup)
-(add-to-list 'init:my-packages 'auto-complete)
+(add-to-list 'init:my-packages 'auto-complete )
 (add-hook 'after-init-hook
 	  (lambda ()
-	    (when (require 'auto-complete-config nil t)
+	    (when (require 'auto-complete-config nil )
 	      (ac-config-default)
 	      (ac-flyspell-workaround))))
 
@@ -199,8 +198,8 @@
 (add-to-list 'init:my-packages 'yasnippet)
 (add-hook 'after-init-hook
 	  (lambda ()
-	    (yas-global-mode t)
- ;;; Hook modes here to allow them to have a specific set of snippets available
+	    (yas-global-mode)
+	    ;; Hook modes here to allow them to have a specific set of snippets available.
 	    ;; makefiles will now include text-mode snippets
 	    (add-hook 'makefile-mode-hook
 		      (lambda()
