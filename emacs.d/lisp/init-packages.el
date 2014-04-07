@@ -215,6 +215,15 @@
 	    (elpy-enable)
 	    (elpy-clean-modeline)))
 
+;;; lua-mode:
+;;; lua major mode
+(add-to-list 'init:my-packages 'lua-mode)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (setq auto-mode-alist
+		  (append '(("\\.\\(lua\\)$" .
+			     lua-mode)) auto-mode-alist))))
+
 ;;; Initialize the package manager and installed packages.
 (package-initialize)
 
