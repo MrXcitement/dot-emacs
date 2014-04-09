@@ -101,7 +101,18 @@
 	  (lambda ()
 	    (when (require 'auto-complete-config nil )
 	      (ac-config-default)
-	      (ac-flyspell-workaround))))
+	      (ac-flyspell-workaround)
+	      ;; Enable auto-complete in ielm mode
+	      (add-hook 'ielm-mode-hook
+			(lambda()
+			  (setq ac-sources '(ac-source-functions
+					     ac-source-variables
+					     ac-source-features
+					     ac-source-symbols
+					     ac-source-words-in-same-mode-buffers))
+			  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
+			  (auto-complete-mode 1)))
+	      )))
 
 ;;; buffer-move:
 (add-to-list 'init:my-packages 'buffer-move)
