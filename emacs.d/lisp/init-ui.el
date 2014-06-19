@@ -46,12 +46,11 @@
 (cua-selection-mode 1)
 
 ;;; Whitespace configuration
-(setq whitespace-line-column 80
-      whitespace-style '(face spaces tabs newline space-mark tab-mark
-			      newline-mark trailing lines-tail))
+(setq whitespace-line-column 80 whitespace-style
+      '(face newline space-mark tab-mark newline-mark trailing lines-tail))
 
 ;; activate minor whitespace mode when in python mode
-(add-hook 'python-mode-hook 'whitespace-mode)
+;;(add-hook 'python-mode-hook 'whitespace-mode)
 
 ;;; Window (gui) ui settings
 (when (window-system)
