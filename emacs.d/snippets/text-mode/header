@@ -1,18 +1,17 @@
 # -*- mode: snippet -*-
-# name: standard header template
-# key: hhead
+# name: header template
+# key: !head
 # --
-${1:Filename}
-${2:Description}
+${1:`(file-name-nondirectory (buffer-file-name))`} -- ${2:Simple Description}
+${3:Full Description}
 
 `user-full-name` <`user-mail-address`>
 `(format-time-string "%B %e, %Y")`
 
-Copyright (c) `(format-time-string "%Y")` `user-full-name` 
+Copyright (c) `(format-time-string "%Y")` by `user-full-name`
 
 Change log:
 `(format-time-string "%Y.%m.%d")`
 * First release.
-
+`(comment-region (point-min) (point-at-eol 0))`
 $0
-
