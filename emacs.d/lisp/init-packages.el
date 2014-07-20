@@ -235,6 +235,24 @@
 		  (append '(("\\.\\(lua\\)$" .
 			     lua-mode)) auto-mode-alist))))
 
+;;; malabar-mode:
+;; A better java mode
+;; when mvn is available, load this mode
+(when (mrb:eshell-command-exist-p "mvn")
+  (add-to-list 'init:my-packages 'malabar-mode)
+  (add-hook 'after-init-hook
+	    (lambda ()
+	      (setq semantic-default-submodes
+		    '(global-semantic-idle-scheduler-mode
+		      global-semanticdb-minor-mode
+		      global-semantic-idle-summary-mode
+		      global-semantic-mru-bookmark-mode))
+	      (semantic-mode 1)
+	      (require 'malabar-mode)
+	      (setq malabar-groovy-lib-dir "~/lib/malabar/lib")
+	      (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+	      )))
+
 ;;; Initialize the package manager and installed packages.
 (package-initialize)
 
