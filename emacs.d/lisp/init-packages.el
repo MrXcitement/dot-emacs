@@ -246,6 +246,18 @@
 	      (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 	      )))
 
+;;; emacs-eclim
+;; emacs frontend to eclim server
+;; (add-to-list 'init:my-packages 'emacs-eclim)
+;; (add-hook 'after-init-hook
+;; 	  (lambda ()
+;; 	    (require 'eclim)
+;; 	    (global-eclim-mode)
+;; 	    (add-to-list 'eclim-eclipse-dirs
+;; 			 '("/Users/Shared/Applications/adt/eclipse"))
+;; 	    (setq eclim-executable
+;; 		  "/Users/Shared/Applications/adt/eclipse/eclim")))
+
 ;;; Initialize the package manager and installed packages.
 (package-initialize)
 
