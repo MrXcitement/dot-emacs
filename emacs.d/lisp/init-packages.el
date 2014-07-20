@@ -209,14 +209,7 @@
 (add-to-list 'init:my-packages 'yasnippet)
 (add-hook 'after-init-hook
 	  (lambda ()
-	    (yas-global-mode)
-	    ;; Hook modes here to allow them to have a specific set of snippets available.
-	    ;; makefiles will now include text-mode snippets
-	    (add-hook 'makefile-mode-hook
-		      (lambda()
-			(make-local-variable 'yas-extra-modes)
-			(setq yas-extra-modes 'text-mode)))
-	    ))
+	    (yas-global-mode)))
 
 ;;; elpy:
 ;;; Emacs Python Development Environment
