@@ -118,6 +118,7 @@
 	     (expand-file-name (concat user-emacs-directory "/lisp")))
 
 ;;; Configure internal major modes
+(require 'init-defuns nil t)
 (require 'init-eshell nil t)
 (require 'init-hideshow nil t)
 (require 'init-ido nil t)

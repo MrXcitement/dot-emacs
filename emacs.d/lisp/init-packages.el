@@ -209,14 +209,7 @@
 (add-to-list 'init:my-packages 'yasnippet)
 (add-hook 'after-init-hook
 	  (lambda ()
-	    (yas-global-mode)
-	    ;; Hook modes here to allow them to have a specific set of snippets available.
-	    ;; makefiles will now include text-mode snippets
-	    (add-hook 'makefile-mode-hook
-		      (lambda()
-			(make-local-variable 'yas-extra-modes)
-			(setq yas-extra-modes 'text-mode)))
-	    ))
+	    (yas-global-mode)))
 
 ;;; elpy:
 ;;; Emacs Python Development Environment
@@ -234,6 +227,36 @@
 	    (setq auto-mode-alist
 		  (append '(("\\.\\(lua\\)$" .
 			     lua-mode)) auto-mode-alist))))
+
+;;; malabar-mode:
+;; A better java mode
+;; when mvn is available, load this mode
+(when (mrb:eshell-command-exist-p "mvn")
+  (add-to-list 'init:my-packages 'malabar-mode)
+  (add-hook 'after-init-hook
+	    (lambda ()
+	      (setq semantic-default-submodes
+		    '(global-semantic-idle-scheduler-mode
+		      global-semanticdb-minor-mode
+		      global-semantic-idle-summary-mode
+		      global-semantic-mru-bookmark-mode))
+	      (semantic-mode 1)
+	      (require 'malabar-mode)
+	      (setq malabar-groovy-lib-dir "~/lib/malabar/lib")
+	      (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+	      )))
+
+;;; emacs-eclim
+;; emacs frontend to eclim server
+;; (add-to-list 'init:my-packages 'emacs-eclim)
+;; (add-hook 'after-init-hook
+;; 	  (lambda ()
+;; 	    (require 'eclim)
+;; 	    (global-eclim-mode)
+;; 	    (add-to-list 'eclim-eclipse-dirs
+;; 			 '("/Users/Shared/Applications/adt/eclipse"))
+;; 	    (setq eclim-executable
+;; 		  "/Users/Shared/Applications/adt/eclipse/eclim")))
 
 ;;; Initialize the package manager and installed packages.
 (package-initialize)
