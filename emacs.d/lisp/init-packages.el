@@ -217,7 +217,8 @@
 (add-hook 'after-init-hook
 	  (lambda ()
 	    (elpy-enable)
-	    (elpy-clean-modeline)))
+	    ;; (elpy-clean-modeline)
+	    ))
 
 ;;; lua-mode:
 ;;; lua major mode
