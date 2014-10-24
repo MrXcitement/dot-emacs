@@ -1,9 +1,11 @@
 My Emacs Configuration
 ======================
 This is my constantly evolving Emacs configuration.
+
 Requirements
 ============
 Emacs 24 or greater.
+
 Installation
 ============
 To install the configuration on your system, clone this repository and then link the configuration direcotory (emacs.d) into your home directory. Detailed directions are listed below for Unix and Windows systems.

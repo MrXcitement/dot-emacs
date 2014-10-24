@@ -1,11 +1,11 @@
 ;;; init.el --- My Emacs initialization file
 
-;; This file is NOT part of GNU Emacs
-
-;; Mike Barker <mike@thebarkers.com>
-;; October 10, 2007
-
 ;; Copyright (c) 2012 Mike Barker
+
+;; Author: Mike Barker <mike@thebarkers.com>
+;; Created: October 10, 2007
+
+;; This file is NOT part of GNU Emacs
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a
 ;; copy of this software and associated documentation files (the "Software"),
@@ -89,8 +89,11 @@
 ;; * Error if Emacs earlier than version 24
 ;; * Major cleanup of code.
 
-;;;
-;; Load the cl package and disable byte compile warnings
+
+;;; 2014.10.22 MRB
+;; * Emacs Modular Configuration
+
+;;; Load the cl package and disable byte compile warnings
 (eval-when-compile (require 'cl nil t))
 (setq byte-compile-warnings '(cl-functions))
 
@@ -99,45 +102,13 @@
   (unless (>= emacs-major-version minver)
     (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
 
-;; Aquamacs has it's own custom.el and some of the default settings in
-;; custom.el will cause aquamacs to have problems. Also if Aquamacs
-;; puts it's customize settings in the same file, Emacs may have
-;; problems when it loads.
-
-;; Unless the current emacs is aquamaces,
-(unless (featurep 'aquamacs)
-  ;; configure and load custom-file used for customize settings.
-  (setq custom-file
-	(expand-file-name
-	 (concat user-emacs-directory "/custom.el")))
-  (load custom-file 'noerror))
-
-;;; Initialize various aspects of emacs.
-;;; These scripts are located in the lisp subdirectory.
-(add-to-list 'load-path
-	     (expand-file-name (concat user-emacs-directory "/lisp")))
-
-;;; Configure internal major modes
-(require 'init-defuns nil t)
-(require 'init-eshell nil t)
-(require 'init-hideshow nil t)
-(require 'init-ido nil t)
-(require 'init-spelling nil t)
-(require 'init-save-backup nil t)
-
-;;; Configure the system state
-(require 'init-environment nil t)
-(require 'init-os nil t)
-(require 'init-ui nil t)
-
-;;; Configure global settings
-(require 'init-hooks nil t)
-(require 'init-keymaps nil t)
-(require 'init-server nil t)
-
-;;; Load and configure third party packages
-(require 'init-site-lisp nil t)
-(require 'init-packages nil t)
+;;; Emacs Modular Configuration
+;; This module will merge all of the files in the config directory into a
+;; config file to be loaded at startup.
+(load-file (concat user-emacs-directory "emacs-modular-configuration.el"))
+(unless (file-exists-p emc-config-file)
+  (emc-merge-config-files))
+(load-file (concat user-emacs-directory emc-config-file))
 
 ;;; Load time
 (add-hook 'after-init-hook

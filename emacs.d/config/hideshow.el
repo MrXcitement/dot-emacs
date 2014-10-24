@@ -1,29 +1,17 @@
-;; init-hideshow.el -- initialize the hs minor mode
+;;; hideshow.el --- initialize the hs minor mode
 
-;; Mike Barker <mike@thebarkers.com>
-;; November 19, 2012
+;; Copyright (C) 2014 Mike Barker
 
-;; Copyright (c) 2012 Mike Barker
+;; Author: Mike Barker <mike@thebarkers.com>
+;; Created: October 23, 2014
 
-;; Change log:
-;; 2012.11.19
-;; * First release.
+;; This file is not part of GNU Emacs.
 
-;; 2014-02-27 MRB
-;; * Added initialization message
-;; * Some reformatting of the code.
+(message "hideshow -- Initialize the hideshow minor mode...")
 
-;;; setup selective display for hiding
-(message "init-hideshow -- Initialize the hideshow minor mode...")
-
-(defun toggle-selective-display (column)
-      (interactive "P")
-      (set-selective-display
-       (or column
-           (unless selective-display
-             (1+ (current-column))))))
-
-(defun toggle-hiding (column)
+;;; toggle hiding block on/off
+;; will revert to using selective display if it fails
+(defun mrb:toggle-hiding (column)
       (interactive "P")
       (if hs-minor-mode
           (if (condition-case nil
@@ -32,15 +20,23 @@
               (hs-show-all))
         (toggle-selective-display column)))
 
-;;; global keymaps for toggling hiding
-(global-set-key (kbd "C-+") 'toggle-hiding)
-(global-set-key (kbd "C-=") 'toggle-selective-display)
+;;; toggle selective display of to the current column
+(defun mrb:toggle-selective-display (column)
+      (interactive "P")
+      (set-selective-display
+       (or column
+           (unless selective-display
+             (1+ (current-column))))))
 
-;;; handle hidding html and nxml documents
-(defun my-nxml-forward-sexp-func (pos)
-  (my-nxml-forward-element))
+;;; global key maps for toggling hiding
+(global-set-key (kbd "C-=") 'mrb:toggle-hiding)
+(global-set-key (kbd "C-+") 'mrb:toggle-selective-display)
 
-(defun my-nxml-forward-element ()
+;;; rules used to handle hiding nxml sections
+(defun mrb:nxml-forward-sexp-func (pos)
+  (mrb:nxml-forward-element))
+
+(defun mrb:nxml-forward-element ()
   (let ((nxml-sexp-element-flag)
   	(outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b"))
     (setq nxml-sexp-element-flag (not (looking-at "<!--")))
@@ -55,8 +51,8 @@
 	       "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
 	       ""
 	       "<!--"                        ;; won't work on its own; uses syntax table
-	       my-nxml-forward-sexp-func
-	       nil                           ;; my-nxml-hs-adjust-beg-func
+	       mrb:nxml-forward-sexp-func
+	       nil                           ;; mrb:nxml-hs-adjust-beg-func
 	       ))
 
 ;;; html-mode config to hide/show blocks
@@ -78,4 +74,4 @@
 (add-hook 'nxml-mode-hook       'hs-minor-mode)
 (add-hook 'html-mode-hook       'hs-minor-mode)
 
-(provide 'init-hideshow)
+;;; hideshow.el ends here
