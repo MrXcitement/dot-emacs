@@ -9,6 +9,7 @@ tutorial/
 url/
 
 # Files to ignore
+*elc
 tramp
 *~
 .DS_Store
@@ -23,4 +24,5 @@ emacs.d/eshell/history
 emacs.d/eshell/lastdir
 emacs.d/ido.last
 emacs.d/recentf
-/emacs.d/srecode-map.el
+emacs.d/srecode-map.el
+config.el
