@@ -1,7 +1,9 @@
 ;;; magit.el --- initialize the magit package
 (mrb:package-install 'magit)
-(eval-after-load 'magit-autoloads
-    (progn
+(message "package: magit installing...")
+(add-hook 'after-init-hook
+  (lambda()
+    (message "package: magit initializing...")
       (require 'magit nil t)
 
       ;; show full screen magit-status
@@ -35,4 +37,4 @@
 	(setq magit-diff-options (remove "-w" magit-diff-options))
 	(magit-refresh))
 
-      (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)))
+      (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)) t)

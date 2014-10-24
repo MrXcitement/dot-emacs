@@ -1,8 +1,9 @@
 ;;; auto-complete:
 (mrb:package-install 'auto-complete)
-(eval-after-load 'auto-complete-autoloads
-  (progn
-    (message "*** auto-complete-autoloads has been loaded ***")
+(message "package: auto-complete installing...")
+(add-hook 'after-init-hook
+  (lambda()
+    (message "package: auto-complete initializing...")
     (require 'auto-complete-config)
     (ac-config-default)
 
@@ -21,4 +22,4 @@
     ;; 				   ac-source-words-in-same-mode-buffers))
     ;; 		(add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
     ;; 		(auto-complete-mode 1)))
-    ))
+    ) t)

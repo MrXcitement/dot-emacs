@@ -1,5 +1,7 @@
 ;;; undo-tree:
 (mrb:package-install 'undo-tree)
+(message "package: undu-tree installing...")
 (add-hook 'after-init-hook
-	  (lambda ()
-	    (global-undo-tree-mode)))
+  (lambda()
+    (message "package: undu-tree initializing...")
+    (global-undo-tree-mode)) t)
