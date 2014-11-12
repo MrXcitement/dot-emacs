@@ -7,6 +7,10 @@
 
 ;; This file is not part of GNU Emacs.
 
+;;; History:
+;; 2014.11.12
+;; * removed loading message
+
 ;;; utility functions used to download elisp files.
 (defun mrb:site-lisp-dir ()
   (expand-file-name "site-lisp" user-emacs-directory))
@@ -51,7 +55,6 @@ source file under ~/.emacs.d/site-lisp/name/"
 
 ;;; ensure that third party packages are downloaded and then loaded
 ;;; from the site-lisp subdirectory.
-(message "site-lisp -- Initialize the site-lisp packages directory...")
 
 ;;; Make sure the site-lisp directory exists
 (unless (file-directory-p (mrb:site-lisp-dir))

@@ -7,7 +7,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "hooks -- Initialize global hooks...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 ;;; Remove trailing whitespace when saving
 (add-hook 'before-save-hook 'delete-trailing-whitespace)

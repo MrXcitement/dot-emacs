@@ -7,6 +7,10 @@
 
 ;; This file is not part of GNU Emacs.
 
+;;; History:
+;; 2014.11.12
+;; * removed loading message
+
 ;;; Refresh the package database, but only if the package name is not found.
 (defun mrb:package-refresh-contents (package)
   "Refresh the package database if the package name is not found."
@@ -36,18 +40,17 @@
 	(mrb:package-install p)))
 
 ;;; Initialize the Package Manager
-(message "packages -- Initializing emacs package manager...")
 
-;;; Initialize the package-archives to be used.
+;; Initialize the package-archives to be used.
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-;;; Higlight the selected package
+;; Higlight the selected package
 (add-hook 'package-menu-mode-hook
 	  (lambda() (hl-line-mode 1)))
 
-;;; Initialize the package manager and installed packages.
+;; Initialize the package manager and installed packages.
 (package-initialize)
 
 ;;; pacakages.el ends here.

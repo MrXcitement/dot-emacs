@@ -7,7 +7,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "ui -- Initialize the user interface...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 (setq inhibit-splash-screen t)
 (blink-cursor-mode -1)

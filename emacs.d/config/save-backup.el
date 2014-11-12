@@ -6,7 +6,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "save-backup -- Initialize auto save and backup modes...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 ;;; Set the temp directory to be a directory in the users home
 ;;; directory. ~/tmp/emacs

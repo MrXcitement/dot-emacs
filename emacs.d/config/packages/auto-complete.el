@@ -1,9 +1,7 @@
 ;;; auto-complete:
 (mrb:package-install 'auto-complete)
-(message "package: auto-complete installing...")
 (add-hook 'after-init-hook
   (lambda()
-    (message "package: auto-complete initializing...")
     (require 'auto-complete-config)
     (ac-config-default)
     (auto-complete-mode 1)) t)

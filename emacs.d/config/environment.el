@@ -7,11 +7,12 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "environment -- Initializing the system environment...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 ;;; setup darwin (mac os x) environment setup here...
 (when (eq system-type 'darwin)
-  (message "...initializing the darwin environment (environment-darwin)...")
 
   ;; Setup the path.
   (let ((mypaths '("~/bin"
@@ -35,11 +36,9 @@
   (setq ls-lisp-use-insert-directory-program nil))
 
 ;;; setup linux environment here...
-(when (eq system-type 'linux)
-  (message "...seting up linux environment..."))
+(when (eq system-type 'linux))
 
 ;;; setup window environment here...
-(when (eq system-type 'windows-nt)
-  (message "...setting up windows environment..."))
+(when (eq system-type 'windows-nt))
 
 ;;; environment.el ends here.

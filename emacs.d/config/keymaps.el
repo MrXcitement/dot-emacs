@@ -7,7 +7,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "keymaps -- Initialize global custom keymaps...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 ;;; Compilation output, next/previous error. (<alt-{page up/page down}>)
 (global-set-key (kbd "<M-prior>") 'previous-error)
@@ -21,15 +23,12 @@
 
 ;;; Darwin (Mac OS X) key mappings
 (when (eq system-type 'darwin)
-  (message "...initialize darwin custom keymaps...")
   (global-set-key [kp-delete] 'delete-char)) ; Make fn-del delete forward
 
 ;;; Linux key mappings
-(when (eq system-type 'linux)
-  (message "...initialize linux custom keymaps..."))
+(when (eq system-type 'linux))
 
 ;;; Windows key mappings
-(when (eq system-type 'windows-nt)
-  (message "...initialize windows custom keymaps..."))
+(when (eq system-type 'windows-nt))
 
 ;;; keymaps.el ends here.

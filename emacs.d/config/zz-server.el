@@ -7,19 +7,18 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "server -- Initialize the emacs server process...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 ;;; Darwin (Mac OS X)
-(when (eq system-type 'darwin)
-  (message "...darwin settings for the  server process..."))
+(when (eq system-type 'darwin))
 
 ;;; Gnu/linux
-(when (eq system-type 'gnu/linux)
-  (message "...darwin settings for the  server process..."))
+(when (eq system-type 'gnu/linux))
 
 ;;; Windows
 (when (eq system-type 'windows-nt)
-  (message "...darwin settings for the  server process...")
   (setq server-auth-dir (getenv "TMP")))
 
 ;;; Start a server for client processes, but only if one is not already running

@@ -7,7 +7,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "ido -- Initializing the ido mode...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 (setq ido-enable-flex-matching t) ; enable fuzzy matching
 (setq ido-everywhere t)

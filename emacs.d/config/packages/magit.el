@@ -1,6 +1,5 @@
 ;;; magit.el --- initialize the magit package
 (mrb:package-install 'magit)
-(message "package: magit installing...")
 (eval-after-load 'magit
   '(progn
      ;; show full screen magit-status

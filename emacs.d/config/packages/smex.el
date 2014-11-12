@@ -1,9 +1,7 @@
 ;;; semx:
 (mrb:package-install 'smex)
-(message "package: smex installing...")
 (add-hook 'after-init-hook
   (lambda()
-    (message "package: smex initializing...")
     (smex-initialize)
     (global-set-key (kbd "M-x") 'smex)
     (global-set-key (kbd "M-X") 'smex-major-mode-commands)

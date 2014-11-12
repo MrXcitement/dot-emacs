@@ -7,7 +7,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "spelling -- Initialize the spelling mode...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 (setq ispell-program-name "hunspell")
 

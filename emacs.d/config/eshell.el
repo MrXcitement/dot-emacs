@@ -7,7 +7,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "eshell -- Initializing the eshell mode...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 ;;; Needed for colors to have an effect
 (setq eshell-highlight-prompt nil)

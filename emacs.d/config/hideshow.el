@@ -7,7 +7,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "hideshow -- Initialize the hideshow minor mode...")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 ;;; toggle hiding block on/off
 ;; will revert to using selective display if it fails

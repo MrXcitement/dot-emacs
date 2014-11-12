@@ -7,7 +7,9 @@
 
 ;; This file is not part of GNU Emacs.
 
-(message "protect-buffers -- protect the system buffers from being killed.")
+;;; History:
+;; 2014.11.12
+;; * removed loading message
 
 (save-excursion
   (set-buffer "*scratch*")
