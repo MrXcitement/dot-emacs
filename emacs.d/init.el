@@ -93,6 +93,9 @@
 ;;; 2014.10.22 MRB
 ;; * Emacs Modular Configuration
 
+;;; 2014.11.12 MRB
+;; * Simplified modular configuration setup
+
 ;;; Load the cl package and disable byte compile warnings
 (eval-when-compile (require 'cl nil t))
 (setq byte-compile-warnings '(cl-functions))
@@ -103,12 +106,27 @@
     (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
 
 ;;; Emacs Modular Configuration
-;; This module will merge all of the files in the config directory into a
-;; config file to be loaded at startup.
-(load-file (concat user-emacs-directory "emacs-modular-configuration.el"))
-(unless (file-exists-p emc-config-file)
-  (emc-merge-config-files))
-(load-file (concat user-emacs-directory emc-config-file))
+;; In an effort to make my emacs configuration more modular I am using
+;; the information found at the Emacs Wiki's Dot Emacs Modular article,
+;; http://www.emacswiki.org/emacs-en/DotEmacsModular
+;; I can now add initialization files configuration directory and they
+;; will be loaded at startup.
+;; TODO: Add the capability to byte compile updated files and load the
+;; byte-compiled file
+(defun mrb:load-directory (directory)
+  "Load recursively all `.el' files in DIRECTORY."
+  (dolist (element (directory-files-and-attributes directory nil nil nil))
+    (let* ((path (car element))
+           (fullpath (concat directory "/" path))
+           (isdir (car (cdr element)))
+           (ignore-dir (or (string= path ".") (string= path ".."))))
+      (cond
+       ((and (eq isdir t) (not ignore-dir))
+        (mrb:load-directory fullpath))
+       ((and (eq isdir nil) (string= (substring path -3) ".el"))
+        (load (file-name-sans-extension fullpath)))))))
+
+(mrb:load-directory "~/.emacs.d/config")
 
 ;;; Load time
 (add-hook 'after-init-hook
