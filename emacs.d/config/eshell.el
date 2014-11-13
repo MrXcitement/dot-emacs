@@ -26,37 +26,52 @@
 (if (boundp 'ehsell-ask-to-save-history)
     (setq eshell-ask-to-save-history 'always))
 
-(defun mrb:pwd-tilde-for-home (pwd)
+;;; Git helper functions
+(defun mrb:git-p (pwd)
+  "Is git installed and is pwd a git project."
+  (> (length (and (eshell-search-path "git")
+		  (locate-dominating-file pwd ".git"))) 0))
+
+(defun mrb:git-status-cmd (pwd)
+  "Run the git status command on the pwd."
+  (split-string (shell-command-to-string
+		 (concat "cd " pwd  " && git status --porcelain"))))
+
+(defun mrb:git-branch-cmd (pwd)
+  "Run the git branch command on the pwd."
+  (split-string (shell-command-to-string
+		 (concat "cd " pwd " && git branch --no-color --no-colum"))))
+
+(defun mrb:git-branch-name (pwd)
+  "Get the branch name for pwd."
+  (let ((git-branch (mrb:git-branch-cmd pwd)))
+	(if (> (length git-branch) 2)
+	    (nth 1 git-branch)
+	  ("no branch"))))
+
+;;; Configure the prompt
+(defun mrb:prompt-tilde-for-home (pwd)
   "Returns a path with the home directory replaced with a tilde"
-  (interactive)
   (let* ((home (expand-file-name (getenv "HOME")))
 	 (home-len (length home)))
     (if (and (>= (length pwd) home-len)
 	     (equal home (substring pwd 0 home-len)))
 	(concat "~" (substring pwd home-len)) pwd)))
 
-
-(defun mrb:pwd-current-git-branch (pwd)
-  "When not running on windows.
-Return the current git branch as a string,
+(defun mrb:prompt-git-branch-name (pwd)
+  "Return the current git branch as a string,
 or the empty string if pwd is not in a git repo,
 or the git command is not found."
-  (interactive)
-  (when (not (eq system-type 'windows-nt))
-    (if (and (eshell-search-path "git")
-	     (locate-dominating-file pwd ".git"))
-	(progn
-	  (let ((git-output (shell-command-to-string
-			     (concat "cd " pwd " && git branch | grep '\\*' | sed -e 's/^\\* //'"))))
-	    (concat "("
-		    (if (> (length git-output) 0)
-			(substring git-output 0 -1)
-		      "(no branch)")
-		    ") ")))
-      (concat ""))))
+  (if (mrb:git-p pwd)
+      (let ((git-output (mrb:git-branch-name pwd)))
+	(when (> (length git-output))
+	  (concat "(" git-output ")")))
+    (concat "")))
 
-;;; Configure the prompt
-;; Put a new line after the path and before the prompt
+(defun mrb:prompt-root-or-user (pwd)
+  "Different prompt chars for root or user."
+  (if (= (user-uid) 0) "#" "$"))
+
 (setq eshell-prompt-function
       (lambda nil
 	(concat
@@ -64,10 +79,10 @@ or the git command is not found."
 	 "@"
 	 (system-name)
 	 ": "
-	 (mrb:pwd-tilde-for-home(eshell/pwd))
+	 (mrb:prompt-tilde-for-home(eshell/pwd))
 	 "\n"
-	 (mrb:pwd-current-git-branch(eshell/pwd))
-	 (if (= (user-uid) 0) "#" "$")
+	 (mrb:prompt-git-branch-name(eshell/pwd))
+	 (mrb:prompt-root-or-user(eshell/pwd))
 	 " ")))
 
 ;;; eshell.el ends here.
