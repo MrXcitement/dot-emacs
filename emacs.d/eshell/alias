@@ -1,8 +1,10 @@
-alias ef ediff-files $*
-alias ffow find-file-other-window $1
-alias ffof find-file-other-frame $1
-alias ff find-file $1
-alias gitnp git --no-pager $*
-alias ll ls -l $*
-alias la ls -a $*
+alias diow dired-other-window $1
+alias di dired $1
 alias lla ls -la $*
+alias la ls -a $*
+alias ll ls -l $*
+alias gitnp git --no-pager $*
+alias ff find-file $1
+alias ffof find-file-other-frame $1
+alias ffow find-file-other-window $1
+alias ef ediff-files $*
