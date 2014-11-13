@@ -40,7 +40,7 @@
 (defun mrb:git-branch-cmd ()
   "Run the git branch command in the cwd and return a list of branches."
   (split-string (shell-command-to-string
-		 "git branch --no-color --no-colum") "\n"))
+		 "git branch --no-color") "\n"))
 
 (defun mrb:git-branch-name ()
   "Get the current branch name in the cwd."
