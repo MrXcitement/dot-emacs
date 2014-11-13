@@ -37,17 +37,19 @@
   (split-string (shell-command-to-string
 		 (concat "cd " pwd  " && git status --porcelain"))))
 
-(defun mrb:git-branch-cmd (pwd)
-  "Run the git branch command on the pwd."
+(defun mrb:git-branch-cmd (dir)
+  "Run the git branch command on the dir and return a list of branches."
   (split-string (shell-command-to-string
-		 (concat "cd " pwd " && git branch --no-color --no-colum"))))
+		 (concat "cd " dir " && git branch --no-color --no-colum")) "\n"))
 
-(defun mrb:git-branch-name (pwd)
-  "Get the branch name for pwd."
-  (let ((git-branch (mrb:git-branch-cmd pwd)))
-	(if (> (length git-branch) 2)
-	    (nth 1 git-branch)
-	  ("no branch"))))
+(defun mrb:git-branch-name (dir)
+  "Get the current branch name for dir."
+  (let ((git-branches (mrb:git-branch-cmd dir)))
+    (if (> (length git-branches) 0)
+	(dolist (branch git-branches)
+	  (when (string-prefix-p "*" branch)
+	    (return (substring branch 2 nil))))
+      (concat "no branch"))))
 
 ;;; Configure the prompt
 (defun mrb:prompt-tilde-for-home (pwd)
@@ -80,8 +82,9 @@ or the git command is not found."
 	 (system-name)
 	 ": "
 	 (mrb:prompt-tilde-for-home(eshell/pwd))
-	 "\n"
+	 " "
 	 (mrb:prompt-git-branch-name(eshell/pwd))
+	 "\n"
 	 (mrb:prompt-root-or-user(eshell/pwd))
 	 " ")))
 
