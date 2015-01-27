@@ -1,6 +1,7 @@
 ;;; csharp-mode:
-(mrb:package-install 'csharp-mode)
-(add-hook 'after-init-hook
-  (lambda()
-    (setq auto-mode-alist
-	  (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))) t)
+
+;; Provide support for editing C Sharp code.
+
+(use-package csharp-mode
+  :ensure t
+  :mode "\\.cs\\'")

@@ -1,5 +1,8 @@
-;;; elpy:
-(mrb:package-install 'elpy)
-(add-hook 'after-init-hook
-  (lambda()
-    (elpy-enable)) t)
+;;; elpy
+
+;; Provides a python programming toolset.
+
+(use-package elpy
+  :ensure t
+  :config
+    (elpy-enable))

@@ -1,6 +1,8 @@
-;;; powershell:
+;;; powershell
+
+;; Provide an powershell shell buffer when on windows.
 (when (eq system-type 'windows-nt)
-  (mrb:package-install 'powershell)
-  (add-hook 'after-init-hook
-    (lambda()
-      (require 'powershell nil t))) t)
+  (use-package powershell
+    :ensure t
+    :config
+    (require 'powershell nil t)))

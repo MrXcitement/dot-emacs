@@ -1,8 +1,12 @@
 ;;; semx:
-(mrb:package-install 'smex)
-(add-hook 'after-init-hook
-  (lambda()
-    (smex-initialize)
-    (global-set-key (kbd "M-x") 'smex)
-    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-    (global-set-key (kbd "C-c M-x") 'execute-extended-command)) t)
+
+;; Provide a smart M-x enhancement for Emacs using Ido.
+
+(use-package smex
+  :ensure t
+  :bind
+  (("M-x" . smex)
+   ("M-X" . smex-major-mode-commands)
+   ("C-c M-x" . execute-extended-command))
+  :config
+  (smex-initialize))
