@@ -1,6 +1,11 @@
 ;;; iy-go-to-char:
-(mrb:package-install 'iy-go-to-char)
-(add-hook 'after-init-hook
-  (lambda()
-    (global-set-key (kbd "C-c m") 'iy-go-to-char)
-    (global-set-key (kbd "C-c M") 'iy-go-to-char-backward)) t)
+
+;; Provide the ability to go from point to the first occurence of a
+;; specified character and then continue to the next and subsequent
+;; occurences.
+
+(use-package iy-go-to-char
+  :ensure t
+  :bind
+    (("C-c m" . iy-go-to-char)
+     ("C-c M" . iy-go-to-char-backward)))
