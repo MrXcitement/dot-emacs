@@ -126,7 +126,7 @@
        ((and (eq isdir nil) (string= (substring path -3) ".el"))
         (load (file-name-sans-extension fullpath)))))))
 
-(mrb:load-directory "~/.emacs.d/config")
+(mrb:load-directory "~/.emacs.d/init.d")
 
 ;;; Load time
 (add-hook 'after-init-hook
