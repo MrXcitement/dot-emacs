@@ -1,4 +1,4 @@
-;;; save-backup.el --- Initialize autosave and backup settings
+;;; init-save-backup.el --- Initialize autosave and backup settings
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -9,6 +9,10 @@
 ;;; History:
 ;; 2014.11.12
 ;; * removed loading message
+
+
+;;; Remove trailing whitespace from lines when saving files
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;; Set the temp directory to be a directory in the users home
 ;;; directory. ~/tmp/emacs
@@ -30,4 +34,5 @@
   (setq auto-save-file-name-transforms
 	`(("\\`/?\\([^/]*/\\)*\\([^/]*\\)\\'" ,user-temp-directory t))))
 
-;;; save-backup.el ends here.
+(provide 'init-save-backup)
+;;; init-save-backup.el ends here.

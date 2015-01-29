@@ -1,4 +1,4 @@
-;;; environment.el --- Initialize the system environment
+;;; init-environment.el --- Initialize the system environment
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -11,6 +11,7 @@
 ;; 2014.11.12
 ;; * removed loading message
 
+
 ;;; setup darwin (mac os x) environment setup here...
 (when (eq system-type 'darwin)
 
@@ -41,4 +42,6 @@
 ;;; setup window environment here...
 (when (eq system-type 'windows-nt))
 
-;;; environment.el ends here.
+(provide 'init-environment)
+
+;;; init-environment.el ends here.

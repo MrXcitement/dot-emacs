@@ -1,4 +1,4 @@
-;;; eshell.el --- Initialize the emacs shell
+;;; init-eshell.el --- Initialize the emacs shell
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -11,6 +11,7 @@
 ;; 2014.11.12
 ;; * removed loading message
 
+
 ;;; Needed for colors to have an effect
 (setq eshell-highlight-prompt nil)
 
@@ -26,6 +27,7 @@
 (if (boundp 'ehsell-ask-to-save-history)
     (setq eshell-ask-to-save-history 'always))
 
+
 ;;; Git helper functions
 (defun mrb:git-p ()
   "Is git installed and the cwd is a git project."
@@ -51,6 +53,7 @@
 	    (return (substring branch 2 nil))))
       (concat "no branch"))))
 
+
 ;;; Configure the prompt
 (defun mrb:prompt-tilde-for-home (dir)
   "Returns a path with the home directory replaced with a tilde"
@@ -88,4 +91,5 @@ or the git command is not found."
 	 (mrb:prompt-root-or-user)
 	 " ")))
 
-;;; eshell.el ends here.
+(provide 'init-eshell)
+;;; init-eshell.el ends here.

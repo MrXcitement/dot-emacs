@@ -1,4 +1,4 @@
-;;; zz-server.el --- Initialize the server
+;;; init-server.el --- Initialize the server
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -11,6 +11,7 @@
 ;; 2014.11.12
 ;; * removed loading message
 
+
 ;;; Darwin (Mac OS X)
 (when (eq system-type 'darwin))
 
@@ -26,4 +27,5 @@
 (unless (server-running-p)
   (server-start))
 
-;;; zz-server.el ends here.
+(provide 'init-server)
+;;; init-server.el ends here.

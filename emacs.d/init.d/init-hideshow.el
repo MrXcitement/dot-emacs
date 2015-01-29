@@ -1,4 +1,4 @@
-;;; hideshow.el --- initialize the hs minor mode
+;;; init-hideshow.el --- initialize the hs minor mode
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -11,6 +11,7 @@
 ;; 2014.11.12
 ;; * removed loading message
 
+
 ;;; toggle hiding block on/off
 ;; will revert to using selective display if it fails
 (defun mrb:toggle-hiding (column)
@@ -34,6 +35,7 @@
 (global-set-key (kbd "C-=") 'mrb:toggle-hiding)
 (global-set-key (kbd "C-+") 'mrb:toggle-selective-display)
 
+
 ;;; rules used to handle hiding nxml sections
 (defun mrb:nxml-forward-sexp-func (pos)
   (mrb:nxml-forward-element))
@@ -66,6 +68,7 @@
 	       sgml-skip-tag-forward
 	       nil))
 
+
 ;;; hook into the following major modes
 (add-hook 'c-mode-common-hook   'hs-minor-mode)
 (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
@@ -76,4 +79,5 @@
 (add-hook 'nxml-mode-hook       'hs-minor-mode)
 (add-hook 'html-mode-hook       'hs-minor-mode)
 
-;;; hideshow.el ends here
+(provide 'init-hideshow)
+;;; init-hideshow.el ends here

@@ -1,4 +1,4 @@
-;;; packages.el --- Initialize the package manager and the installed packages
+;;; init-packages.el --- Initialize the package manager and the installed packages
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -13,10 +13,13 @@
 ;; 2015.01.27
 ;; * require the use-package package to handle package management
 
+
 ;; Initialize the package-archives to be used.
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ("marmalade" . "http://marmalade-repo.org/packages/")
-			 ("melpa" . "http://stable.melpa.org/packages/")))
+(setq
+ package-archives
+ '(("gnu" .       "http://elpa.gnu.org/packages/")
+   ("marmalade" . "http://marmalade-repo.org/packages/")
+   ("melpa" .     "http://melpa.org/packages/")))
 
 ;; Higlight the selected package
 (add-hook 'package-menu-mode-hook
@@ -31,4 +34,9 @@
   (package-install 'use-package))
 (require 'use-package nil t)
 
-;;; pacakages.el ends here.
+;; Load package scripts defined in package.d
+(mrb:load-directory
+ (expand-file-name "init.d/packages.d" user-emacs-directory))
+
+(provide 'init-packages)
+;;; init-packages.el ends here.

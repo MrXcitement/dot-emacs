@@ -1,4 +1,4 @@
-;;; site-lisp.el --- Initialize the site-lisp directory
+;;; init-site-lisp.el --- Initialize the site-lisp directory
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -11,6 +11,7 @@
 ;; 2014.11.12
 ;; * removed loading message
 
+
 ;;; utility functions used to download elisp files.
 (defun mrb:site-lisp-dir ()
   (expand-file-name "site-lisp" user-emacs-directory))
@@ -53,6 +54,7 @@ source file under ~/.emacs.d/site-lisp/name/"
                    collecting (expand-file-name dir))
              load-path)))))
 
+
 ;;; ensure that third party packages are downloaded and then loaded
 ;;; from the site-lisp subdirectory.
 
@@ -60,7 +62,12 @@ source file under ~/.emacs.d/site-lisp/name/"
 (unless (file-directory-p (mrb:site-lisp-dir))
   (make-directory (mrb:site-lisp-dir)))
 
-;;; Add any pre-existing packages to the load path
+;;; Load custom site-lisp packages
+(mrb:load-directory
+ (expand-file-name "init.d/site-lisp.d" user-emacs-directory))
+
+;;; Add any site-lisp packages to the load path
 (mrb:add-subdirs-to-load-path (mrb:site-lisp-dir))
 
-;;; site-lisp.el ends here.
+(provide 'init-site-lisp)
+;;; init-site-lisp.el ends here.

@@ -1,4 +1,4 @@
-;; spelling.el -- initialize the spelling sub system.
+;; init-spelling.el -- initialize the spelling sub system.
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -11,6 +11,7 @@
 ;; 2014.11.12
 ;; * removed loading message
 
+
 (setq ispell-program-name "hunspell")
 
 (when (eq system-type 'darwin)
@@ -26,4 +27,5 @@
 ;; (add-hook 'python-mode-hook
 ;; 	  (lambda () (flyspell-prog-mode)))
 
-;; spelling.el ends here.
+(provide 'init-spelling)
+;; init-spelling.el ends here.

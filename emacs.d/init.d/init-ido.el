@@ -1,4 +1,4 @@
-;;; protect-buffers.el --- Protect system buffers
+;;; init-ido.el --- Initialize the Interactively DO mode
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -11,10 +11,10 @@
 ;; 2014.11.12
 ;; * removed loading message
 
-(save-excursion
-  (set-buffer "*scratch*")
-  (emacs-lock-mode 'kill)
-  (set-buffer "*Messages*")
-  (emacs-lock-mode 'kill))
+
+(setq ido-enable-flex-matching t) ; enable fuzzy matching
+(setq ido-everywhere t)
+(ido-mode 1)
 
-;;; protect-buffers.el
+(provide 'init-ido)
+;;; init-ido.el ends here.

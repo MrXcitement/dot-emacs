@@ -1,4 +1,4 @@
-;;; keymaps.el --- Initialize global and system specific key maps
+;;; init-keymaps.el --- Initialize global and system specific key maps
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -10,6 +10,12 @@
 ;;; History:
 ;; 2014.11.12
 ;; * removed loading message
+
+
+;; Configure cua mode to allow selection of text only.
+;; This allows the C-x,c,v keys to retain their original functionality
+;; but allow cua rectangle selection.
+(cua-selection-mode 1)
 
 ;;; Compilation output, next/previous error. (<alt-{page up/page down}>)
 (global-set-key (kbd "<M-prior>") 'previous-error)
@@ -31,4 +37,5 @@
 ;;; Windows key mappings
 (when (eq system-type 'windows-nt))
 
-;;; keymaps.el ends here.
+(provide 'init-keymaps)
+;;; init-keymaps.el ends here.

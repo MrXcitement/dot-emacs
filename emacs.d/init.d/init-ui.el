@@ -1,4 +1,4 @@
-;;; ui.el --- Initialize the user interface
+;;; init-ui.el --- Initialize the user interface
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -11,21 +11,23 @@
 ;; 2014.11.12
 ;; * removed loading message
 
+
+;;; General ui settings
 (setq inhibit-splash-screen t)
 (blink-cursor-mode -1)
 (column-number-mode t)
 (show-paren-mode t)
 (tool-bar-mode -1)
 
-;; Configure cua mode to allow selection of text only.
-;; This allows the C-x,c,v keys to retain their original functionality
-;; but allow cua rectangle selection.
-(cua-selection-mode 1)
-
 ;;; Whitespace display configuration
 (setq whitespace-line-column 80 whitespace-style
       '(face newline space-mark tab-mark newline-mark trailing lines-tail))
 
+;;; Highlight the current line when in dired mode.
+(add-hook 'dired-mode-hook
+	  (lambda() (hl-line-mode 1)))
+
+
 ;;; Window (gui) ui settings
 (when (window-system)
 
@@ -53,6 +55,7 @@
   (when (eq system-type 'windows-nt)
     (set-face-font 'default "Lucida Console 10")))
 
+
 ;;; Terminal ui settings
 (unless (window-system)
   (menu-bar-mode -1)
@@ -60,4 +63,5 @@
   (if (string-match-p "xterm" (tty-type))
       (define-key input-decode-map "\e[1;2A" [S-up])))
 
-;;; ui.el ends here.
+(provide 'init-ui)
+;;; init-ui.el ends here.
