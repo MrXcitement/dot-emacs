@@ -6,5 +6,6 @@
 
 ;; When the leim command is available, install/config cider
 (when (mrb:eshell-command-exist-p "lein")
-  (use-package cider
-    :ensure t))
+  (package-install 'cider))
+
+(use-package cider)
