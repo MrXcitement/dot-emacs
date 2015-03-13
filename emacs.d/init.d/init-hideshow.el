@@ -21,7 +21,7 @@
                   (hs-toggle-hiding)
                 (error t))
               (hs-show-all))
-        (toggle-selective-display column)))
+        (mrb:toggle-selective-display column)))
 
 ;;; toggle selective display of to the current column
 (defun mrb:toggle-selective-display (column)
