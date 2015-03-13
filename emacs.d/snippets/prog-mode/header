@@ -5,8 +5,6 @@
 ${1:`(file-name-nondirectory (buffer-file-name))`} --- ${2:Simple Description}
 ${3:Full Description}
 
-Copyright (C) `(format-time-string "%Y")` by `user-full-name`
-
 Author: `user-full-name` <`user-mail-address`>
 Created: `(format-time-string "%B %e, %Y")`
 
