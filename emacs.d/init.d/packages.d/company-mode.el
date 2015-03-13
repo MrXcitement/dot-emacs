@@ -4,7 +4,5 @@
 
 (use-package company
   :ensure t
-  :bind
-  ("<C-tab>" . company-complete-common)
-  :config
-  (global-company-mode))
+  ;;:bind ("<C-tab>" . company-complete-common)
+  )
