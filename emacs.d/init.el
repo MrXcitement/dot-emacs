@@ -71,7 +71,6 @@
 
 ;; initialize third party packages
 (require 'init-packages nil t)
-(require 'init-site-lisp nil t)
 
 (provide 'init)
 ;;; init.el ends here
