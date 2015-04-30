@@ -8,6 +8,9 @@
 # 2014.11.12 MRB
 # * Added code to install scripts based on system type.
 
+# 2015.04.30 MRB
+# * No longer check for links before creating, just force create them.
+
 echo "$(basename $0)"
 echo "Make sympolic links in the users home directory to the bash config files and directories"
 
@@ -20,9 +23,7 @@ for FILE in ${FSPEC}; do
 	    mv ~/.${FILE} ~/.${FILE}.backup
 	fi
     fi
-    if ! [ -h ~/.${FILE} ]; then
-	ln -sv ${DIR}/${FILE} ~/.${FILE}
-    fi
+    ln -fsv ${DIR}/${FILE} ~/.${FILE}
 done
 
 # handle system specific install
