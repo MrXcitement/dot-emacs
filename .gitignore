@@ -1,5 +1,5 @@
 # Directories to ignore
-auto-install*/
+auto-install/
 auto-save-list/
 elpa/
 site-lisp/
