@@ -27,6 +27,9 @@
 (add-hook 'dired-mode-hook
 	  (lambda() (hl-line-mode 1)))
 
+;;; Default theme
+(load-theme 'tango-dark)
+
 
 ;;; Window (gui) ui settings
 (when (window-system)
