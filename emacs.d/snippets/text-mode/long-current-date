@@ -1,0 +1,15 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: long current date
+# key: lcdate
+# binding: direct-keybinding
+# type: command
+# --
+
+(let* ((oi '(("1" . "st")("2" . "nd")("3" . "rd")("21" . "st")("22" . "nd")("23" . "rd")("31" . "st")))
+       (day (format-time-string "%d"))
+       (day-oi (assoc-default day oi)))
+  (insert (format "%s %s%s, %s"
+	  (format-time-string "%B")
+	  day
+	  (if day-oi day-oi "th")
+	  (format-time-string "%Y"))))
