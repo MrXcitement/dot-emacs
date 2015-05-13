@@ -37,4 +37,7 @@
       (magit-refresh))
 
     ;; use W to cycle through whitespace handling when diffing
-    (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)))
+    (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+
+    ;; do not show data loss warning
+    (setq magit-last-seen-setup-instructions "1.4.0")))
