@@ -12,7 +12,10 @@
   :config
   (progn
     (ac-config-default)
-    (global-auto-complete-mode -1)
+    (global-auto-complete-mode t)
+    (setq ac-auto-start 2)
+    (setq ac-ignore-case nil)
+
     (add-hook 'flyspell-mode
     	      (lambda()
     		(ac-flyspell-workaround)))
@@ -26,10 +29,3 @@
     				   ac-source-words-in-same-mode-buffers))
     		(add-to-list 'ac-modes 'inferior-emacs-lisp-mode)))
     ))
-
-;;; ac-html auto completion
-(use-package ac-html
-  :ensure t
-  :config
-  (progn
-    (add-hook 'html-mode-hook 'ac-html-enable)))
