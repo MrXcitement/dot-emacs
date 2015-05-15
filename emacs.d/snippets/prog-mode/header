@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: header template
-# key: !head
+# key: iihead
 # --
 ${1:`(file-name-nondirectory (buffer-file-name))`} --- ${2:Simple Description}
 ${3:Full Description}

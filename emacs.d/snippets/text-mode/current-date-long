@@ -1,6 +1,6 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: long current date
-# key: lcdate
+# name: current date long
+# key: iicdl
 # binding: direct-keybinding
 # type: command
 # --

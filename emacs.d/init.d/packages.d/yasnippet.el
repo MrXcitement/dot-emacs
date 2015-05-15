@@ -3,4 +3,6 @@
 ;; Provide a snippet/template engine
 
 (use-package yasnippet
-  :ensure t)
+  :ensure t
+  :config
+  (yas-global-mode))
