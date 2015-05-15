@@ -16,10 +16,12 @@
     (setq ac-auto-start 2)
     (setq ac-ignore-case nil)
 
+    ;; fixup problems with flyspell mode
     (add-hook 'flyspell-mode
     	      (lambda()
     		(ac-flyspell-workaround)))
 
+    ;; set the correct sources for ielm mode
     (add-hook 'ielm-mode-hook
     	      (lambda()
     		(setq ac-sources '(ac-source-functions
@@ -28,4 +30,11 @@
     				   ac-source-symbols
     				   ac-source-words-in-same-mode-buffers))
     		(add-to-list 'ac-modes 'inferior-emacs-lisp-mode)))
+
+    ;; turn off auto-complete menu when in elpy mode
+    (add-hook 'elpy-mode-hook
+	      (lambda()
+		(message "turning off auto-complete menu...")
+		(make-local-variable 'ac-auto-start)
+		(setq ac-auto-start nil)))
     ))

@@ -4,5 +4,4 @@
 
 (use-package company
   :ensure t
-  ;;:bind ("<C-tab>" . company-complete-common)
-  )
+  :bind ("<C-tab>" . company-complete-common))
