@@ -7,13 +7,22 @@
 
 ;; This file is not part of GNU Emacs.
 
+
 ;;; History:
 ;; 2014.11.12
 ;; * removed loading message
+
 ;; 2015.01.27
 ;; * require the use-package package to handle package management
+
 ;; 2015.03.13 (Friday the 13th!!!)
 ;; * require the auto-install package to handle packages not handled by package.el
+
+;; 2015-06-03
+;; * going forward all new package install/configuration scripts
+;;   should be placed in the pacakages.d directory.
+;; * moved visual-basic-mode.el from auto-install.d to packages.d directory
+;; * removed auto-install.d directory
 
 
 ;;; Utility functions
@@ -56,29 +65,26 @@
 (mrb:package-install 'use-package)
 (require 'use-package nil t)
 
-;; Load package scripts defined in package.d
-(mrb:load-directory
- (expand-file-name "init.d/packages.d" user-emacs-directory))
-
 
 ;;; Bootstrap `auto-install'
 (mrb:package-install 'auto-install)
 (require 'auto-install nil t)
 
+;; Do not prompt to save auto-installed libraries
+(setq auto-install-save-confirm nil)
+
 ;; Set the auto-install download directory
 (setq auto-install-directory
       (expand-file-name "auto-install/" user-emacs-directory))
 
-;; Do not prompt to save auto-installed libraries
-(setq auto-install-save-confirm nil)
-
-;; Load auto-install scripts defined in auto-install.d
-(mrb:load-directory
- (expand-file-name "init.d/auto-install.d" user-emacs-directory))
-
 ;; If auto-install-directory is not in the load-path, add it
 (unless (member auto-install-directory load-path)
   (add-to-list 'load-path auto-install-directory))
+
+
+;;; Load package scripts defined in package.d
+(mrb:load-directory
+ (expand-file-name "init.d/packages.d" user-emacs-directory))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here.
