@@ -4,6 +4,9 @@
 ;; 2015.03.13
 ;; * Now use auto-install to download and setup elisp library.
 
+;; 2015-06-03
+;; * Moved from auto-install.d to packages.d
+
 ;; Only download the library if it does not allready exist. Updates will be done manualy
 (unless (mrb:auto-install-library-exists-p "visual-basic-mode.el")
   (mrb:auto-install-from-url
