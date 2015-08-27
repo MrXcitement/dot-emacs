@@ -1,6 +1,6 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: current date long
-# key: iicdl
+# key: yycdl
 # binding: direct-keybinding
 # type: command
 # --
