@@ -7,6 +7,7 @@ semanticdb/
 server/
 tutorial/
 url/
+.tutor/
 
 # Files to ignore
 *elc
