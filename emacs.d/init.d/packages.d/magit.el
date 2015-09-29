@@ -1,4 +1,5 @@
 ;;; magit.el --- initialize the magit package
+(when (and (>= emacs-major-version 24)(>= emacs-minor-version 4))
 (use-package magit
   :ensure t
   :config
@@ -40,4 +41,4 @@
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
 
     ;; do not show data loss warning
-    (setq magit-last-seen-setup-instructions "1.4.0")))
+    (setq magit-last-seen-setup-instructions "1.4.0"))))
