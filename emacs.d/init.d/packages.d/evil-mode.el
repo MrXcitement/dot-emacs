@@ -6,5 +6,6 @@
 (use-package evil
   :ensure
   :config
-  (progn
-    (evil-mode 1)))
+;;  (progn
+;;  (evil-mode 1))
+)
