@@ -4,5 +4,4 @@
 ;; October 31st 2015
 
 (use-package neotree
-  :ensure
-  :config)
+  :ensure t)
