@@ -5,6 +5,7 @@
 ;; occurences.
 
 (use-package iy-go-to-char
+  :disabled
   :ensure t
   :bind
     (("C-c m" . iy-go-to-char)
