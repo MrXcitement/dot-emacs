@@ -18,30 +18,77 @@
 ;; 2015.03.13 (Friday the 13th!!!)
 ;; * require the auto-install package to handle packages not handled by package.el
 
-;; 2015-06-03
+;; 2015.06.03
 ;; * going forward all new package install/configuration scripts
 ;;   should be placed in the pacakages.d directory.
 ;; * moved visual-basic-mode.el from auto-install.d to packages.d directory
 ;; * removed auto-install.d directory
 
+;; 2015.11.04 MRB
+;; * Major edits.
+;; * Added advice to package-install to refresh and retry
+;;   package-install when package-install sends a file-error signal.
+;; * Added mrb:package-desc and mrb:package-delete. mrb:package-desc
+;;   is usefull to get the full description of a package from it's
+;;   name and is used by mrb:package-delete to allow a package to be
+;;   deleted outside the list-package interface.
+;; * Added doc strings to function definitions.
+
 
 ;;; Utility functions
 
-;; Use mrb:package-install to only install a package that is not allready installed
-(defun mrb:package-install (package-name)
-  "Install a package from the package archives."
-  (interactive "P")
-  (unless (package-installed-p package-name)
-    (package-refresh-contents)
-    (package-install package-name)))
+;;; Advice for 'package-install to change it to handle file-error signals.
+(defun mrb:package-install-advice (orig-func &rest args)
+"Advice for 'package-install to change how it handles file-error signals.
+- If package-install does not signal an error:  just exit like normal.
+- If package-install signals a file-error: refresh the package-archive and try package-install again.
+- If package-install signals any other error: the signal is passed on.
+- If the second package-install signals any error: the signal passed on.
+
+This should fix errors where the package-archive has not been refreshed in a while and has become stale with invalid package version information.
+
+Use the following commands to add/remove the advice:
+(advice-add 'package-install :around #'mrb:package-install-advice)
+(advice-remove 'package-install #'mrb:package-install-advice)"
+  (condition-case err
+      (apply orig-func args)
+    (file-error
+     (progn
+       (message "Error: %S" err)
+       (package-refresh-contents)
+       (apply orig-func args)))))
+
+;;; Add advice to 'package-install to handle a file-error when installing a package
+(advice-add 'package-install :around #'mrb:package-install-advice)
+
+;;; Get the package description from a package name
+(defun mrb:package-desc (package)
+  "Given a PACKAGE name, return the package's description."
+  (car (cdr (assq 'neotree package-alist))))
+
+;;; Delete a package
+(defun mrb:package-delete (package)
+  "Given a PACKAGE name, delete the package."
+  (package-delete (mrb:package-desc package))
+  (package-initialize))
+
+;;; Use mrb:package-install to only install a package that is not allready installed
+(defun mrb:package-install (package)
+  "Given a PACKAGE name, install the package."
+  (unless (package-installed-p package)
+    (unless (assoc package package-archive-contents)
+      (package-refresh-contents))
+    (package-install package)))
 
 ;; Check if the auto installed library exists
 (defun mrb:auto-install-library-exists-p (library-name)
+  "Given a LIBRARY-NAME check if it exists."
   (file-exists-p (format "%s/%s" auto-install-directory library-name)))
 
 ;; Install from url helper function
 (defun mrb:auto-install-from-url (library-name library-url)
-       (auto-install-from-url (format "%s/%s" library-url library-name)))
+  "Given a LIBRARY-NAME and LIBRARY-URL, use auto-install to install the library."
+  (auto-install-from-url (format "%s/%s" library-url library-name)))
 
 
 ;;; Configure the package manager
@@ -64,7 +111,6 @@
 (mrb:package-install 'use-package)
 (require 'use-package nil t)
 
-
 ;;; Bootstrap `auto-install'
 (mrb:package-install 'auto-install)
 (require 'auto-install nil t)
