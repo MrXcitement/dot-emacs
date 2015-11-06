@@ -54,7 +54,7 @@
 		    init-packages)))
   (dolist (init-file init-files)
     (progn
-      (message "%S" init-file)
+      (message "require %S file..." init-file)
       (require init-file nil t))))
 
 
