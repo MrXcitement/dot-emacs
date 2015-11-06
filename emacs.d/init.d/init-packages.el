@@ -126,7 +126,7 @@ Use the following commands to add/remove the advice:
   (add-to-list 'load-path auto-install-directory))
 
 
-(byte-recompile-directory (expand-file-name "init.d/packages.d" user-emacs-directory) 0)
+;;(byte-recompile-directory (expand-file-name "init.d/packages.d" user-emacs-directory) 0)
 
 ;;; Load package scripts defined in package.d
 (mrb:load-directory

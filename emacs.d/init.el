@@ -38,11 +38,6 @@
 
 
 
-;;;;;
-;;; Byte compile the init files.
-(byte-recompile-directory (expand-file-name "init.d" user-emacs-directory))
-
-
 ;;;;;;
 ;;; Initialize standard emacs features
 (add-to-list
