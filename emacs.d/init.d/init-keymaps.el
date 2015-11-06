@@ -29,7 +29,10 @@
 
 ;;; Darwin (Mac OS X) key mappings
 (when (eq system-type 'darwin)
-  (global-set-key [kp-delete] 'delete-char)) ; Make fn-del delete forward
+  (global-set-key [kp-delete] 'delete-char)       ; Make fn-del delete forward
+  (global-set-key (kbd "s-=") 'text-scale-increase)
+  (global-set-key (kbd "s--") 'text-scale-decrease)
+  (global-set-key (kbd "s-0") (lambda () (interactive) (text-scale-set 0))))
 
 ;;; Linux key mappings
 (when (eq system-type 'linux))

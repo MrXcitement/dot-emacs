@@ -35,20 +35,18 @@
 (when (window-system)
 
   ;; Any window-system
-  (defun toggle-fullscreen ()
+  (defun mrb:toggle-fullscreen ()
     "Toggle full screen"
     (interactive)
     (set-frame-parameter
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
-  (global-set-key [f11] 'toggle-fullscreen)
+  (global-set-key [f11] 'mrb:toggle-fullscreen)
 
   ;; Darwin (Mac OS X) customization
   (when (eq system-type 'darwin)
     (set-face-font 'default "Droid Sans Mono Slashed 14")
-    (global-set-key (kbd "s-=") 'text-scale-increase)
-    (global-set-key (kbd "s--") 'text-scale-decrease)
-    (global-set-key (kbd "s-0") (lambda () (interactive) (text-scale-set 0))))
+    (global-set-key (kbd "s-<return>") 'mrb:toggle-fullscreen))
 
   ;; Linux customization
   (when (eq system-type 'gnu/linux)
