@@ -13,13 +13,9 @@
 ;; problems when it loads.
 (if (featurep 'aquamacs)
     (setq custom-file
-	  (expand-file-name
-	   (concat user-emacs-directory "/aquamacs.el")))
-
+	  (expand-file-name "aquamacs.el" user-emacs-directory))
   (setq custom-file
-	(expand-file-name
-	 (concat user-emacs-directory "/custom.el"))))
-
+	(expand-file-name "custom.el" user-emacs-directory)))
 (load custom-file 'noerror)
 
 (provide 'init-customize)
