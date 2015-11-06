@@ -1,8 +1,8 @@
 ;;; elpy
 
 ;; Provides a python programming toolset.
-
-(use-package elpy
-  :ensure t
-  :config
-    (elpy-enable))
+(when (executable-find "python")
+  (use-package elpy
+    :ensure
+    :config
+    (elpy-enable)))
