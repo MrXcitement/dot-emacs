@@ -8,9 +8,12 @@
 ;; This file is not part of GNU Emacs.
 
 
-;; Turn on EDE (Project handling mode)
-(global-ede-mode t)
-(semantic-mode t)
-
-(provide 'init-cedet)
+;;; Configure the cedet mode
+(use-package cedet
+  :config
+  (progn
+    (require 'cedet)
+    ;; Turn on EDE (Project handling mode)
+    (global-ede-mode t)
+    (semantic-mode 1)))
 ;;; cedet.el ends here.

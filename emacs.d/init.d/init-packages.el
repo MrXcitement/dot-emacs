@@ -7,7 +7,6 @@
 
 ;; This file is not part of GNU Emacs.
 
-
 ;;; History:
 ;; 2014.11.12
 ;; * removed loading message
@@ -127,6 +126,8 @@ Use the following commands to add/remove the advice:
   (add-to-list 'load-path auto-install-directory))
 
 
+(byte-recompile-directory (expand-file-name "init.d/packages.d" user-emacs-directory) 0)
+
 ;;; Load package scripts defined in package.d
 (mrb:load-directory
  (expand-file-name "init.d/packages.d" user-emacs-directory))

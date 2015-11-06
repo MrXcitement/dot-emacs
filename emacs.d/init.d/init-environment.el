@@ -12,7 +12,7 @@
 ;; * removed loading message
 
 
-;;; setup darwin (mac os x) environment setup here...
+;; setup darwin (mac os x) environment setup here...
 (when (eq system-type 'darwin)
 
   ;; Setup the path.
@@ -36,12 +36,11 @@
   (require 'ls-lisp)
   (setq ls-lisp-use-insert-directory-program nil))
 
-;;; setup linux environment here...
+;; setup linux environment here...
 (when (eq system-type 'linux))
 
-;;; setup window environment here...
+;; setup window environment here...
 (when (eq system-type 'windows-nt))
 
 (provide 'init-environment)
-
 ;;; init-environment.el ends here.

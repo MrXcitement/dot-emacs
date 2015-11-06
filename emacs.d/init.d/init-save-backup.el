@@ -1,4 +1,4 @@
-;;; init-save-backup.el --- Initialize autosave and backup settings
+;;; init-save-backup.el --- Initialize save, autosave and backup settings
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -16,23 +16,23 @@
 
 ;;; Set the temp directory to be a directory in the users home
 ;;; directory. ~/tmp/emacs
-(let ((user-temp-directory (expand-file-name "~/tmp/emacs/")))
+(let ((temp-directory (expand-file-name "~/tmp/emacs/")))
 
   ;; make the temp directory
-  (make-directory user-temp-directory t)
+  (make-directory temp-directory t)
 
   ;; Backup files to the temp directory
   (setq backup-by-copying t)
   (setq backup-directory-alist
-      `((".*" . ,user-temp-directory)
+      `((".*" . ,temp-directory)
         (,tramp-file-name-regexp nil)))
 
   ;; Auto save files to the temp directory
   (setq auto-save-list-file-prefix
-	(concat user-temp-directory "auto-saves-"))
+	(concat temp-directory "auto-saves-"))
 
   (setq auto-save-file-name-transforms
-	`(("\\`/?\\([^/]*/\\)*\\([^/]*\\)\\'" ,user-temp-directory t))))
+	`(("\\`/?\\([^/]*/\\)*\\([^/]*\\)\\'" ,temp-directory t))))
 
 (provide 'init-save-backup)
 ;;; init-save-backup.el ends here.

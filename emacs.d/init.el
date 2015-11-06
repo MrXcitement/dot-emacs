@@ -28,49 +28,49 @@
 ;;; 2015.01.29 MRB
 ;; * Simplify my initialization into one single file.
 
+
 
+;;;;;;
 ;;; Emacs 24 or greater only
-(unless (>= emacs-major-version 24)
-  (error "Your Emacs is too old -- this config requires v%s or higher" minver))
+(let ((minver 24))
+  (unless (>= emacs-major-version minver)
+    (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
 
-;;; Load the cl package and disable byte compile warnings
-(eval-when-compile (require 'cl nil t))
-(setq byte-compile-warnings '(cl-functions))
 
-;;; Determine init load time
-(add-hook
- 'after-init-hook
- (lambda ()
-   (message "init completed in %.2fms"
-	    (* 1000.0
-	       (float-time
-		(time-subtract after-init-time before-init-time))))))
+
+;;;;;
+;;; Byte compile the init files.
+(byte-recompile-directory (expand-file-name "init.d" user-emacs-directory))
 
-;;; Require initialization files
-
-;; Add initialization directory to load the load path.
+
+;;;;;;
+;;; Initialize standard emacs features
 (add-to-list
  'load-path (expand-file-name "init.d" user-emacs-directory))
 
-;; initialization of standard emacs features
-(require 'init-customize nil t)
-(require 'init-defuns nil t)
-(require 'init-environment nil t)
-(require 'init-protect-buffers nil t)
-(require 'init-save-backup nil t)
-(require 'init-keymaps nil t)
-(require 'init-ui nil t)
-(require 'init-server nil t)
+(let ((init-files '(init-customize
+		    init-defuns
+		    init-environment
+		    init-lock-buffers
+		    init-save-backup
+		    init-keymaps
+		    init-ui
+		    init-server
+		    init-packages)))
+  (dolist (init-file init-files)
+    (progn
+      (message "%S" init-file)
+      (require init-file nil t))))
 
-;; initialize major and minor modes
-(require 'init-c-mode nil t)
-(require 'init-eshell nil t)
-(require 'init-hideshow nil t)
-(require 'init-ido nil t)
-(require 'init-spelling nil t)
-
-;; initialize third party packages
-(require 'init-packages nil t)
+
+;;;;;;
+;;; Report the init load time
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (message "init completed in %.2fms"
+		     (* 1000.0
+			(float-time
+			 (time-subtract after-init-time before-init-time))))))
 
 (provide 'init)
 ;;; init.el ends here

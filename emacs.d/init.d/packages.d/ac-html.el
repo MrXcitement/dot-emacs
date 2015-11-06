@@ -10,7 +10,7 @@
 
 (use-package ac-html
   :disabled
-  :ensure t
+  :functions mrb:ac-html-hook
   :init
   (add-hook 'html-mode-hook 'mrb:ac-html-hook)
   :config

@@ -1,4 +1,4 @@
-;;; init-protect-buffers.el --- Protect system buffers
+;;; init-lock-buffers.el --- Protect system buffers
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -19,5 +19,5 @@
   (set-buffer "*Messages*")
   (emacs-lock-mode 'kill))
 
-(provide 'init-protect-buffers)
-;;; init-protect-buffers.el
+(provide 'init-lock-buffers)
+;;; init-lock-buffers.el

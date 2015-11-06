@@ -1,4 +1,4 @@
-;;; init-ido.el --- Initialize the Interactively DO mode
+;;; ido.el --- Initialize the Interactively DO mode
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -12,9 +12,12 @@
 ;; * removed loading message
 
 
-(setq ido-enable-flex-matching t) ; enable fuzzy matching
-(setq ido-everywhere t)
-(ido-mode 1)
+;;; Configure the ido package
+(use-package ido
+  :config
+  (progn
+    (setq ido-enable-flex-matching t) ; enable fuzzy matching
+    (setq ido-everywhere t)
+    (ido-mode 1)))
 
-(provide 'init-ido)
-;;; init-ido.el ends here.
+;;; ido.el ends here.

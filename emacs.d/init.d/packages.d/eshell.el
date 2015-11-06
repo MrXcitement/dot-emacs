@@ -1,4 +1,4 @@
-;;; init-eshell.el --- Initialize the emacs shell
+;;; eshell.el --- Initialize the emacs shell
 
 ;; Copyright (C) 2014 Mike Barker
 
@@ -10,22 +10,6 @@
 ;;; History:
 ;; 2014.11.12
 ;; * removed loading message
-
-
-;;; Needed for colors to have an effect
-(setq eshell-highlight-prompt nil)
-
-;;; Needed to tweek for completion to work
-(setq eshell-prompt-regexp "^[^#$\n]*[#$] ")
-
-;;; History settings
-;; make sure the history vars are defined
-(load "em-hist")
-(setq eshell-history-size 1024)
-(if (boundp 'eshell-save-history-on-exit)
-    (setq eshell-save-history-on-exit t))
-(if (boundp 'ehsell-ask-to-save-history)
-    (setq eshell-ask-to-save-history 'always))
 
 
 ;;; Git helper functions
@@ -77,19 +61,39 @@ or the git command is not found."
   "Different prompt chars for root or user."
   (if (= (user-uid) 0) "#" "$"))
 
-(setq eshell-prompt-function
-      (lambda nil
-	(concat
-	 (user-login-name)
-	 "@"
-	 (system-name)
-	 ": "
-	 (mrb:prompt-tilde-for-home(eshell/pwd))
-	 " "
-	 (mrb:prompt-git-branch-name)
-	 "\n"
-	 (mrb:prompt-root-or-user)
-	 " ")))
+(defun mrb:prompt-function ()
+  (concat
+   (user-login-name)
+   "@"
+   (system-name)
+   ": "
+   (mrb:prompt-tilde-for-home(eshell/pwd))
+   " "
+   (mrb:prompt-git-branch-name)
+   "\n"
+   (mrb:prompt-root-or-user)
+   " "))
+
+;;; Configure the eshell package
+(use-package eshell
+  :config
+  (progn
+    ;; Needed for colors to have an effect
+    (setq eshell-highlight-prompt nil)
 
-(provide 'init-eshell)
+    ;; Needed to tweek for completion to work
+    (setq eshell-prompt-regexp "^[^#$\n]*[#$] ")
+
+    ;; History settings
+    ;; make sure the history vars are defined
+    (load "em-hist")
+    (setq eshell-history-size 1024)
+    (if (boundp 'eshell-save-history-on-exit)
+	(setq eshell-save-history-on-exit t))
+    (if (boundp 'ehsell-ask-to-save-history)
+	(setq eshell-ask-to-save-history 'always))
+
+    ;; Set the prompt function
+    (setq eshell-prompt-function 'mrb:prompt-function)))
+
 ;;; init-eshell.el ends here.
