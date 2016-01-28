@@ -8,23 +8,24 @@ server/
 tutorial/
 url/
 .tutor/
+emacs.d/var/
 
 # Files to ignore
+\#*#
 *elc
-tramp
 *~
 .DS_Store
 .org-id-locations
 ac-*dat
+tramp
 anything-c-adaptive-history
 ede-projects.el
 wget-log
-\#*#
 abbrev_defs
+config.el
 emacs.d/eshell/history
 emacs.d/eshell/lastdir
 emacs.d/ido.last
 emacs.d/recentf
 emacs.d/srecode-map.el
-config.el
-/emacs.d/smex-items
+emacs.d/smex-items
