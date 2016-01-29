@@ -14,9 +14,10 @@
   :defines solarized-theme
   :ensure t
   :init
-  (load-theme 'solarized-light))
+  ;(load-theme 'solarized-light)
+  )
 
-(use-package deeper-blue-theme
-  :if (not window-system)
-  :init
-  (load-theme 'deeper-blue))
+;; (use-package deeper-blue-theme
+;;   :if (not window-system)
+;;   :init
+;;   (load-theme 'deeper-blue))
