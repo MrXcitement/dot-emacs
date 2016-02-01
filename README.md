@@ -12,20 +12,20 @@ Make sure to backup your emacs configuration before you install this new one.
 
 ###Clone the repository
     $ cd ~
-    $ git clone https://github.com/mrxcitement/emacsrc.git ~/git/emacsrc
+    $ git clone https://github.com/mrxcitement/dot-emacs.git ~/src/dot-emacs
 
 ###Install the config files
-    $ cd ~/git/emacsrc
+    $ cd ~/src/dot-emacs
     $ sh ./install.sh
 
 ##For windows based OS: (Windows XP or greater with MKLINK available)
 
 ###Clone the repository from github.
     > cd /d %userprofile%
-    > git clone https://github.com/mrxcitement/emacsrc.git %userprofile%/src/emacsrc
+    > git clone https://github.com/mrxcitement/dot-emacs.git %userprofile%/src/dot-emacs
 
 ###Link the emacs configuration directory.
 (Note: To use MKLINK you need to be in a command prompt "Run As" an Administrator.)
 
-    > cd /d %userprofile%/git/emacsrc
+    > cd /d %userprofile%/git/dot-emacs
     > .\install.cmd
