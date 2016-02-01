@@ -23,7 +23,7 @@ for FILE in ${FSPEC}; do
 	    mv ~/.${FILE} ~/.${FILE}.backup
 	fi
     fi
-    ln -fsv ${DIR}/${FILE} ~/.${FILE}
+    ln -fsnv ${DIR}/${FILE} ~/.${FILE}
 done
 
 # handle system specific install
