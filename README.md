@@ -16,7 +16,7 @@ Make sure to backup your emacs configuration before you install this new one.
 
 ###Install the config files
     $ cd ~/src/dot-emacs
-    $ sh ./install.sh
+    $ ./install
 
 ##For windows based OS: (Windows XP or greater with MKLINK available)
 
