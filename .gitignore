@@ -2,6 +2,7 @@
 auto-install/
 auto-save-list/
 elpa/
+elpy/
 site-lisp/
 semanticdb/
 server/
