@@ -1,7 +1,5 @@
 ;;; init-ui.el --- Initialize the user interface
 
-;; Copyright (C) 2014 Mike Barker
-
 ;; Author: Mike Barker <mike@thebarkers.com>
 ;; Created: October 23, 2014
 
@@ -11,6 +9,9 @@
 ;; 2014.11.12
 ;; * removed loading message
 
+;; 2021-03-15 MRB
+;; Remove copyright
+;; Only set font if it is available
 
 ;;; General ui settings
 (setq inhibit-splash-screen t)
@@ -45,16 +46,20 @@
 
   ;; Darwin (Mac OS X) customization
   (when (eq system-type 'darwin)
-    (set-face-font 'default "Droid Sans Mono Slashed 14")
-    (global-set-key (kbd "s-<return>") 'mrb:toggle-fullscreen))
+    (global-set-key (kbd "s-<return>") 'mrb:toggle-fullscreen)
+    (when (member "FiraCode Nerd Font" (font-family-list))
+      (set-frame-font "FiraCode Nerd Font" t t)))
 
   ;; Linux customization
   (when (eq system-type 'gnu/linux)
-    (set-face-font 'default "Monospace 11"))
+    (when (member "Monospace" (font-family-list))
+      (set-face-font 'default "Monospace 11")))
 
   ;; Windows customizations
   (when (eq system-type 'windows-nt)
-    (set-face-font 'default "Lucida Console 10")))
+    (when (member "Lucida Console" (font-family-list))
+      (set-face-font 'default "Lucida Console 10")))
+)
 
 
 ;;; Terminal ui settings

@@ -1,7 +1,5 @@
 ;;; init.el --- My Emacs initialization file
 
-;; Copyright (c) 2012 Mike Barker
-
 ;; Author: Mike Barker <mike@thebarkers.com>
 ;; Created: October 10, 2007
 
@@ -25,9 +23,16 @@
 ;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;; DEALINGS IN THE SOFTWARE.
 
-;;; 2015.01.29 MRB
-;; * Simplify my initialization into one single file.
+;;;;;;
+;;; History
 
+;; 2021-03-15 MRB
+;; Reorganize init files
+;; - Moved packages from ~/.emacs.d/init.d to ~/.emacs.d/packages.d
+;; - Now require any .el file in the init.d directory
+;; - Load any .el file in the packages.d directory
+;; - Misc changes to get the initialization to complete without errors
+;; - Removed copyright in header
 
 
 ;;;;;;
@@ -36,26 +41,22 @@
   (unless (>= emacs-major-version minver)
     (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
 
-
 
 ;;;;;;
-;;; Initialize standard emacs features
-(add-to-list
- 'load-path (expand-file-name "init.d" user-emacs-directory))
+;;; Initialize emacs features
 
-(let ((init-files '(init-customize
-		    init-defuns
-		    init-environment
-		    init-lock-buffers
-		    init-save-backup
-		    init-keymaps
-		    init-ui
-		    init-server
-		    init-packages)))
-  (dolist (init-file init-files)
-    (progn
-      (message "require %S file..." init-file)
-      (require init-file nil t))))
+;; Require all `.el' files in the init.d directory
+(let ((dir (expand-file-name "init.d" user-emacs-directory)))
+  (when (file-exists-p dir)
+    (add-to-list 'load-path dir)
+    (dolist (file (directory-files dir nil "\.el$"))
+      (message "require file %s..." file)
+      (require (intern (file-name-sans-extension file)) nil t))))
+
+;; Load all `.el' files in the packages.d directory
+(let ((dir (expand-file-name "packages.d" user-emacs-directory)))
+  (when (file-exists-p dir)
+    (mrb/load-directory dir)))
 
 
 ;;;;;;

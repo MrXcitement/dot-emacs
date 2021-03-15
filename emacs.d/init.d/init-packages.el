@@ -1,7 +1,5 @@
 ;;; init-packages.el --- Initialize the package manager and the installed packages
 
-;; Copyright (C) 2014 Mike Barker
-
 ;; Author: Mike Barker <mike@thebarkers.com>
 ;; Created: October 23, 2014
 
@@ -32,6 +30,11 @@
 ;;   name and is used by mrb:package-delete to allow a package to be
 ;;   deleted outside the list-package interface.
 ;; * Added doc strings to function definitions.
+
+;; 2021-03-15 MRB
+;; Remove copyright notice
+;; Comment out all functions that use auto-install, will look into a
+;; replacement. Possibly straight.el?
 
 
 ;;; Utility functions
@@ -80,14 +83,14 @@ Use the following commands to add/remove the advice:
     (package-install package)))
 
 ;; Check if the auto installed library exists
-(defun mrb:auto-install-library-exists-p (library-name)
-  "Given a LIBRARY-NAME check if it exists."
-  (file-exists-p (format "%s/%s" auto-install-directory library-name)))
+;; (defun mrb:auto-install-library-exists-p (library-name)
+;;   "Given a LIBRARY-NAME check if it exists."
+;;   (file-exists-p (format "%s/%s" auto-install-directory library-name)))
 
 ;; Install from url helper function
-(defun mrb:auto-install-from-url (library-name library-url)
-  "Given a LIBRARY-NAME and LIBRARY-URL, use auto-install to install the library."
-  (auto-install-from-url (format "%s/%s" library-url library-name)))
+;; (defun mrb:auto-install-from-url (library-name library-url)
+;;   "Given a LIBRARY-NAME and LIBRARY-URL, use auto-install to install the library."
+;;   (auto-install-from-url (format "%s/%s" library-url library-name)))
 
 
 ;;; Configure the package manager
@@ -111,26 +114,26 @@ Use the following commands to add/remove the advice:
 (require 'use-package nil t)
 
 ;;; Bootstrap `auto-install'
-(mrb:package-install 'auto-install)
-(require 'auto-install nil t)
+;; (mrb:package-install 'auto-install)
+;; (require 'auto-install nil t)
 
 ;; Do not prompt to save auto-installed libraries
-(setq auto-install-save-confirm nil)
+;; (setq auto-install-save-confirm nil)
 
 ;; Set the auto-install download directory
-(setq auto-install-directory
-      (expand-file-name "auto-install/" user-emacs-directory))
+;; (setq auto-install-directory
+;;       (expand-file-name "auto-install/" user-emacs-directory))
 
 ;; If auto-install-directory is not in the load-path, add it
-(unless (member auto-install-directory load-path)
-  (add-to-list 'load-path auto-install-directory))
+;; (unless (member auto-install-directory load-path)
+;;   (add-to-list 'load-path auto-install-directory))
 
 
 ;;(byte-recompile-directory (expand-file-name "init.d/packages.d" user-emacs-directory) 0)
 
 ;;; Load package scripts defined in package.d
-(mrb:load-directory
- (expand-file-name "init.d/packages.d" user-emacs-directory))
+;; (mrb:load-directory
+;;  (expand-file-name "init.d/packages.d" user-emacs-directory))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here.
