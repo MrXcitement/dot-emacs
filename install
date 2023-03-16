@@ -5,29 +5,45 @@
 # May 14th, 2013
 
 # History:
+# 2023.03.15 MRB
+# * Refactor from dot-vim's install
+# * No longer install osx launch scripts
+# 2015.04.30 MRB
+# * No longer check for links before creating, just force create them.
 # 2014.11.12 MRB
 # * Added code to install scripts based on system type.
 
-# 2015.04.30 MRB
-# * No longer check for links before creating, just force create them.
+# Backup a file/directory by renaming it with the current date and time
+backup_file() {
+  file=$1
+  file_ext=$(date +%Y%m%d%H%M)
 
-echo "$(basename $0)"
-echo "Make sympolic links in the users home directory to the bash config files and directories"
-
-DIR="$(cd "$(dirname "$0")" && pwd)"
-FSPEC="emacs.d"
-for FILE in ${FSPEC}; do
-    echo "Processing file ${FILE}"
-    if [ -a ~/.${FILE} ]; then
-	if ! [ -h ~/.${FILE} ]; then
-	    mv ~/.${FILE} ~/.${FILE}.backup
-	fi
+  if [ -e "${file}" ]; then
+    if ! [ -h "${file}" ]; then
+      echo "Backing up ${file} to: ${file}.${file_ext}"
+      mv "${file}" "${file}.${file_ext}"
     fi
-    ln -fsnv ${DIR}/${FILE} ~/.${FILE}
-done
+  fi
+}
 
-# handle system specific install
-unamestr=`uname`
-if [[ "$unamestr" == 'Darwin' ]]; then
-    install -v -m770 osx/* ~/bin
-fi
+# create a symbolic link if one does not allready exist
+link_file() {
+  local src=$1
+  local dst=$2
+
+  if ! [ -e "${dst}" ]; then
+    echo "Linking file ${dst}"
+    ln -sfnv "${src}" "${dst}"
+  fi
+}
+
+# Backup existing files and link files/dirs in the home folder into
+# the users home directory.
+DIR="$(cd "$(dirname "$0")" && pwd)"
+shopt -s dotglob
+for src in "${DIR}"/home/*; do
+  dst="${HOME}"/$(basename "$src")
+  backup_file "$dst"
+  link_file "$src" "$dst"
+done
+shopt -u dotglob

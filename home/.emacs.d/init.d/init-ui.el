@@ -66,8 +66,9 @@
 (unless (window-system)
   (menu-bar-mode -1)
   ;; on xterm's remap the select key to shift-up
-  (if (string-match-p "xterm" (tty-type))
-      (define-key input-decode-map "\e[1;2A" [S-up])))
+  ;; (if (string-match-p "xterm" (tty-type))
+  ;;    (define-key input-decode-map "\e[1;2A" [S-up]))
+  )
 
 (provide 'init-ui)
 ;;; init-ui.el ends here.
