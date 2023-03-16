@@ -38,6 +38,15 @@
 
   ;; Any window-system
 
+  ;; Switch theme based on system appearance
+  (defun my/apply-theme (appearance)
+    "Load theme, taking current system APPEARANCE into consideration."
+    (interactive)
+    (mapc #'disable-theme custom-enabled-themes)
+    (pcase appearance
+      ('light (load-theme 'vs-light t))
+      ('dark (load-theme 'vs-dark t))))
+
   ;; Toggle fullscreen
   (defun my/toggle-fullscreen ()
     "Toggle full screen"
