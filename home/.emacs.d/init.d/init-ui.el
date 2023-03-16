@@ -12,6 +12,7 @@
 ;; 2021-03-15 MRB
 ;; Remove copyright
 ;; Only set font if it is available
+
 
 ;;; General ui settings
 (setq inhibit-splash-screen t)
@@ -36,17 +37,36 @@
 (when (window-system)
 
   ;; Any window-system
-  (defun mrb:toggle-fullscreen ()
+
+  ;; Toggle fullscreen
+  (defun my/toggle-fullscreen ()
     "Toggle full screen"
     (interactive)
     (set-frame-parameter
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
-  (global-set-key [f11] 'mrb:toggle-fullscreen)
+
+  (global-set-key [f11] 'my/toggle-fullscreen)
 
   ;; Darwin (Mac OS X) customization
   (when (eq system-type 'darwin)
-    (global-set-key (kbd "s-<return>") 'mrb:toggle-fullscreen)
+    ;; Raise emacs to frontmost window
+    (when (featurep 'ns)
+      (defun ns-raise-emacs ()
+        "Raise Emacs."
+        (ns-do-applescript "tell application \"Emacs\" to activate"))
+      (defun ns-raise-emacs-with-frame (frame)
+        "Raise Emacs and select the provided frame."
+        (with-selected-frame frame
+          (when (display-graphic-p)
+    	(ns-raise-emacs))))
+      (add-hook 'after-make-frame-functions 'ns-raise-emacs-with-frame)
+      (when (display-graphic-p)
+        (ns-raise-emacs)))
+
+    (global-set-key (kbd "s-<return>") 'my/toggle-fullscreen)
+    (add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
+    ;; Use FiraCode if installed
     (when (member "FiraCode Nerd Font" (font-family-list))
       (set-frame-font "FiraCode Nerd Font" t t)))
 
@@ -65,9 +85,9 @@
 ;;; Terminal ui settings
 (unless (window-system)
   (menu-bar-mode -1)
-  ;; on xterm's remap the select key to shift-up
-  ;; (if (string-match-p "xterm" (tty-type))
-  ;;    (define-key input-decode-map "\e[1;2A" [S-up]))
+;;   ;; on xterm's remap the select key to shift-up
+;;   (if (string-match-p "xterm" (tty-type))
+;;       (define-key input-decode-map "\e[1;2A" [S-up]))
   )
 
 (provide 'init-ui)
