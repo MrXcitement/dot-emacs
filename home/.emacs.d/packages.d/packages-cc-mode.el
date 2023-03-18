@@ -1,15 +1,16 @@
-;;; cc-mode.el --- Configure cc-mode settings
+;;; packages-cc-mode.el --- Configure cc-mode settings
 
-;; Copyright (C) 2014 by Mike Barker
+;; Mike Barker <mike@thebarkers.com>
+;; October 23, 2014
 
-;; Author: Mike Barker <mike@thebarkers.com>
-;; Created: October 23, 2014
+;;; Commentary:
+;; Configure the c major mode
 
-;; History:
+;;; History:
 ;; 2014.10.23
 ;; * First release.
 
-;;; Configure the c major mode
+;;; Code:
 (use-package cc-mode
   :init
   ;; hook c-mode to comment multi line regions like so:
@@ -20,4 +21,4 @@
   (add-hook 'c-mode-hook
 	    (lambda() (setq comment-style 'extra-line))))
 
-;;; cc-mode.el ends here.
+(provide 'packages-cc-mode)

@@ -1,20 +1,29 @@
-;;; auto-complete:
+;;; packages-auto-complete.el --- Install and configure auto-complete
 
+;; Mike Barker <mike@thebarkers.com>
+;; May 15, 2015
+
+;;; Commentary:
 ;; This package provides auto complete in a drop down window similar
 ;; to intelisense in visual studio.
 
-;; Use the auto-complete package
+;;; History:
+;; 2023.03.17
+;; * rename and refactor file to be a valid package
+;; * rename personal functions
+
+;;; Code:
 (use-package auto-complete
   :disabled
   :ensure t
   :init
   (progn
     ;; fixup problems with flyspell mode
-    (defun mrb:auto-complete-flyspell-mode-hook()
+    (defun my/auto-complete-flyspell-mode-hook()
       (ac-flyspell-workaround))
 
     ;; set the correct sources for ielm mode
-    (defun mrb:auto-complete-ielm-mode-hook()
+    (defun my/auto-complete-ielm-mode-hook()
       (setq ac-sources '(ac-source-functions
 			 ac-source-variables
 			 ac-source-features
@@ -28,9 +37,9 @@
       (make-local-variable 'ac-auto-start)
       (setq ac-auto-start nil))
 
-    (add-hook 'flyspell-mode 'mrb:auto-complete-flyspell-hook)
-    (add-hook 'ielm-mode-hook 'mrb:auto-complete-ielm-mode-hook)
-    (add-hook 'elpy-mode-hook 'mrb:auto-complete-elpy-mode-hook))
+    (add-hook 'flyspell-mode 'my/auto-complete-flyspell-hook)
+    (add-hook 'ielm-mode-hook 'my/auto-complete-ielm-mode-hook)
+    (add-hook 'elpy-mode-hook 'my/auto-complete-elpy-mode-hook))
 
   :config
   (progn
@@ -39,6 +48,6 @@
     (ac-config-default)
     (global-auto-complete-mode t)
     (setq ac-auto-start 2)
-    (setq ac-ignore-case nil))
+    (setq ac-ignore-case nil)))
 
-  )
+(provide 'packages-auto-complete)

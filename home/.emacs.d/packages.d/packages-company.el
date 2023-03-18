@@ -1,10 +1,22 @@
-;;; company-mode.el
+;;; packages-company.el --- Install and configure the `company' package.
 
-;;; Use the complete any mode.
+;; Mike Barker <mike@thebarkers.com>
+;; May 15, 2015
+
+;;; Commentary:
+;; Use the complete any mode.
+
+;;; History:
+;; 2023.03.17
+;; * rename and refactor this file into a valid package.
+;; * rename personal functions from mrb:funcname to my/funcname
+;; 2015.05.15
+;; * First release.
+
+;;; Code:
 (use-package company
   :disabled t
   :ensure nil
-
   :demand t 				; make sure this is loaded at startup, not defered.
   :bind (("C-c SPC" . company-complete)	; key to force completion
 	 ("C-c /" . company-files))	; key to force file completion
@@ -17,3 +29,5 @@
     (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
     (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
     ))
+
+(provide 'packages-company)

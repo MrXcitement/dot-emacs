@@ -6,16 +6,17 @@ elpy/
 site-lisp/
 semanticdb/
 server/
+transient/
 tutorial/
 url/
+var/
 .tutor/
-emacs.d/var/
 
 # Files to ignore
+.DS_Store
 \#*#
 *elc
 *~
-.DS_Store
 .org-id-locations
 ac-*dat
 tramp
@@ -24,11 +25,10 @@ ede-projects.el
 wget-log
 abbrev_defs
 config.el
-home/.emacs.d/eshell/history
-home/.emacs.d/eshell/lastdir
-home/.emacs.d/ido.last
-home/.emacs.d/recentf
-home/.emacs.d/srecode-map.el
-home/.emacs.d/smex-items
-home/.emacs.d/custom.el
-home/.emacs.d/var/
+ido.last
+recentf
+srecode-map.el
+smex-items
+custom.el
+**/eshell/history
+**/eshell/lastdir
