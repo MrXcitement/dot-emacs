@@ -1,11 +1,18 @@
-;;; web-mode
+;;; packages-web-mode --- Install and configure the `web-mode' package.
 
+;; Mike Barker <mike@thebarkers.com>
+
+;;; Commentary:
 ;; Configure the web mode major mode.
 ;; web-mode.el is an autonomous emacs major-mode for editing web templates.
 ;; HTML documents can embed parts (CSS / JavaScript) and blocks (client / server side).
 ;; http://web-mode.org/
 
+;;; History:
+
+;;; Code:
 (use-package web-mode
+  :disabled
   :ensure t
 
   ;; :mode
@@ -59,3 +66,5 @@
     	      (yas-activate-extra-mode 'css-mode)
     	    (yas-deactivate-extra-mode 'css-mode)))))
     ))
+
+(provide 'packages-web-mode)

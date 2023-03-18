@@ -1,8 +1,15 @@
-;;; unicode-fonts.el --- install and configure the unicode-fonts module
+;;; packages-unicode-fonts.el --- Install and configure the `unicode-fonts' package.
 
+;; Mike Barker <mike@thebarkers.com>
+
+;;; Commentary:
 ;; provide emoticon support in emacs. very important indeed.
 
+;;; History:
+
+;;; Code:
 (use-package unicode-fonts
+  :disabled
   :ensure t
   :config
   (require 'unicode-fonts)
@@ -14,3 +21,5 @@
   (when (member "Apple Color Emoji" (font-family-list))
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
   (unicode-fonts-setup))
+
+(provide 'packages-unicode-fonts)

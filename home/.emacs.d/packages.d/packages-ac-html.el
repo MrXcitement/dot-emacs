@@ -1,22 +1,28 @@
-;;; ac-html.el --- Require and configure ac-html mode
+;;; packages-ac-html.el --- Install and configure the `ac-html' package.
+
+;; Mike Barker <mike@thebarkers.com>
+;; May 15, 2015
+
+;;; Commentary:
 ;; A mode to edit html files.
 
-;; Author: Mike Barker <mike@thebarkers.com>
-;; Created: May 15, 2015
-
-;; History:
+;;; History:
+;; 2023.03.17
+;; * rename and refactor this file into a valid package.
+;; * rename personal functions from mrb:funcname to my/funcname
 ;; 2015.05.15
 ;; * First release.
 
+;;; Code:
 (use-package ac-html
   :disabled
-  :functions mrb:ac-html-hook
+  :functions my/ac-html-hook
   :init
-  (add-hook 'html-mode-hook 'mrb:ac-html-hook)
+  (add-hook 'html-mode-hook 'my/ac-html-hook)
   :config
   (progn
     ;; my ac-html auto completion
-    (defun mrb:ac-html-hook()
+    (defun my/ac-html-hook()
       ;; Require ac-html since we are setup html auto completion
       (require 'ac-html)
       ;; Require default data provider if you want to use
@@ -32,3 +38,5 @@
 			 ac-source-html-attrv))
       ;; Enable auto complete mode
       (auto-complete-mode))))
+
+(provide 'packages-ac-html)
