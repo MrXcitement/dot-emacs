@@ -13,12 +13,13 @@
 ;; * First release.
 
 ;;; Code:
-(when (executable-find "python3")
-  (setq python-shell-interpreter "python3"
-	python-shell-interpreter-args "-i")
+(when (or (executable-find "python")
+	  (executable-find "python3"))
   (use-package elpy
     :ensure t
+    :defer t
     :init
-    (elpy-enable)))
+    (advice-add 'python-mode :before 'elpy-enable)))
+
 
 (provide 'packages-elpy)
