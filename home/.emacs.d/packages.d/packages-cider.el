@@ -11,7 +11,6 @@
 ;;; History:
 ;; 2023.03.17
 ;; * rename and refactor this file into a valid package.
-;; * rename personal functions from mrb:funcname to my/funcname
 ;; 2015.05.15
 ;; * First release.
 

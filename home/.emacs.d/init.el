@@ -12,6 +12,8 @@
 ;; and configure third party packages using the `use-package' macro.
 
 ;;; History
+;; 2023-03-22
+;; * rename personal functions from `my/funcname' to `my-funcname'
 ;; 2023-03-18 MRB
 ;; - Now `require' files in the `init.d' and `packages.d' folders.
 ;; - Renamed files in the `packages.d' folder to be precided by packages-
@@ -38,7 +40,7 @@
 
 
 ;; Require all `.el' files in a directory
-(defun my/require-directory (directory)
+(defun my-require-directory (directory)
   "Require all `.el' files in DIRECTORY."
   (when (file-exists-p directory)
     (add-to-list 'load-path directory)
@@ -47,10 +49,10 @@
       (require (intern (file-name-sans-extension file)) nil t))))
 
 ;; Require all `.el' files in the `init.d' directory
-(my/require-directory (expand-file-name "init.d" user-emacs-directory))
+(my-require-directory (expand-file-name "init.d" user-emacs-directory))
 
 ;; Require all `.el' files in the `packages.d' directory
-(my/require-directory (expand-file-name "packages.d" user-emacs-directory))
+(my-require-directory (expand-file-name "packages.d" user-emacs-directory))
 
 ;; Report the init load time
 (add-hook 'after-init-hook

@@ -1,34 +1,22 @@
 ;;; init-environment.el --- Initialize the system environment
 
-;; Copyright (C) 2014 Mike Barker
+;; Mike Barker <mike@thebarkers.com>
+;; October 23, 2014
 
-;; Author: Mike Barker <mike@thebarkers.com>
-;; Created: October 23, 2014
-
-;; This file is not part of GNU Emacs.
+;;; Commentary:
+;; Configure environment settings
 
 ;;; History:
+;; 2023.03.22
+;; * modify header to include default sections.
+;; * remove setting `exec-path' on `darwin' systems.
 ;; 2014.11.12
 ;; * removed loading message
 
-
-;; setup darwin (mac os x) environment setup here...
+;;; Code:
+
+;; Darwin (mac os x) environment setup here...
 (when (eq system-type 'darwin)
-
-  ;; Setup the path.
-  (let ((mypaths '("~/bin"
-		   "/Users/Shared/bin"
-		   "/usr/local/share/python"
-		   "/usr/local/git/bin"
-		   "/usr/local/bin"
-		   "/usr/local/sbin"
-		   "/usr/bin"
-		   "/usr/sbin"
-		   "/bin"
-		   "/sbin")))
-    (setenv "PATH" (mapconcat 'identity mypaths ":"))
-    (setq exec-path mypaths))
-
   ;; Force the current directory to be the users home dir
   (setq default-directory "~/")
 
@@ -36,10 +24,10 @@
   (require 'ls-lisp)
   (setq ls-lisp-use-insert-directory-program nil))
 
-;; setup linux environment here...
+;; Linux environment here...
 (when (eq system-type 'linux))
 
-;; setup window environment here...
+;; Windows environment here...
 (when (eq system-type 'windows-nt))
 
 (provide 'init-environment)

@@ -8,6 +8,7 @@
 ;; to intelisense in visual studio.
 
 ;;; History:
+;; * rename personal functions from `my/funcname' to `my-funcname'
 ;; 2023.03.17
 ;; * rename and refactor file to be a valid package
 ;; * rename personal functions
@@ -19,11 +20,11 @@
   :init
   (progn
     ;; fixup problems with flyspell mode
-    (defun my/auto-complete-flyspell-mode-hook()
+    (defun my-auto-complete-flyspell-mode-hook()
       (ac-flyspell-workaround))
 
     ;; set the correct sources for ielm mode
-    (defun my/auto-complete-ielm-mode-hook()
+    (defun my-auto-complete-ielm-mode-hook()
       (setq ac-sources '(ac-source-functions
 			 ac-source-variables
 			 ac-source-features
@@ -37,9 +38,9 @@
       (make-local-variable 'ac-auto-start)
       (setq ac-auto-start nil))
 
-    (add-hook 'flyspell-mode 'my/auto-complete-flyspell-hook)
-    (add-hook 'ielm-mode-hook 'my/auto-complete-ielm-mode-hook)
-    (add-hook 'elpy-mode-hook 'my/auto-complete-elpy-mode-hook))
+    (add-hook 'flyspell-mode 'my-auto-complete-flyspell-hook)
+    (add-hook 'ielm-mode-hook 'my-auto-complete-ielm-mode-hook)
+    (add-hook 'elpy-mode-hook 'my-auto-complete-elpy-mode-hook))
 
   :config
   (progn

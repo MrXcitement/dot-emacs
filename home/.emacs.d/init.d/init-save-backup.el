@@ -1,21 +1,24 @@
 ;;; init-save-backup.el --- Initialize save, autosave and backup settings
 
-;; Copyright (C) 2014 Mike Barker
+;; Mike Barker <mike@thebarkers.com>
+;; Created: October 23, 2014
 
-;; Author: Mike Barker <mike@thebarkers.com> Created: October 23, 2014
-
-;; This file is not part of GNU Emacs.
+;;; Commentary:
+;; Initialize the save, autosave and backup of files
 
 ;;; History:
+;; 2023.03.22
+;; * modify header to include standard sections.
 ;; 2014.11.12
 ;; * removed loading message
 
-
-;;; Remove trailing whitespace from lines when saving files
+;;; Code:
+
+;; Remove trailing whitespace from lines when saving files
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;;; Set the temp directory to be a directory in the users home
-;;; directory. ~/tmp/emacs
+;; Set the temp directory to be a directory in the users home
+;; directory. ~/tmp/emacs
 (let ((temp-directory (expand-file-name "~/tmp/emacs/")))
 
   ;; make the temp directory
