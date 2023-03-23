@@ -84,18 +84,19 @@ or the git command is not found."
   :init
   (require 'esh-mode)
   :config
-  ;; Needed for colors to have an effect
-  (setq eshell-highlight-prompt nil)
-  ;; Needed to tweek for completion to work
-  (setq eshell-prompt-regexp "^[^#$\n]*[#$] ")
-  ;; History settings
-  ;; make sure the history vars are defined
-  (setq eshell-history-size 1024)
-  (if (boundp 'eshell-save-history-on-exit)
-    (setq eshell-save-history-on-exit t))
-  (if (boundp 'ehsell-ask-to-save-history)
-    (setq eshell-ask-to-save-history 'always))
-  ;; Set the prompt function
-  (setq eshell-prompt-function 'my-prompt-function))
+  (progn
+    ;; Needed for colors to have an effect
+    (setq eshell-highlight-prompt nil)
+    ;; Needed to tweek for completion to work
+    (setq eshell-prompt-regexp "^[^#$\n]*[#$] ")
+    ;; History settings
+    ;; make sure the history vars are defined
+    (setq eshell-history-size 1024)
+    (if (boundp 'eshell-save-history-on-exit)
+	(setq eshell-save-history-on-exit t))
+    (if (boundp 'ehsell-ask-to-save-history)
+	(setq eshell-ask-to-save-history 'always))
+    ;; Set the prompt function
+    (setq eshell-prompt-function 'my-prompt-function)))
 
 (provide 'packages-eshell)

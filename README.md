@@ -1,31 +1,58 @@
-# My Emacs Configuration
+# Personal Emacs Configuration
 This is my constantly evolving Emacs configuration.
 
-# Requirements
-Emacs 24 or greater.
+# Summary
+
+## File editing
+- Use [Evil](https://www.emacswiki.org/emacs/Evil) mode to provide an editing environment that mimimcks the [Vim](https://www.vim.org/) editor.
+
+## Input Completion
+- Use [ido]() and [icomplete]() modes to handle completing items in the minibuffer
+
+## Text Completion
+- *TODO!*
+
+## Programming Language Support
+- *TODO!*
 
 # Installation
-To install the configuration on your system, clone this repository and then link the configuration direcotory (emacs.d) into your home directory. Detailed directions are listed below for Unix and Windows systems.
+To install the configuration on your system, clone this repository and then link the configuration directory `./home/.emacs.d` into your home directory.
+Directions are listed below for Unix and Windows systems.
 
-## For Unix style OS: (Linux/Mac OS X/etc.)
-Make sure to backup your emacs configuration before you install this new one.
+## Requirements
+Emacs 24 or greater.
+*Recommend* Emacs 27+
+
+## For Linux, macOS, wsl
+Backup any existing Emacs configuration before you install this new one.
 
 ### Clone the repository
-    $ cd ~
-    $ git clone https://github.com/mrxcitement/dot-emacs.git ~/src/dot-emacs
+
+```sh
+$ cd ~
+$ git clone https://github.com/mrxcitement/dot-emacs.git ~/src/dot-emacs
+```
 
 ### Install the config files
-    $ cd ~/src/dot-emacs
-    $ ./install
 
-## For windows based OS: (Windows XP or greater with MKLINK available)
+```sh
+$ cd ~/src/dot-emacs
+$ ./install
+```
+
+## For Windows OS: (Windows 10 or greater with powershell installed)
 
 ### Clone the repository from github.
-    > cd /d %userprofile%
-    > git clone https://github.com/mrxcitement/dot-emacs.git %userprofile%/src/dot-emacs
 
-### Link the emacs configuration directory.
-(Note: To use MKLINK you need to be in a command prompt "Run As" an Administrator.)
+```powershell
+> cd /d %userprofile%
+> git clone https://github.com/mrxcitement/dot-emacs.git %userprofile%/src/dot-emacs
+```
 
-    > cd /d %userprofile%/git/dot-emacs
-    > .\install.cmd
+### Install the config files
+(Note: To LINK the files you need to "Run As" an Administrator.)
+
+```powershell
+> cd /d %userprofile%/git/dot-emacs
+> .\install.ps1
+```
