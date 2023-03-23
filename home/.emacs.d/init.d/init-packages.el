@@ -101,8 +101,9 @@ Use the following commands to add/remove the advice:
 
 ;; Install and configure the `use-package' package.
 (when (< emacs-major-version 28)
-  (my-package-install 'use-package)
-  (require 'use-package nil t))
+  (my-package-install 'use-package))
+
+(require 'use-package nil t)
 (setq use-package-expand-minimally t)
 
 ;; Bootstrap `auto-install'
