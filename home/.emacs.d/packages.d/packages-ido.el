@@ -18,11 +18,21 @@
 ;; * removed loading message
 
 ;;; Code:
+
+;; Ido - interactive do - switches between buffers and opens files and
+;; directories with a minimum of keystrokes.
 (use-package ido
+  :if (version< emacs-version "28.1")
   :config
   (progn
-    (setq ido-enable-flex-matching t) ; enable fuzzy matching
-    (setq ido-everywhere t)
-    (ido-mode 1)))
+    (ido-mode 1)
+    ;; show choices vertically
+    (setf (nth 2 ido-decorations) "\n")
+    ;; show any name that has the chars you typed
+    (setq ido-enable-flex-matching t)
+    ;; use current pane for newly opened file
+    (setq ido-default-file-method 'selected-window)
+    ;; use current pane for newly switched buffer
+    (setq ido-default-buffer-method 'selected-window)))
 
 (provide 'packages-ido)
