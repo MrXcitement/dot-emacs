@@ -4,12 +4,17 @@
 ;; October 23, 2014
 
 ;;; Commentary:
-;; Initialize the user interface no handling text and gui and
-;; `darwin', `linux' and `windows' systems.
+;; Initialize the user interface handling text and gui modes.
+;; System specific initialization is handled by the `init-ui-<system>.el' files.
 
 ;;; History:
+;; 2023-03-25 MRB
+;; * Move disabling UI elements to `early-init.el'
+;; * Move configuring `dired' to `init-dired.el'
+;; * Remove `load-theme' code.
+;; * Move system specific configuration to `init-ui-<system>.el' files.
 ;; 2023-03-22 MRB
-;; * Mmodify header to include standard sections.
+;; * Modify header to include standard sections.
 ;; 2021-03-15 MRB
 ;; Remove copyright
 ;; Only set font if it is available
@@ -26,9 +31,6 @@
 ;; Whitespace display configuration
 (setq whitespace-line-column 80 whitespace-style
       '(face newline space-mark tab-mark newline-mark trailing lines-tail))
-
-;; Default theme
-;(load-theme 'tango-dark)
 
 ;; Any GUI configuration
 (when (window-system)
@@ -55,48 +57,6 @@
 ;; Any TUI settings
 (unless (window-system)
   (menu-bar-mode -1))
-
-;; Darwin (Mac OS X) customization
-(when (eq system-type 'darwin)
-
-  ;; GUI Configuration
-  (when (window-system)
-
-    ;; Raise emacs to frontmost window
-    (when (featurep 'ns)
-      (defun ns-raise-emacs ()
-	"Raise Emacs."
-	(ns-do-applescript "tell application \"Emacs\" to activate"))
-      (defun ns-raise-emacs-with-frame (frame)
-	"Raise Emacs and select the provided frame."
-	(with-selected-frame frame
-	  (when (display-graphic-p)
-	    (ns-raise-emacs))))
-      (add-hook 'after-make-frame-functions 'ns-raise-emacs-with-frame)
-      (when (display-graphic-p)
-	(ns-raise-emacs)))
-
-    ;; hook the dark/light theme switcher
-    (add-hook 'ns-system-appearance-change-functions #'my-apply-theme)
-
-    ;; set key to toggle fullscreen mode
-    (global-set-key (kbd "s-<return>") 'my-toggle-fullscreen)
-
-    ;; set default font
-    (when (member "FiraCode Nerd Font" (font-family-list))
-      (set-frame-font "FiraCode Nerd Font" t t))))
-
-;; Linux customization
-(when (eq system-type 'gnu/linux)
-  (when (window-system)
-    (when (member "Monospace" (font-family-list))
-      (set-face-font 'default "Monospace 11"))))
-
-;; Windows customizations
-(when (eq system-type 'windows-nt)
-  (when (window-system)
-    (when (member "Lucida Console" (font-family-list))
-      (set-face-font 'default "Lucida Console 10"))))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here.
