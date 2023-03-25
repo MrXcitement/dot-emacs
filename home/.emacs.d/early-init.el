@@ -18,6 +18,10 @@
 ;; Increase GC threshold during startup to 50MB
 (setq gc-cons-threshold (* 50 1000 1000))
 
+;; Turn off ui elements
+(setq inhibit-splash-screen t)
+(tool-bar-mode -1)
+
 ;; After emacs has started...
 ;; Tell us how long it took to start and how many times the GC ran
 ;; Reset the GC threshold to 8KB

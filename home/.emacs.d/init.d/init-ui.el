@@ -19,11 +19,9 @@
 ;;; Code:
 
 ;; Any ui settings
-(setq inhibit-splash-screen t)
 (blink-cursor-mode -1)
 (column-number-mode t)
 (show-paren-mode t)
-(tool-bar-mode -1)
 
 ;; Whitespace display configuration
 (setq whitespace-line-column 80 whitespace-style
