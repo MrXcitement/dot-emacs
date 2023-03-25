@@ -29,10 +29,6 @@
 (setq whitespace-line-column 80 whitespace-style
       '(face newline space-mark tab-mark newline-mark trailing lines-tail))
 
-;; Highlight the current line when in dired mode.
-(add-hook 'dired-mode-hook
-	  (lambda() (hl-line-mode 1)))
-
 ;; Default theme
 ;(load-theme 'tango-dark)
 
