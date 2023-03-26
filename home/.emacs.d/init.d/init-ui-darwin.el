@@ -15,32 +15,32 @@
 ;; Darwin (Mac OS X) customization
 (when (eq system-type 'darwin)
 
-  ;; GUI Configuration
-  (when (window-system)
+  ;; Frame configuration for `darwin'
+  (defun my-after-make-frame-darwin(&optional frame)
+    "Configure a new FRAME (default: selected frame) on `darwin' system"
 
-    ;; Raise emacs to frontmost window
-    (when (featurep 'ns)
-      (defun ns-raise-emacs ()
-	"Raise Emacs."
-	(ns-do-applescript "tell application \"Emacs\" to activate"))
-      (defun ns-raise-emacs-with-frame (frame)
-	"Raise Emacs and select the provided frame."
-	(with-selected-frame frame
-	  (when (display-graphic-p)
-	    (ns-raise-emacs))))
-      (add-hook 'after-make-frame-functions 'ns-raise-emacs-with-frame)
-      (when (display-graphic-p)
-	(ns-raise-emacs)))
+    ;; When the frame is GUI
+    (when (display-graphic-p)
 
-    ;; hook the dark/light theme switcher
-    (add-hook 'ns-system-appearance-change-functions #'my-apply-theme)
+      ;; set key to toggle fullscreen mode
+      (global-set-key (kbd "s-<return>") 'toggle-frame-fullscreen)
 
-    ;; set key to toggle fullscreen mode
-    (global-set-key (kbd "s-<return>") 'my-toggle-fullscreen)
+      ;; set default font
+      (when (member "FiraCode Nerd Font" (font-family-list))
+	(set-frame-font "FiraCode Nerd Font" t t))
 
-    ;; set default font
-    (when (member "FiraCode Nerd Font" (font-family-list))
-      (set-frame-font "FiraCode Nerd Font" t t))))
+      ;; raise Emacs using AppleScript."
+      (ns-do-applescript "tell application \"Emacs\" to activate")))
+
+  ;; Hook make frame to apply `darwin' specific configuration
+  (add-hook 'after-make-frame-functions 'my-after-make-frame-darwin)
+
+  ;; Hook to change theme based on system appearence
+  (add-hook 'ns-system-appearance-change-functions #'my-apply-theme)
+
+  ;; Emacs not started in `daemon' mode.
+  (unless (daemonp)
+    (my-after-make-frame-darwin)))
 
 (provide 'init-ui-darwin)
 ;;; End of init-ui-darwin.el
