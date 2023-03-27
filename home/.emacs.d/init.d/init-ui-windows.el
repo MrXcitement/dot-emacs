@@ -7,6 +7,8 @@
 ;; Initialize the user interface on Windows systems
 
 ;;; History:
+;; 2023-03-26 MRB
+;; * Handle Emacs being run as a daemon and normally
 ;; 2023-03-25 MRB
 ;; * Created
 
@@ -26,7 +28,7 @@
       (when (member "Lucida Console" (font-family-list))
 	(set-face-font 'default "Lucida Console 10"))))
 
-  ;; Hook make frame to apply `darwin' specific configuration
+  ;; Hook make frame to apply `windows' specific configuration
   (add-hook 'after-make-frame-functions 'my-after-make-frame-windows)
 
   ;; Emacs not started in `daemon' mode.
