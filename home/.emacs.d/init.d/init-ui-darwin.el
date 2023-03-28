@@ -7,6 +7,8 @@
 ;; Initialize the user interface on Darwin systems
 
 ;;; History:
+;; 2023-03-26 MRB
+;; * Handle Emacs being run as a daemon and normally
 ;; 2023-03-25 MRB
 ;; * Created
 
