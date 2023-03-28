@@ -58,9 +58,8 @@
   "Configure a new FRAME (default: selected frame) on any system"
 
   ;; Display the menubar in GUI and hide in TUI frames
-  (set-frame-parameter frame 'menu-bar-lines
-                             (if (display-graphic-p frame)
-                                  1 0)))
+  (let ((lines (if (display-graphic-p frame) 1 0)))
+    (set-frame-parameter frame 'menu-bar-lines lines)))
 
 ;; Add hook to configure new frames either GUI or TUI
 (add-hook 'after-make-frame-functions 'my-any-after-make-frame)
