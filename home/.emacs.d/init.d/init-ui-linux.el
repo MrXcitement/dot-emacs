@@ -18,7 +18,7 @@
 (when (eq system-type 'gnu/linux)
 
   ;; Frame configuration for `windows' systems.
-  (defun my-after-make-frame-linux(&optional frame)
+  (defun mrb-after-make-frame-linux(&optional frame)
     "Configure a new FRAME (default: selected frame) on `linux' system"
 
     ;; When the frame is GUI
@@ -29,11 +29,11 @@
 	(set-face-font 'default "Monospace 11"))))
 
   ;; Hook make frame to apply `linux' specific configuration
-  (add-hook 'after-make-frame-functions 'my-after-make-frame-linux)
+  (add-hook 'after-make-frame-functions 'mrb-after-make-frame-linux)
 
   ;; Emacs not started in `daemon' mode.
   (unless (daemonp)
-    (my-after-make-frame-linux)))
+    (mrb-after-make-frame-linux)))
 
 (provide 'init-ui-linux)
 ;;; End of init-ui-linux

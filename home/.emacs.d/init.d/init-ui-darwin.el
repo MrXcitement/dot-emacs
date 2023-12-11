@@ -18,7 +18,7 @@
 (when (eq system-type 'darwin)
 
   ;; Frame configuration for `darwin'
-  (defun my-after-make-frame-darwin(&optional frame)
+  (defun mrb-after-make-frame-darwin(&optional frame)
     "Configure a new FRAME (default: selected frame) on `darwin' system"
 
     ;; When the frame is GUI
@@ -35,14 +35,14 @@
       (ns-do-applescript "tell application \"Emacs\" to activate")))
 
   ;; Hook make frame to apply `darwin' specific configuration
-  (add-hook 'after-make-frame-functions 'my-after-make-frame-darwin)
+  (add-hook 'after-make-frame-functions 'mrb-after-make-frame-darwin)
 
   ;; Hook to change theme based on system appearence
-  (add-hook 'ns-system-appearance-change-functions #'my-apply-theme)
+  (add-hook 'ns-system-appearance-change-functions #'mrb-apply-theme)
 
   ;; Emacs not started in `daemon' mode.
   (unless (daemonp)
-    (my-after-make-frame-darwin)))
+    (mrb-after-make-frame-darwin)))
 
 (provide 'init-ui-darwin)
 ;;; End of init-ui-darwin.el

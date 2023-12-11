@@ -33,7 +33,7 @@
       '(face newline space-mark tab-mark newline-mark trailing lines-tail))
 
 ;; Apply theme based on system appearance
-(defun my-apply-theme (appearance)
+(defun mrb-apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (interactive)
   (mapc #'disable-theme custom-enabled-themes)
@@ -42,19 +42,19 @@
     ('dark (load-theme 'vs-dark t))))
 
 ;; Apply light theme
-(defun my-apply-theme-light ()
+(defun mrb-apply-theme-light ()
   "Apply the light theme"
   (interactive)
-  (my-apply-theme 'light))
+  (mrb-apply-theme 'light))
 
 ;; Apply dark theme
-(defun my-apply-theme-dark ()
+(defun mrb-apply-theme-dark ()
   "Apply the dark theme"
   (interactive)
-  (my-apply-theme 'dark))
+  (mrb-apply-theme 'dark))
 
 ;; Any GUI/TUI configuration
-(defun my-any-after-make-frame (&optional frame)
+(defun mrb-any-after-make-frame (&optional frame)
   "Configure a new FRAME (default: selected frame) on any system"
 
   ;; Display the menubar in GUI and hide in TUI frames
@@ -62,11 +62,11 @@
     (set-frame-parameter frame 'menu-bar-lines lines)))
 
 ;; Add hook to configure new frames either GUI or TUI
-(add-hook 'after-make-frame-functions 'my-any-after-make-frame)
+(add-hook 'after-make-frame-functions 'mrb-any-after-make-frame)
 
 ;; Emacs was started normally
 (unless (daemonp)
-  (my-any-after-make-frame))
+  (mrb-any-after-make-frame))
 
 (provide 'init-ui-any)
 ;;; init-ui.el ends here.

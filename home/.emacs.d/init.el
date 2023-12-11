@@ -38,7 +38,7 @@
 ;;; Code:
 
 ;; Emacs version earlier than v24
-(let ((minver 24))
+(let ((minver 26))
   (when (< emacs-major-version minver)
     (error "Your Emacs v%s is too old -- this config requires v%s or higher" emacs-version minver)))
 
@@ -50,7 +50,7 @@
       (load-file "early-init.el"))))
 
 ;; Require all `.el' files in a directory
-(defun my-require-directory (directory)
+(defun mrb-require-directory (directory)
   "Require all `.el' files in DIRECTORY."
   (when (file-exists-p directory)
     (add-to-list 'load-path directory)
@@ -59,9 +59,9 @@
       (require (intern (file-name-sans-extension file)) nil t))))
 
 ;; Require all `.el' files in the `init.d' directory
-(my-require-directory (expand-file-name "init.d" user-emacs-directory))
+(mrb-require-directory (expand-file-name "init.d" user-emacs-directory))
 
 ;; Require all `.el' files in the `packages.d' directory
-(my-require-directory (expand-file-name "packages.d" user-emacs-directory))
+(mrb-require-directory (expand-file-name "packages.d" user-emacs-directory))
 
 (provide 'init)

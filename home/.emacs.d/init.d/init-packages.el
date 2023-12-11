@@ -10,6 +10,9 @@
 ;; TODO: Find a replacement for the `auto-install.el' package
 
 ;;; History:
+;; 2023-12-11 MRB
+;; * changed function namespace qualifier from `my-' to `mrb-'
+
 ;; 2023-03-22 MRB
 ;; * modify the header to include standard sections.
 ;; * when emacs version is < 27 run `package-initialize'
@@ -43,7 +46,7 @@
 ;;; Code:
 
 ;; Advice for 'package-install to change it to handle file-error signals.
-(defun my-package-install-advice (orig-func &rest args)
+(defun mrb-package-install-advice (orig-func &rest args)
 "Advice for 'package-install to change how it handles file-error signals.
 
 - If package-install does not signal an error:  just exit like normal.
@@ -54,8 +57,8 @@
 This should fix errors where the package-archive has not been refreshed in a while and has become stale with invalid package version information.
 
 Use the following commands to add/remove the advice:
-(advice-add 'package-install :around #'my-package-install-advice)
-(advice-remove 'package-install #'my-package-install-advice)"
+(advice-add 'package-install :around #'mrb-package-install-advice)
+(advice-remove 'package-install #'mrb-package-install-advice)"
   (condition-case err
       (apply orig-func args)
     (file-error
@@ -65,21 +68,21 @@ Use the following commands to add/remove the advice:
        (apply orig-func args)))))
 
 ;; Add advice to 'package-install to handle a file-error when installing a package
-(advice-add 'package-install :around #'my-package-install-advice)
+(advice-add 'package-install :around #'mrb-package-install-advice)
 
 ;; Get a package's description from a package name
-(defun my-package-desc (package)
+(defun mrb-package-desc (package)
   "Given a PACKAGE name, return the package's description."
   (car (cdr (assq 'neotree package-alist))))
 
 ;; Delete a package
-(defun my-package-delete (package)
+(defun mrb-package-delete (package)
   "Given a PACKAGE name, delete the package."
-  (package-delete (my-package-desc package))
+  (package-delete (mrb-package-desc package))
   (package-initialize))
 
 ;; Install a package, but only if it is not allready installed
-(defun my-package-install (package)
+(defun mrb-package-install (package)
   "Given a PACKAGE name, install the package."
   (unless (package-installed-p package)
     (unless (assoc package package-archive-contents)
@@ -101,7 +104,7 @@ Use the following commands to add/remove the advice:
 
 ;; Install and configure the `use-package' package.
 (when (< emacs-major-version 28)
-  (my-package-install 'use-package))
+  (mrb-package-install 'use-package))
 
 (require 'use-package nil t)
 (setq use-package-expand-minimally t)
@@ -110,16 +113,16 @@ Use the following commands to add/remove the advice:
 
 ;; Install and configure the `auto-install' package.
 ;; Check if the auto installed library exists
-;; (defun my-auto-install-library-exists-p (library-name)
+;; (defun mrb-auto-install-library-exists-p (library-name)
 ;;   "Given a LIBRARY-NAME check if it exists."
 ;;   (file-exists-p (format "%s/%s" auto-install-directory library-name)))
 
 ;; Install from url helper function
-;; (defun my-auto-install-from-url (library-name library-url)
+;; (defun mrb-auto-install-from-url (library-name library-url)
 ;;   "Given a LIBRARY-NAME and LIBRARY-URL, use auto-install to install the library."
 ;;   (auto-install-from-url (format "%s/%s" library-url library-name)))
 
-;; (my-package-install 'auto-install)
+;; (mrb-package-install 'auto-install)
 ;; (require 'auto-install nil t)
 
 ;; Do not prompt to save auto-installed libraries
