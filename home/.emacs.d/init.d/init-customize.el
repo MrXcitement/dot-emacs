@@ -15,11 +15,8 @@
 
 
 ;;; Code:
-(if (featurep 'aquamacs)
-    (setq custom-file
-	  (expand-file-name "aquamacs.el" user-emacs-directory))
-  (setq custom-file
-	(expand-file-name "custom.el" user-emacs-directory)))
+(setq custom-file
+      (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
 (provide 'init-customize)
