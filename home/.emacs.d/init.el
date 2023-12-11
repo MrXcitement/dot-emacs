@@ -12,6 +12,12 @@
 ;; and configure third party packages using the `use-package' macro.
 
 ;;; History
+;; 2023-03-25
+;; * modify Emacs version is earlier than v24 check.
+;; * add Emacs version is earlier than v27 check.
+;; * move the init load time report to `early-init.el'
+;; 2023-03-22
+;; * rename personal functions from `my/funcname' to `my-funcname'
 ;; 2023-03-18 MRB
 ;; - Now `require' files in the `init.d' and `packages.d' folders.
 ;; - Renamed files in the `packages.d' folder to be precided by packages-
@@ -31,14 +37,20 @@
 
 ;;; Code:
 
-;; Emacs 24 or greater only
-(let ((minver 24))
-  (unless (>= emacs-major-version minver)
-    (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
+;; Emacs version earlier than v24
+(let ((minver 26))
+  (when (< emacs-major-version minver)
+    (error "Your Emacs v%s is too old -- this config requires v%s or higher" emacs-version minver)))
 
+;; Emacs version earlier than v27
+(let ((minver 27))
+  (when (< emacs-major-version minver)
+    (progn
+      (message "Your Emacs v%s is old -- this configuration may not work as expected since Emacs is < v%s." emacs-version minver)
+      (load-file "early-init.el"))))
 
 ;; Require all `.el' files in a directory
-(defun my/require-directory (directory)
+(defun mrb-require-directory (directory)
   "Require all `.el' files in DIRECTORY."
   (when (file-exists-p directory)
     (add-to-list 'load-path directory)
@@ -47,17 +59,9 @@
       (require (intern (file-name-sans-extension file)) nil t))))
 
 ;; Require all `.el' files in the `init.d' directory
-(my/require-directory (expand-file-name "init.d" user-emacs-directory))
+(mrb-require-directory (expand-file-name "init.d" user-emacs-directory))
 
 ;; Require all `.el' files in the `packages.d' directory
-(my/require-directory (expand-file-name "packages.d" user-emacs-directory))
-
-;; Report the init load time
-(add-hook 'after-init-hook
-	  (lambda ()
-	    (message "init completed in %.2fms"
-		     (* 1000.0
-			(float-time
-			 (time-subtract after-init-time before-init-time))))))
+(mrb-require-directory (expand-file-name "packages.d" user-emacs-directory))
 
 (provide 'init)

@@ -9,7 +9,6 @@
 ;;; History:
 ;; 2023.03.17
 ;; * rename and refactor this file into a valid package.
-;; * rename personal functions from mrb:funcname to my/funcname
 ;; 2021-03-15 MRB
 ;; Copied evil setup from here:
 ;; - https://ryan.himmelwright.net/post/emacs-update-evil-usepackage/

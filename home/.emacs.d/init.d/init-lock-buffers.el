@@ -1,18 +1,18 @@
 ;;; init-lock-buffers.el --- Protect system buffers
 
-;; Copyright (C) 2014 Mike Barker
+;; Mike Barker <mike@thebarkers.com>
+;; October 23, 2014
 
-;; Author: Mike Barker <mike@thebarkers.com>
-;; Created: October 23, 2014
-
-;; This file is not part of GNU Emacs.
+;;; Commentary:
+;; Lock the `*scratch*' and `*Messages*' buffers so they can not be killed.
 
 ;;; History:
+;; 2023.03.22
+;; * modify header to include standard sections.
 ;; 2014.11.12
 ;; * removed loading message
 
-
-;;; Lock buffers so they can not be killed.
+;;; Code:
 (save-excursion
   (set-buffer "*scratch*")
   (emacs-lock-mode 'kill)

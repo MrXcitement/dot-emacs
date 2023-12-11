@@ -1,18 +1,21 @@
 ;;; init-server.el --- Initialize the server
 
-;; Copyright (C) 2014 Mike Barker
+;; Mike Barker <mike@thebarkers.com>
+;; October 23, 2014
 
-;; Author: Mike Barker <mike@thebarkers.com>
-;; Created: October 23, 2014
-
-;; This file is not part of GNU Emacs.
+;;; Commentary:
+;; Start the server whenever the main emacs app is run as a `gui' If
+;; you need to make any system specific settings for the server to
+;; run, make them in the provided system sections.
 
 ;;; History:
+;; 2023.03.22
+;; * modify header to include standard sections.
 ;; 2014.11.12
 ;; * removed loading message
 
-
-;;; Configure the server package
+;;; Code:
+
 ;; Darwin (Mac OS X)
 (when (eq system-type 'darwin))
 
@@ -23,7 +26,8 @@
 (when (eq system-type 'windows-nt)
   (setq server-auth-dir (getenv "TMP")))
 
-;; On windows (gui) Start a server for client processes, but only if one is not already running
+;; When running as a GUI
+;; Start a server for client processes, but only if one is not already running
 (when (window-system)
   (load "server")
   (unless (server-running-p)

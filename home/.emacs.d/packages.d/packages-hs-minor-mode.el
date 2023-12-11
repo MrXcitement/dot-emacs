@@ -11,6 +11,8 @@
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Hideshow.html
 
 ;;; History:
+;; 202#.03.22
+;; * rename personal functions from `my/funcname' to `my-funcname'
 ;; 2023.03.17
 ;; * rename and refactor this file into a valid package.
 ;; * rename personal functions from mrb:funcname to my/funcname
@@ -18,31 +20,31 @@
 ;; * removed loading message
 
 ;;; Code:
-
-;;; toggle hiding block on/off
+
+;; toggle hiding block on/off
 ;; will revert to using selective display if it fails
-(defun my/toggle-hiding (column)
+(defun my-toggle-hiding (column)
       (interactive "P")
       (if hs-minor-mode
           (if (condition-case nil
                   (hs-toggle-hiding)
                 (error t))
               (hs-show-all))
-        (my/toggle-selective-display column)))
+        (my-toggle-selective-display column)))
 
-;;; toggle selective display of to the current column
-(defun my/toggle-selective-display (column)
+;; toggle selective display of to the current column
+(defun my-toggle-selective-display (column)
       (interactive "P")
       (set-selective-display
        (or column
            (unless selective-display
              (1+ (current-column))))))
 
-;;; rules used to handle hiding nxml sections
-(defun my/nxml-forward-sexp-func (pos)
-  (my/nxml-forward-element))
+;; rules used to handle hiding nxml sections
+(defun my-nxml-forward-sexp-func (pos)
+  (my-nxml-forward-element))
 
-(defun my/nxml-forward-element ()
+(defun my-nxml-forward-element ()
   (let ((nxml-sexp-element-flag)
   	(outline-regexp "\\s *<\\([h][1-6]\\|html\\|body\\|head\\)\\b"))
     (setq nxml-sexp-element-flag (not (looking-at "<!--")))
@@ -51,11 +53,11 @@
   	  (nxml-forward-balanced-item 1)
   	(error nil)))))
 
-
+;; initialize and configure the `hideshow.el' system package
 (use-package hs-minor-mode
   :bind
-  (("C-c =" . my/toggle-hiding)
-   ("C-c +" . my/toggle-selective-display))
+  (("C-c =" . my-toggle-hiding)
+   ("C-c +" . my-toggle-selective-display))
 
   :init
   (progn
@@ -77,8 +79,8 @@
 		   "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
 		   ""
 		   "<!--"                        ; won't work on its own; uses syntax table
-		   my/nxml-forward-sexp-func
-		   nil                           ; my/nxml-hs-adjust-beg-func
+		   my-nxml-forward-sexp-func
+		   nil                           ; my-nxml-hs-adjust-beg-func
 		   ))
 
     ;; html-mode config to hide/show blocks
