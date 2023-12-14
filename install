@@ -5,6 +5,10 @@
 # May 14th, 2013
 
 # History:
+# 2023.12.14 MRB
+# * Provide the ability to define the source and target dirs
+# * Rename src and dst variables to source and target
+# * Rename file_ext to backup_ext
 # 2023.03.15 MRB
 # * Refactor from dot-vim's install
 # * No longer install osx launch scripts
@@ -13,37 +17,41 @@
 # 2014.11.12 MRB
 # * Added code to install scripts based on system type.
 
+DIR="$(cd "$(dirname "$0")" && pwd)"
+SOURCE_DIR="${DIR}/home"
+TARGET_DIR="${HOME}"
+
 # Backup a file/directory by renaming it with the current date and time
 backup_file() {
   file=$1
-  file_ext=$(date +%Y%m%d%H%M)
+  backup_ext=$(date +%Y%m%d%H%M)
 
   if [ -e "${file}" ]; then
     if ! [ -h "${file}" ]; then
-      echo "Backing up ${file} to: ${file}.${file_ext}"
-      mv "${file}" "${file}.${file_ext}"
+      echo "Backing up ${file} to: ${file}.${backup_ext}"
+      mv "${file}" "${file}.${backup_ext}"
     fi
   fi
 }
 
 # create a symbolic link if one does not allready exist
 link_file() {
-  local src=$1
-  local dst=$2
+  local source=$1
+  local target=$2
 
-  if ! [ -e "${dst}" ]; then
-    echo "Linking file ${dst}"
-    ln -sfnv "${src}" "${dst}"
+  if ! [ -e "${target}" ]; then
+    echo "Linking file ${target}"
+    ln -sfnv "${source}" "${target}"
   fi
 }
 
 # Backup existing files and link files/dirs in the home folder into
 # the users home directory.
-DIR="$(cd "$(dirname "$0")" && pwd)"
+
 shopt -s dotglob
-for src in "${DIR}"/home/*; do
-  dst="${HOME}"/$(basename "$src")
-  backup_file "$dst"
-  link_file "$src" "$dst"
+for source in "${SOURCE_DIR}"/*; do
+  target="${TARGET_DIR}"/$(basename "$source")
+  backup_file "$target"
+  link_file "$source" "$target"
 done
 shopt -u dotglob
